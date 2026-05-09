@@ -69,15 +69,16 @@ const Footer = () => {
           {/* Left Column: Contact Details */}
           <div className="md:col-span-3 flex flex-col gap-8 text-[15px] text-gray-400">
             <div>
-              <p>785 15th Street, Office 47</p>
-              <p>Berlin, De 81566</p>
+              <p>Italian School,Sikiru Alade-Oloko</p>
+              <p>Crescent, Off Adebayo Doherty Street</p>
+              <p>Lekki, Lagos</p>
             </div>
             <div>
               <a
-                href="mailto:info@islandfootballclub.com"
+                href="mailto:info@islandfc.com.ng"
                 className="hover:text-primaryColor transition-colors block"
               >
-                info@islandfootballclub.com
+                info@islandfc.com.ng
               </a>
               <a
                 href="tel:+2348033253625"
@@ -138,7 +139,9 @@ const Footer = () => {
               <TwitterIcon size={18} />
             </a>
             <a
-              href="#"
+              href="https://www.instagram.com/ifclekki/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-all"
             >
               <InstagramIcon size={18} />

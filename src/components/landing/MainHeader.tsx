@@ -155,9 +155,7 @@ export function MainHeader() {
                   <div className="w-8 h-8 rounded-full bg-primaryColor/10 flex items-center justify-center">
                     <Mail size={16} className="text-primaryColor" />
                   </div>
-                  <a href="mailto:info@islandfootballclub.com">
-                    info@islandfootballclub.com
-                  </a>
+                  <a href="mailto:info@islandfc.com.ng">info@islandfc.com.ng</a>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-primaryColor/10 flex items-center justify-center">

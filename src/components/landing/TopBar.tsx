@@ -9,10 +9,10 @@ export function TopBar() {
           <span>
             Email :{" "}
             <a
-              href="mailto:info@islandfootballclub.com"
+              href="mailto:info@islandfc.com.ng"
               className="hover:text-primary transition-colors"
             >
-              info@islandfootballclub.com
+              info@islandfc.com.ng
             </a>
           </span>
         </div>
