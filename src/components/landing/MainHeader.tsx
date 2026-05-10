@@ -16,20 +16,19 @@ import React, { useState } from "react";
 import logo from "../../../public/images/logos/ifc-logo.png";
 
 const navItems = [
-  "Certifications",
-  "About Us",
-  "Gallery",
-  "Events",
-  "Membership",
-  "Partners",
-  "Blog",
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "#" },
+  { label: "Training", href: "#" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Events", href: "#" },
+  { label: "Membership", href: "#" },
+  { label: "Partners", href: "#" },
+  { label: "Blog", href: "#" },
 ];
 
 const eventsDropdownItems = [
   { label: "Matches", href: "#" },
-  { label: "Training", href: "#" },
   { label: "Players", href: "#" },
-  { label: "Academy", href: "#" },
   { label: "Academy", href: "#" },
   { label: "Community Initiative", href: "#" },
 ];
@@ -98,16 +97,16 @@ export function MainHeader() {
               <nav className="flex flex-col gap-4">
                 {navItems.map((item) => (
                   <div
-                    key={item}
+                    key={item.label}
                     className="flex flex-col border-b border-zinc-100 pb-4 last:border-0 last:pb-0"
                   >
-                    {item === "Events" ? (
+                    {item.label === "Events" ? (
                       <>
                         <button
                           onClick={() => setIsEventsOpen(!isEventsOpen)}
                           className="flex items-center justify-between text-lg font-bold text-[#2A2A2A] hover:text-primaryColor transition-colors w-full text-left"
                         >
-                          {item}
+                          {item.label}
                           <ChevronDown
                             size={20}
                             className={`transition-transform duration-300 ${isEventsOpen ? "rotate-180" : ""}`}
@@ -131,10 +130,10 @@ export function MainHeader() {
                       </>
                     ) : (
                       <Link
-                        href="#"
+                        href={item.href}
                         className="text-lg font-bold text-[#2A2A2A] hover:text-primaryColor transition-colors block"
                       >
-                        {item}
+                        {item.label}
                       </Link>
                     )}
                   </div>
