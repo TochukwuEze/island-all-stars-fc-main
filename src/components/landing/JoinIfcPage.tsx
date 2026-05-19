@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { User, Mail, Phone, Calendar, Shield, Trophy, Users, CheckCircle2, ArrowRight } from "lucide-react";
+import FadeIn from "@/components/ui/FadeIn";
 
 export default function JoinIfcPage() {
   const [formStep, setFormStep] = useState(1);
@@ -27,199 +28,205 @@ export default function JoinIfcPage() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-[#f7f9fc] flex items-center justify-center p-4">
-        <div className="bg-white max-w-lg w-full rounded-3xl p-10 text-center shadow-xl border border-gray-100">
-          <div className="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle2 className="w-10 h-10" />
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
+        <FadeIn className="max-w-md w-full text-center">
+          <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8 animate-bounce">
+            <CheckCircle2 className="w-12 h-12 text-green-600" />
           </div>
-          <h2 className="text-3xl font-black text-[#001429] uppercase mb-4">Application Received!</h2>
-          <p className="text-gray-500 mb-8 leading-relaxed">
-            Welcome to the Island Football Club family! We've received your membership application. Our team will review your details and send a confirmation email shortly with your next steps.
+          <h2 className="text-3xl font-black text-[#001429] uppercase mb-4">Registration Successful!</h2>
+          <p className="text-gray-500 mb-10 leading-relaxed">
+            Welcome to the Island Football Club family. Your membership application has been received. Please check your email for the next steps.
           </p>
-          <Link href="/">
-            <button className="w-full py-4 bg-primaryColor text-white rounded-xl font-bold uppercase tracking-widest text-sm hover:bg-blue-600 transition-colors">
-              Return to Homepage
-            </button>
-          </Link>
-        </div>
+          <button 
+            onClick={() => window.location.href = "/member-portal"}
+            className="w-full py-4 bg-primaryColor text-white font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20"
+          >
+            Go to Portal
+          </button>
+        </FadeIn>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white flex">
-      {/* Left Side - Image/Branding (Hidden on Mobile) */}
-      <div className="hidden lg:flex lg:w-5/12 relative bg-[#001429] flex-col justify-between overflow-hidden p-12">
-        <div className="absolute inset-0">
+    <div className="min-h-screen flex flex-col lg:flex-row">
+      {/* Left Side: Branding/Info */}
+      <FadeIn direction="right" className="hidden lg:flex lg:w-1/2 bg-[#001429] relative overflow-hidden flex-col justify-center p-20 text-white">
+        <div className="absolute inset-0 opacity-20">
           <Image
             src="/images/hero-bg-2.webp"
-            alt="Island FC players"
+            alt="Football Background"
             fill
-            className="object-cover opacity-40 mix-blend-luminosity"
-            sizes="(max-width: 1024px) 0vw, 50vw"
-            priority
+            className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#001429] via-[#001429]/60 to-transparent" />
         </div>
-
+        <div className="absolute inset-0 bg-gradient-to-br from-[#001429] via-[#001429]/90 to-primaryColor/40" />
+        
         <div className="relative z-10">
-          <Link href="/">
-            <div className="text-white text-2xl font-black tracking-tighter uppercase inline-block">
-              Island <span className="text-primaryColor">FC</span>
+          <Link href="/" className="inline-block mb-12">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center">
+                <span className="text-primaryColor font-black text-2xl">IFC</span>
+              </div>
+              <span className="text-xl font-black uppercase tracking-tighter">Island Football Club</span>
             </div>
           </Link>
-        </div>
 
-        <div className="relative z-10 mb-10">
-          <p className="text-primaryColor text-xs font-black uppercase tracking-[0.3em] mb-4">
-            Join The Legacy
-          </p>
-          <h1 className="text-white text-4xl xl:text-5xl font-black uppercase leading-[1.1] mb-6">
-            More Than Just <br /> A Football Club
+          <h1 className="text-5xl font-black uppercase leading-tight mb-8">
+            The Journey <br /> <span className="text-primaryColor">Starts Here.</span>
           </h1>
-          <p className="text-gray-300 text-lg max-w-md leading-relaxed">
-            Connect with professionals, develop your skills, and be part of an exclusive community both on and off the pitch.
-          </p>
           
-          <div className="mt-12 space-y-6">
+          <div className="space-y-8">
             {[
-              "Professional coaching & facilities",
-              "Exclusive networking events",
-              "Competitive and social leagues",
-            ].map((benefit, i) => (
-              <div key={i} className="flex items-center gap-4">
-                <div className="w-8 h-8 rounded-full bg-primaryColor/20 flex items-center justify-center flex-shrink-0">
-                  <CheckCircle2 className="w-5 h-5 text-primaryColor" />
+              { icon: <Shield className="w-6 h-6 text-primaryColor" />, title: "Elite Community", desc: "Access to Lagos' most exclusive football network." },
+              { icon: <Trophy className="w-6 h-6 text-primaryColor" />, title: "World Class Training", desc: "Learn from professional UEFA-licensed coaches." },
+              { icon: <Users className="w-6 h-6 text-primaryColor" />, title: "Member Events", desc: "Exclusive access to matches, galas, and tours." }
+            ].map((item, idx) => (
+              <div key={idx} className="flex gap-4">
+                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                  {item.icon}
                 </div>
-                <span className="text-white font-medium">{benefit}</span>
+                <div>
+                  <h3 className="font-bold uppercase text-sm tracking-wide mb-1">{item.title}</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </FadeIn>
 
-      {/* Right Side - Form */}
-      <div className="w-full lg:w-7/12 flex items-center justify-center p-6 md:p-12 lg:p-16 bg-[#f7f9fc]">
-        <div className="max-w-xl w-full">
-          {/* Mobile Header */}
-          <div className="lg:hidden mb-10 text-center">
-            <Link href="/">
-              <div className="text-[#001429] text-2xl font-black tracking-tighter uppercase inline-block mb-4">
-                Island <span className="text-primaryColor">FC</span>
+      {/* Right Side: Form */}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center p-6 sm:p-12 md:p-20 bg-white overflow-y-auto">
+        <FadeIn direction="left" className="max-w-md w-full mx-auto">
+          <div className="mb-10">
+            <h2 className="text-3xl font-black text-[#001429] uppercase mb-2">Create Account</h2>
+            <p className="text-gray-400">Step {formStep} of 2: {formStep === 1 ? "Personal Details" : "Membership Preferences"}</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {formStep === 1 ? (
+              <div className="space-y-4">
+                {/* Name */}
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Full Name</label>
+                  <div className="relative">
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <input 
+                      required
+                      type="text"
+                      placeholder="e.g. John Doe"
+                      className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-sm font-semibold text-[#001429]"
+                    />
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
+                  <div className="relative">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <input 
+                      required
+                      type="email"
+                      placeholder="john@example.com"
+                      className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-sm font-semibold text-[#001429]"
+                    />
+                  </div>
+                </div>
+
+                {/* Phone & DOB Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Phone Number</label>
+                    <div className="relative">
+                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <input 
+                        required
+                        type="tel"
+                        placeholder="+234..."
+                        className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-sm font-semibold text-[#001429]"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Date of Birth</label>
+                    <div className="relative">
+                      <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <input 
+                        required
+                        type="date"
+                        className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-sm font-semibold text-[#001429]"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <button 
+                  type="button"
+                  onClick={() => setFormStep(2)}
+                  className="w-full py-4 bg-[#001429] text-white font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-primaryColor transition-all shadow-lg"
+                >
+                  Continue
+                </button>
               </div>
-            </Link>
-            <h1 className="text-3xl font-black uppercase text-[#001429]">Join The Club</h1>
-            <p className="text-gray-500 mt-2">Create your membership account today.</p>
-          </div>
+            ) : (
+              <div className="space-y-4">
+                {/* Tier Selection */}
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Select Membership Tier</label>
+                  <select className="w-full px-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-sm font-semibold text-[#001429] appearance-none">
+                    <option>Basic Member</option>
+                    <option>Premium Member</option>
+                    <option>Platinum Member</option>
+                    <option>Youth Academy Player</option>
+                  </select>
+                </div>
 
-          <div className="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100">
-            {/* Progress Indicator */}
-            <div className="flex items-center gap-3 mb-8">
-              <div className="flex-1 h-2 rounded-full bg-primaryColor" />
-              <div className={`flex-1 h-2 rounded-full transition-colors duration-300 ${formStep === 2 ? "bg-primaryColor" : "bg-gray-100"}`} />
-            </div>
-
-            <h2 className="text-2xl font-black text-[#001429] uppercase mb-1">
-              {formStep === 1 ? "Personal Details" : "Membership Preferences"}
-            </h2>
-            <p className="text-gray-500 text-sm mb-8">
-              {formStep === 1 ? "Let's start with your basic information." : "Customize your IFC experience."}
-            </p>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {formStep === 1 ? (
-                <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-widest text-gray-500">First Name *</label>
-                      <input required type="text" placeholder="Emeka" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primaryColor/20 focus:border-primaryColor transition-all" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Last Name *</label>
-                      <input required type="text" placeholder="Okafor" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primaryColor/20 focus:border-primaryColor transition-all" />
-                    </div>
+                {/* Interest Category */}
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Primary Interest</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {["Playing", "Supporting", "Networking", "Academy"].map((cat) => (
+                      <button 
+                        key={cat}
+                        type="button"
+                        className="py-3 px-4 rounded-xl border border-gray-100 text-xs font-bold text-gray-500 hover:border-primaryColor hover:text-primaryColor transition-all"
+                      >
+                        {cat}
+                      </button>
+                    ))}
                   </div>
+                </div>
 
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Email Address *</label>
-                    <input required type="email" placeholder="emeka@example.com" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primaryColor/20 focus:border-primaryColor transition-all" />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Phone Number *</label>
-                      <input required type="tel" placeholder="+234 800 000 0000" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primaryColor/20 focus:border-primaryColor transition-all" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Date of Birth</label>
-                      <input required type="date" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primaryColor/20 focus:border-primaryColor transition-all text-gray-600" />
-                    </div>
-                  </div>
-
-                  <button type="submit" className="w-full mt-4 py-4 bg-[#001429] text-white rounded-xl font-bold uppercase tracking-widest text-sm hover:bg-primaryColor transition-all duration-300 flex items-center justify-center gap-2 group">
-                    Continue <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <div className="flex gap-4 pt-4">
+                  <button 
+                    type="button"
+                    onClick={() => setFormStep(1)}
+                    className="flex-1 py-4 bg-gray-100 text-[#001429] font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-gray-200 transition-all"
+                  >
+                    Back
                   </button>
-                </>
-              ) : (
-                <>
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Membership Tier *</label>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {["Basic", "Premium", "Platinum"].map((tier) => (
-                        <label key={tier} className="cursor-pointer">
-                          <input type="radio" name="tier" value={tier} className="peer sr-only" defaultChecked={tier === "Premium"} />
-                          <div className="p-4 bg-gray-50 border border-gray-200 rounded-xl text-center peer-checked:bg-primaryColor/5 peer-checked:border-primaryColor peer-checked:ring-1 peer-checked:ring-primaryColor transition-all">
-                            <span className="block text-sm font-bold text-[#001429] uppercase">{tier}</span>
-                          </div>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
+                  <button 
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex-[2] py-4 bg-primaryColor text-white font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-70 flex items-center justify-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      "Complete Registration"
+                    )}
+                  </button>
+                </div>
+              </div>
+            )}
+          </form>
 
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Primary Interest *</label>
-                    <select className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primaryColor/20 focus:border-primaryColor transition-all text-gray-700 appearance-none">
-                      <option value="">Select your main interest</option>
-                      <option value="playing">Playing Matches & Tournaments</option>
-                      <option value="training">Training & Fitness</option>
-                      <option value="networking">Networking & Social Events</option>
-                      <option value="supporter">Just Supporting</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Preferred Position (If Playing)</label>
-                    <div className="grid grid-cols-2 gap-4">
-                      {["Goalkeeper", "Defender", "Midfielder", "Forward"].map((pos) => (
-                        <label key={pos} className="flex items-center gap-3 p-4 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
-                          <input type="checkbox" className="w-4 h-4 text-primaryColor rounded border-gray-300 focus:ring-primaryColor" />
-                          <span className="text-sm font-semibold text-gray-700">{pos}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="pt-4 flex gap-4">
-                    <button type="button" onClick={() => setFormStep(1)} className="px-6 py-4 bg-gray-100 text-gray-600 rounded-xl font-bold uppercase tracking-widest text-sm hover:bg-gray-200 transition-colors">
-                      Back
-                    </button>
-                    <button type="submit" disabled={isSubmitting} className="flex-1 py-4 bg-primaryColor text-white rounded-xl font-bold uppercase tracking-widest text-sm hover:bg-blue-600 transition-all shadow-[0_0_15px_rgba(20,105,180,0.3)] disabled:opacity-70 flex items-center justify-center gap-2">
-                      {isSubmitting ? (
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      ) : (
-                        "Complete Registration"
-                      )}
-                    </button>
-                  </div>
-                </>
-              )}
-            </form>
-            
-            <p className="text-center text-xs text-gray-400 mt-8">
-              By joining, you agree to our <Link href="#" className="text-primaryColor hover:underline">Terms of Service</Link> and <Link href="#" className="text-primaryColor hover:underline">Privacy Policy</Link>.
-            </p>
-          </div>
-        </div>
+          <p className="mt-10 text-center text-xs text-gray-400 font-medium">
+            Already have an account? <Link href="/login" className="text-primaryColor font-bold hover:underline">Sign In</Link>
+          </p>
+        </FadeIn>
       </div>
     </div>
   );

@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/landing/Breadcrumb";
 import { Calendar, MapPin, Clock, Trophy, ChevronRight } from "lucide-react";
+import FadeIn from "@/components/ui/FadeIn";
+
 
 const upcomingFixtures = [
   { date: "Saturday, May 18, 2026", time: "16:00", opponent: "Lagos United FC", venue: "Home - Lekki Sports Complex", competition: "LFA Premier League", type: "Home" },
@@ -46,16 +48,22 @@ export default function MatchesPage() {
         </div>
         
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-primaryColor text-xs md:text-sm font-black uppercase tracking-[0.3em] mb-4">
-            Match Center
-          </p>
-          <h1 className="text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6">
-            Follow the <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryColor to-blue-400">Action Live</span>
-          </h1>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
-            Stay up to date with Island FC's latest fixtures, recent results, and league standings. Support the team home and away.
-          </p>
+          <FadeIn>
+            <p className="text-primaryColor text-xs md:text-sm font-black uppercase tracking-[0.3em] mb-4">
+              Match Center
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.2}>
+            <h1 className="text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6">
+              Follow the <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryColor to-blue-400">Action Live</span>
+            </h1>
+          </FadeIn>
+          <FadeIn delay={0.4}>
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
+              Stay up to date with Island FC's latest fixtures, recent results, and league standings. Support the team home and away.
+            </p>
+          </FadeIn>
         </div>
       </section>
 
@@ -74,29 +82,31 @@ export default function MatchesPage() {
               
               <div className="space-y-4">
                 {upcomingFixtures.map((fixture, idx) => (
-                  <div key={idx} className="flex flex-col md:flex-row gap-4 md:items-center justify-between p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:border-primaryColor/30 transition-colors">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-primaryColor bg-primaryColor/10 px-2.5 py-1 rounded-full">
-                          {fixture.competition}
-                        </span>
-                        <span className={`text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full ${fixture.type === "Home" ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700"}`}>
-                          {fixture.type}
-                        </span>
+                  <FadeIn key={idx} delay={idx * 0.1}>
+                    <div className="flex flex-col md:flex-row gap-4 md:items-center justify-between p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:border-primaryColor/30 transition-colors">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-primaryColor bg-primaryColor/10 px-2.5 py-1 rounded-full">
+                            {fixture.competition}
+                          </span>
+                          <span className={`text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full ${fixture.type === "Home" ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700"}`}>
+                            {fixture.type}
+                          </span>
+                        </div>
+                        <h3 className="text-xl font-bold text-[#001429] mb-1">vs {fixture.opponent}</h3>
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-gray-500 font-medium">
+                          <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" /> {fixture.date}</span>
+                          <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> {fixture.time}</span>
+                          <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {fixture.venue}</span>
+                        </div>
                       </div>
-                      <h3 className="text-xl font-bold text-[#001429] mb-1">vs {fixture.opponent}</h3>
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-gray-500 font-medium">
-                        <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" /> {fixture.date}</span>
-                        <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> {fixture.time}</span>
-                        <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {fixture.venue}</span>
-                      </div>
+                      {fixture.type === "Home" && (
+                        <button className="md:ml-4 px-6 py-3 bg-[#001429] text-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-primaryColor transition-colors flex-shrink-0">
+                          Get Tickets
+                        </button>
+                      )}
                     </div>
-                    {fixture.type === "Home" && (
-                      <button className="md:ml-4 px-6 py-3 bg-[#001429] text-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-primaryColor transition-colors flex-shrink-0">
-                        Get Tickets
-                      </button>
-                    )}
-                  </div>
+                  </FadeIn>
                 ))}
               </div>
             </section>
@@ -111,21 +121,23 @@ export default function MatchesPage() {
               
               <div className="space-y-3">
                 {recentResults.map((result, idx) => (
-                  <div key={idx} className="flex flex-col sm:flex-row items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:bg-gray-50 transition-colors">
-                    <div className="flex-1 w-full flex justify-between items-center text-sm font-semibold text-gray-500">
-                      <span className="flex-1 text-right">{result.homeTeam}</span>
-                      <div className="mx-6 px-4 py-2 bg-[#001429] text-white text-lg font-black rounded-lg min-w-[80px] text-center">
-                        {result.score}
+                  <FadeIn key={idx} delay={idx * 0.1}>
+                    <div className="flex flex-col sm:flex-row items-center gap-4 p-5 rounded-2xl border border-gray-100 hover:bg-gray-50 transition-colors">
+                      <div className="flex-1 w-full flex justify-between items-center text-sm font-semibold text-gray-500">
+                        <span className="flex-1 text-right">{result.homeTeam}</span>
+                        <div className="mx-6 px-4 py-2 bg-[#001429] text-white text-lg font-black rounded-lg min-w-[80px] text-center">
+                          {result.score}
+                        </div>
+                        <span className="flex-1 text-left">{result.awayTeam}</span>
                       </div>
-                      <span className="flex-1 text-left">{result.awayTeam}</span>
+                      <div className="w-full sm:w-auto flex justify-between sm:flex-col items-center sm:items-end gap-1 border-t sm:border-t-0 sm:border-l border-gray-100 pt-3 sm:pt-0 sm:pl-4 mt-2 sm:mt-0">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{result.date}</span>
+                        <span className={`w-6 h-6 flex items-center justify-center rounded text-xs font-bold text-white ${
+                          result.result === "W" ? "bg-green-500" : result.result === "D" ? "bg-gray-400" : "bg-red-500"
+                        }`}>{result.result}</span>
+                      </div>
                     </div>
-                    <div className="w-full sm:w-auto flex justify-between sm:flex-col items-center sm:items-end gap-1 border-t sm:border-t-0 sm:border-l border-gray-100 pt-3 sm:pt-0 sm:pl-4 mt-2 sm:mt-0">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{result.date}</span>
-                      <span className={`w-6 h-6 flex items-center justify-center rounded text-xs font-bold text-white ${
-                        result.result === "W" ? "bg-green-500" : result.result === "D" ? "bg-gray-400" : "bg-red-500"
-                      }`}>{result.result}</span>
-                    </div>
-                  </div>
+                  </FadeIn>
                 ))}
               </div>
             </section>
@@ -136,52 +148,56 @@ export default function MatchesPage() {
           <div className="space-y-8">
             
             {/* League Table */}
-            <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
-              <h3 className="text-lg font-black text-[#001429] uppercase mb-6 pb-4 border-b border-gray-100">
-                LFA Premier League
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="text-gray-400 text-xs uppercase tracking-wider border-b border-gray-50">
-                      <th className="pb-3 text-left font-semibold">Pos</th>
-                      <th className="pb-3 text-left font-semibold">Club</th>
-                      <th className="pb-3 text-center font-semibold">P</th>
-                      <th className="pb-3 text-center font-semibold">GD</th>
-                      <th className="pb-3 text-right font-semibold">Pts</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-50">
-                    {standings.map((team, idx) => (
-                      <tr key={idx} className={`${team.team === "Island FC" ? "bg-primaryColor/5" : ""}`}>
-                        <td className="py-3 font-semibold text-gray-500">{team.pos}</td>
-                        <td className={`py-3 font-bold ${team.team === "Island FC" ? "text-primaryColor" : "text-[#001429]"}`}>
-                          {team.team}
-                        </td>
-                        <td className="py-3 text-center text-gray-500">{team.p}</td>
-                        <td className="py-3 text-center text-gray-500">{team.gd}</td>
-                        <td className="py-3 text-right font-black text-[#001429]">{team.pts}</td>
+            <FadeIn direction="left">
+              <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
+                <h3 className="text-lg font-black text-[#001429] uppercase mb-6 pb-4 border-b border-gray-100">
+                  LFA Premier League
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="text-gray-400 text-xs uppercase tracking-wider border-b border-gray-50">
+                        <th className="pb-3 text-left font-semibold">Pos</th>
+                        <th className="pb-3 text-left font-semibold">Club</th>
+                        <th className="pb-3 text-center font-semibold">P</th>
+                        <th className="pb-3 text-center font-semibold">GD</th>
+                        <th className="pb-3 text-right font-semibold">Pts</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50">
+                      {standings.map((team, idx) => (
+                        <tr key={idx} className={`${team.team === "Island FC" ? "bg-primaryColor/5" : ""}`}>
+                          <td className="py-3 font-semibold text-gray-500">{team.pos}</td>
+                          <td className={`py-3 font-bold ${team.team === "Island FC" ? "text-primaryColor" : "text-[#001429]"}`}>
+                            {team.team}
+                          </td>
+                          <td className="py-3 text-center text-gray-500">{team.p}</td>
+                          <td className="py-3 text-center text-gray-500">{team.gd}</td>
+                          <td className="py-3 text-right font-black text-[#001429]">{team.pts}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <Link href="#" className="mt-4 flex items-center justify-center gap-2 text-sm font-bold text-primaryColor hover:text-[#001429] transition-colors pt-4 border-t border-gray-50">
+                  View Full Table <ChevronRight className="w-4 h-4" />
+                </Link>
               </div>
-              <Link href="#" className="mt-4 flex items-center justify-center gap-2 text-sm font-bold text-primaryColor hover:text-[#001429] transition-colors pt-4 border-t border-gray-50">
-                View Full Table <ChevronRight className="w-4 h-4" />
-              </Link>
-            </div>
+            </FadeIn>
 
             {/* CTA Box */}
-            <div className="bg-gradient-to-br from-primaryColor to-[#001429] rounded-3xl p-8 text-center text-white shadow-lg relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-              <h3 className="text-xl font-black uppercase mb-3 relative z-10">Matchday Hospitality</h3>
-              <p className="text-sm text-blue-100 mb-6 relative z-10">
-                Experience Island FC matches in style. Premium seating, exclusive lounge access, and catered food.
-              </p>
-              <button className="w-full py-3 bg-white text-[#001429] font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-gray-100 transition-colors relative z-10">
-                Book VIP Package
-              </button>
-            </div>
+            <FadeIn direction="left" delay={0.2}>
+              <div className="bg-gradient-to-br from-primaryColor to-[#001429] rounded-3xl p-8 text-center text-white shadow-lg relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                <h3 className="text-xl font-black uppercase mb-3 relative z-10">Matchday Hospitality</h3>
+                <p className="text-sm text-blue-100 mb-6 relative z-10">
+                  Experience Island FC matches in style. Premium seating, exclusive lounge access, and catered food.
+                </p>
+                <button className="w-full py-3 bg-white text-[#001429] font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-gray-100 transition-colors relative z-10">
+                  Book VIP Package
+                </button>
+              </div>
+            </FadeIn>
 
           </div>
         </div>

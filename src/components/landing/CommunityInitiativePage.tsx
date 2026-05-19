@@ -4,7 +4,8 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/landing/Breadcrumb";
-import { Heart, BookOpen, HandHeart, Trophy } from "lucide-react";
+import FadeIn from "@/components/ui/FadeIn";
+import { Heart, BookOpen, HandHeart, Trophy, Globe, Users, Shield } from "lucide-react";
 
 const initiatives = [
   {
@@ -53,16 +54,22 @@ export default function CommunityInitiativePage() {
         </div>
         
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-primaryColor text-xs md:text-sm font-black uppercase tracking-[0.3em] mb-4">
-            Beyond Football
-          </p>
-          <h1 className="text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6">
-            Heart of the <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryColor to-blue-400">Community</span>
-          </h1>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-            Island FC is committed to using the power of football to drive positive social change and uplift the communities we call home.
-          </p>
+          <FadeIn>
+            <p className="text-primaryColor text-xs md:text-sm font-black uppercase tracking-[0.3em] mb-4">
+              More Than A Club
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.2}>
+            <h1 className="text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6">
+              Our Community <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryColor to-blue-400">Impact</span>
+            </h1>
+          </FadeIn>
+          <FadeIn delay={0.4}>
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
+              Island Football Club is dedicated to making a positive difference in Lagos. We believe in the power of football to unite and inspire.
+            </p>
+          </FadeIn>
         </div>
       </section>
 
@@ -72,9 +79,27 @@ export default function CommunityInitiativePage() {
           <h2 className="text-2xl md:text-4xl font-black text-[#001429] uppercase mb-8 leading-tight">
             "A football club is only as strong as the community that stands behind it."
           </h2>
-          <p className="text-gray-600 text-lg leading-relaxed">
+          <p className="text-gray-600 text-lg leading-relaxed mb-12">
             Since our inception, Island Football Club has dedicated a percentage of all revenue directly to our charitable foundation. We don't just want to win trophies; we want to win hearts, provide opportunities, and build a better future for the youth of Lagos.
           </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { icon: <Heart className="w-8 h-8 text-white" />, title: "Empowerment", text: "Providing opportunities for young people to reach their full potential through sports." },
+              { icon: <Globe className="w-8 h-8 text-white" />, title: "Sustainability", text: "Promoting environmental awareness and sustainable practices in our local area." },
+              { icon: <Shield className="w-8 h-8 text-white" />, title: "Inclusion", text: "Ensuring football is accessible to everyone, regardless of background or ability." }
+            ].map((item, idx) => (
+              <FadeIn key={idx} delay={idx * 0.1}>
+                <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-50 hover:shadow-xl transition-shadow">
+                  <div className="w-14 h-14 rounded-2xl bg-primaryColor flex items-center justify-center mb-6 shadow-lg shadow-primaryColor/20">
+                    {item.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-[#001429] mb-4">{item.title}</h3>
+                  <p className="text-gray-500 leading-relaxed text-sm">{item.text}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -83,15 +108,17 @@ export default function CommunityInitiativePage() {
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {initiatives.map((init, idx) => (
-              <div key={idx} className="flex gap-6 p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:shadow-xl transition-all duration-300 group">
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 bg-gradient-to-br ${init.color} shadow-lg group-hover:-translate-y-2 transition-transform`}>
-                  {init.icon}
+              <FadeIn key={idx} delay={idx * 0.1}>
+                <div className="flex gap-6 p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 bg-gradient-to-br ${init.color} shadow-lg group-hover:-translate-y-2 transition-transform`}>
+                    {init.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-black text-[#001429] mb-3">{init.title}</h3>
+                    <p className="text-gray-500 leading-relaxed mb-4">{init.desc}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-black text-[#001429] mb-3">{init.title}</h3>
-                  <p className="text-gray-500 leading-relaxed mb-4">{init.desc}</p>
-                </div>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>

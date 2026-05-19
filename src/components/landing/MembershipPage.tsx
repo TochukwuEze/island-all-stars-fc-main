@@ -5,6 +5,8 @@ import Breadcrumb from "@/components/landing/Breadcrumb";
 import Image from "next/image";
 import Link from "next/link";
 import { Check, Shield, Star, Trophy, Users } from "lucide-react";
+import FadeIn from "@/components/ui/FadeIn";
+
 
 const membershipTiers = [
   {
@@ -100,16 +102,22 @@ export default function MembershipPage() {
         </div>
         
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-primaryColor text-xs md:text-sm font-black uppercase tracking-[0.3em] mb-4">
-            Join The Family
-          </p>
-          <h1 className="text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6">
-            Become a part of <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryColor to-blue-400">Island Football Club</span>
-          </h1>
-          <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            Whether you want to play, support, or network, our membership packages are designed to bring you closer to the action and the community.
-          </p>
+          <FadeIn>
+            <p className="text-primaryColor text-xs md:text-sm font-black uppercase tracking-[0.3em] mb-4">
+              Join The Family
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.2}>
+            <h1 className="text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6">
+              Become a part of <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryColor to-blue-400">Island Football Club</span>
+            </h1>
+          </FadeIn>
+          <FadeIn delay={0.4}>
+            <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+              Whether you want to play, support, or network, our membership packages are designed to bring you closer to the action and the community.
+            </p>
+          </FadeIn>
         </div>
       </section>
 
@@ -126,13 +134,15 @@ export default function MembershipPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {benefits.map((benefit, idx) => (
-              <div key={idx} className="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:border-primaryColor/30 hover:shadow-xl transition-all duration-300 group">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#001429] to-primaryColor flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
-                  {benefit.icon}
+              <FadeIn key={idx} delay={idx * 0.1}>
+                <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:border-primaryColor/30 hover:shadow-xl transition-all duration-300 group">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#001429] to-primaryColor flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                    {benefit.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-[#001429] mb-3">{benefit.title}</h3>
+                  <p className="text-gray-500 leading-relaxed">{benefit.description}</p>
                 </div>
-                <h3 className="text-xl font-bold text-[#001429] mb-3">{benefit.title}</h3>
-                <p className="text-gray-500 leading-relaxed">{benefit.description}</p>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -165,68 +175,69 @@ export default function MembershipPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center max-w-6xl mx-auto">
             {membershipTiers.map((tier, idx) => (
-              <div 
-                key={idx} 
-                className={`relative rounded-3xl overflow-hidden transition-all duration-300 ${
-                  tier.highlight 
-                    ? "bg-gradient-to-b from-[#001429] to-[#1469B4] text-white shadow-2xl scale-100 lg:scale-105 z-10 border border-[#1a7cd4]" 
-                    : "bg-white text-[#001429] shadow-lg hover:shadow-xl border border-gray-100"
-                }`}
-              >
-                {tier.highlight && (
-                  <div className="absolute top-0 left-0 right-0 bg-primaryColor text-white text-[10px] font-black uppercase tracking-[0.2em] text-center py-2">
-                    Most Popular
-                  </div>
-                )}
-                
-                <div className={`p-8 md:p-10 ${tier.highlight ? "pt-12" : ""}`}>
-                  <div className="flex justify-between items-center mb-6">
-                    <div>
-                      <h3 className={`text-2xl font-black uppercase ${tier.highlight ? "text-white" : "text-[#001429]"}`}>
-                        {tier.name}
-                      </h3>
-                      <p className={`text-sm mt-2 ${tier.highlight ? "text-blue-100" : "text-gray-500"}`}>
-                        {tier.description}
-                      </p>
+              <FadeIn key={idx} delay={idx * 0.15} className="h-full">
+                <div 
+                  className={`relative h-full rounded-3xl overflow-hidden transition-all duration-300 ${
+                    tier.highlight 
+                      ? "bg-gradient-to-b from-[#001429] to-[#1469B4] text-white shadow-2xl scale-100 lg:scale-105 z-10 border border-[#1a7cd4]" 
+                      : "bg-white text-[#001429] shadow-lg hover:shadow-xl border border-gray-100"
+                  }`}
+                >
+                  {tier.highlight && (
+                    <div className="absolute top-0 left-0 right-0 bg-primaryColor text-white text-[10px] font-black uppercase tracking-[0.2em] text-center py-2">
+                      Most Popular
                     </div>
-                  </div>
+                  )}
                   
-                  <div className="mb-8 flex items-end gap-1">
-                    <span className="text-4xl md:text-5xl font-black">{tier.price}</span>
-                    <span className={`text-sm font-semibold pb-1 ${tier.highlight ? "text-blue-200" : "text-gray-400"}`}>
-                      {tier.period}
-                    </span>
+                  <div className={`p-8 md:p-10 ${tier.highlight ? "pt-12" : ""}`}>
+                    <div className="flex justify-between items-center mb-6">
+                      <div>
+                        <h3 className={`text-2xl font-black uppercase ${tier.highlight ? "text-white" : "text-[#001429]"}`}>
+                          {tier.name}
+                        </h3>
+                        <p className={`text-sm mt-2 ${tier.highlight ? "text-blue-100" : "text-gray-500"}`}>
+                          {tier.description}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="mb-8 flex items-end gap-1">
+                      <span className="text-4xl md:text-5xl font-black">{tier.price}</span>
+                      <span className={`text-sm font-semibold pb-1 ${tier.highlight ? "text-blue-200" : "text-gray-400"}`}>
+                        {tier.period}
+                      </span>
+                    </div>
+
+                    <Link href="/join-ifc" className="block w-full">
+                      <button 
+                        className={`w-full py-4 rounded-xl font-bold uppercase tracking-wider text-sm transition-all duration-300 ${
+                          tier.highlight 
+                            ? "bg-white text-primaryColor hover:bg-gray-100 hover:shadow-lg" 
+                            : "bg-[#f4f7f9] text-[#001429] hover:bg-primaryColor hover:text-white"
+                        }`}
+                      >
+                        {tier.buttonText}
+                      </button>
+                    </Link>
                   </div>
 
-                  <Link href="/join-ifc" className="block w-full">
-                    <button 
-                      className={`w-full py-4 rounded-xl font-bold uppercase tracking-wider text-sm transition-all duration-300 ${
-                        tier.highlight 
-                          ? "bg-white text-primaryColor hover:bg-gray-100 hover:shadow-lg" 
-                          : "bg-[#f4f7f9] text-[#001429] hover:bg-primaryColor hover:text-white"
-                      }`}
-                    >
-                      {tier.buttonText}
-                    </button>
-                  </Link>
+                  <div className={`p-8 md:p-10 border-t ${tier.highlight ? "border-blue-800/50 bg-black/10" : "border-gray-50 bg-gray-50/50"}`}>
+                    <p className={`text-xs font-bold uppercase tracking-widest mb-6 ${tier.highlight ? "text-blue-200" : "text-gray-400"}`}>
+                      What's included
+                    </p>
+                    <ul className="space-y-4">
+                      {tier.features.map((feature, fIdx) => (
+                        <li key={fIdx} className="flex items-start gap-3">
+                          <Check className={`w-5 h-5 flex-shrink-0 ${tier.highlight ? "text-blue-300" : "text-primaryColor"}`} />
+                          <span className={`text-sm leading-tight ${tier.highlight ? "text-white" : "text-gray-600"}`}>
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-
-                <div className={`p-8 md:p-10 border-t ${tier.highlight ? "border-blue-800/50 bg-black/10" : "border-gray-50 bg-gray-50/50"}`}>
-                  <p className={`text-xs font-bold uppercase tracking-widest mb-6 ${tier.highlight ? "text-blue-200" : "text-gray-400"}`}>
-                    What's included
-                  </p>
-                  <ul className="space-y-4">
-                    {tier.features.map((feature, fIdx) => (
-                      <li key={fIdx} className="flex items-start gap-3">
-                        <Check className={`w-5 h-5 flex-shrink-0 ${tier.highlight ? "text-blue-300" : "text-primaryColor"}`} />
-                        <span className={`text-sm leading-tight ${tier.highlight ? "text-white" : "text-gray-600"}`}>
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>

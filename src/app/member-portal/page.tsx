@@ -1,3 +1,4 @@
+import { MainHeader } from "@/components/landing/MainHeader";
 import MemberPortalPage from "@/components/landing/MemberPortalPage";
 
 export const metadata = {
@@ -6,5 +7,12 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <MemberPortalPage />;
+  return (
+    <div className="flex flex-col min-h-screen">
+      <MainHeader />
+      <main className="flex-1">
+        <MemberPortalPage />
+      </main>
+    </div>
+  );
 }

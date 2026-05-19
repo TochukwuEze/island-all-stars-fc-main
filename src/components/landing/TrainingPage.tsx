@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/landing/Breadcrumb";
 import { Calendar, Clock, MapPin, Target, Users, Zap, Shield, ArrowRight } from "lucide-react";
+import FadeIn from "@/components/ui/FadeIn";
+
 
 const programs = [
   {
@@ -67,16 +69,22 @@ export default function TrainingPage() {
         </div>
         
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-primaryColor text-xs md:text-sm font-black uppercase tracking-[0.3em] mb-4">
-            Elevate Your Game
-          </p>
-          <h1 className="text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6">
-            Elite Training <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryColor to-blue-400">For Every Level</span>
-          </h1>
-          <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            From grassroots development to competitive senior squads, our professional coaching staff provides the perfect environment to hone your skills.
-          </p>
+          <FadeIn>
+            <p className="text-primaryColor text-xs md:text-sm font-black uppercase tracking-[0.3em] mb-4">
+              Elevate Your Game
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.2}>
+            <h1 className="text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6">
+              Elite Training <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryColor to-blue-400">For Every Level</span>
+            </h1>
+          </FadeIn>
+          <FadeIn delay={0.4}>
+            <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+              From grassroots development to competitive senior squads, our professional coaching staff provides the perfect environment to hone your skills.
+            </p>
+          </FadeIn>
         </div>
       </section>
 
@@ -93,24 +101,26 @@ export default function TrainingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {programs.map((prog, idx) => (
-              <div key={idx} className="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:border-primaryColor/30 hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#001429] to-primaryColor flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform duration-300">
-                  <div className="bg-white rounded-full p-2">{prog.icon}</div>
-                </div>
-                <h3 className="text-xl font-bold text-[#001429] mb-3">{prog.title}</h3>
-                <p className="text-gray-500 leading-relaxed mb-6 flex-grow">{prog.description}</p>
-                
-                <div className="space-y-2 pt-4 border-t border-gray-200">
-                  <div className="flex items-center gap-2 text-sm text-gray-600 font-semibold">
-                    <Calendar className="w-4 h-4 text-primaryColor" />
-                    <span>{prog.schedule}</span>
+              <FadeIn key={idx} delay={idx * 0.1}>
+                <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:border-primaryColor/30 hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#001429] to-primaryColor flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <div className="bg-white rounded-full p-2">{prog.icon}</div>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600 font-semibold">
-                    <Target className="w-4 h-4 text-primaryColor" />
-                    <span>{prog.level}</span>
+                  <h3 className="text-xl font-bold text-[#001429] mb-3">{prog.title}</h3>
+                  <p className="text-gray-500 leading-relaxed mb-6 flex-grow">{prog.description}</p>
+                  
+                  <div className="space-y-2 pt-4 border-t border-gray-200">
+                    <div className="flex items-center gap-2 text-sm text-gray-600 font-semibold">
+                      <Calendar className="w-4 h-4 text-primaryColor" />
+                      <span>{prog.schedule}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-600 font-semibold">
+                      <Target className="w-4 h-4 text-primaryColor" />
+                      <span>{prog.level}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -133,34 +143,38 @@ export default function TrainingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {schedule.map((dayPlan, idx) => (
-              <div key={idx} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
-                <div className="bg-[#001429] px-6 py-4">
-                  <h3 className="text-white font-black uppercase tracking-wider">{dayPlan.day}</h3>
+              <FadeIn key={idx} delay={idx * 0.05}>
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                  <div className="bg-[#001429] px-6 py-4">
+                    <h3 className="text-white font-black uppercase tracking-wider">{dayPlan.day}</h3>
+                  </div>
+                  <div className="p-6 divide-y divide-gray-50">
+                    {dayPlan.sessions.map((session, sIdx) => (
+                      <div key={sIdx} className="py-3 first:pt-0 last:pb-0">
+                        <p className="text-primaryColor text-xs font-bold flex items-center gap-1.5 mb-1">
+                          <Clock className="w-3.5 h-3.5" />
+                          {session.time}
+                        </p>
+                        <p className="text-[#001429] font-semibold text-sm leading-tight">{session.name}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="p-6 divide-y divide-gray-50">
-                  {dayPlan.sessions.map((session, sIdx) => (
-                    <div key={sIdx} className="py-3 first:pt-0 last:pb-0">
-                      <p className="text-primaryColor text-xs font-bold flex items-center gap-1.5 mb-1">
-                        <Clock className="w-3.5 h-3.5" />
-                        {session.time}
-                      </p>
-                      <p className="text-[#001429] font-semibold text-sm leading-tight">{session.name}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              </FadeIn>
             ))}
             
             {/* Call to action card in schedule grid */}
-            <div className="bg-gradient-to-br from-primaryColor to-[#001429] rounded-2xl shadow-sm border border-blue-800 p-6 flex flex-col justify-center items-center text-center">
-              <h3 className="text-white font-black uppercase text-xl mb-3">Private Sessions</h3>
-              <p className="text-blue-100 text-sm mb-6">Need 1-on-1 coaching? Book a private session with our senior staff.</p>
-              <Link href="/contact" className="w-full">
-                <button className="w-full py-3 bg-white text-[#001429] rounded-xl font-bold uppercase text-xs tracking-wider hover:bg-gray-50 transition-colors">
-                  Inquire Now
-                </button>
-              </Link>
-            </div>
+            <FadeIn delay={0.4}>
+              <div className="bg-gradient-to-br from-primaryColor to-[#001429] rounded-2xl shadow-sm border border-blue-800 p-6 flex flex-col justify-center items-center text-center h-full">
+                <h3 className="text-white font-black uppercase text-xl mb-3">Private Sessions</h3>
+                <p className="text-blue-100 text-sm mb-6">Need 1-on-1 coaching? Book a private session with our senior staff.</p>
+                <Link href="/contact" className="w-full">
+                  <button className="w-full py-3 bg-white text-[#001429] rounded-xl font-bold uppercase text-xs tracking-wider hover:bg-gray-50 transition-colors">
+                    Inquire Now
+                  </button>
+                </Link>
+              </div>
+            </FadeIn>
           </div>
         </div>
       </section>

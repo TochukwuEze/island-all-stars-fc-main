@@ -1,3 +1,7 @@
+import { TopBar } from "@/components/landing/TopBar";
+import { MainHeader } from "@/components/landing/MainHeader";
+import { Navbar } from "@/components/landing/Navbar";
+import Footer from "@/components/landing/Footer";
 import EventsPage from "@/components/landing/EventsPage";
 
 export const metadata = {
@@ -6,5 +10,15 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <EventsPage />;
+  return (
+    <div className="flex flex-col min-h-screen">
+      <TopBar />
+      <MainHeader />
+      <Navbar />
+      <main className="flex-1">
+        <EventsPage />
+      </main>
+      <Footer />
+    </div>
+  );
 }

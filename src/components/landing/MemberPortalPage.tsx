@@ -3,10 +3,11 @@
 import React, { useState } from "react";
 import Breadcrumb from "@/components/landing/Breadcrumb";
 import Link from "next/link";
+import { constitutionSections } from "@/data/constitution";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
-type Tab = "dashboard" | "profile" | "matches" | "membership" | "messages";
+type Tab = "dashboard" | "profile" | "matches" | "membership" | "messages" | "constitution";
 
 // ── Mock Data ──────────────────────────────────────────────────────────────
 
@@ -624,6 +625,51 @@ function MessagesTab() {
   );
 }
 
+// ── Constitution Tab ────────────────────────────────────────────────────────
+function ConstitutionTab() {
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="bg-white border border-gray-100 rounded-md p-8 shadow-sm">
+        <div className="flex items-center gap-4 mb-10 pb-6 border-b border-gray-50">
+          <div className="w-12 h-12 bg-primaryColor/10 rounded-xl flex items-center justify-center text-primaryColor">
+            <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
+            </svg>
+          </div>
+          <div>
+            <h2 className="text-2xl font-black text-[#001429] uppercase">Club Constitution</h2>
+            <p className="text-sm text-gray-400">Official governing documents of Island Football Club</p>
+          </div>
+        </div>
+
+        <div className="space-y-8">
+          {constitutionSections.map((section, idx) => (
+            <div key={idx} className="group">
+              <h3 className="text-lg font-bold text-[#001429] mb-3 flex items-center gap-3">
+                <span className="w-1 h-6 bg-primaryColor rounded-full" />
+                {section.title}
+              </h3>
+              <p className="text-gray-500 leading-relaxed pl-4">
+                {section.content}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 p-6 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+          <p className="text-xs text-gray-400 leading-relaxed italic text-center">
+            Last updated: January 15, 2026. For the full legal document, please contact the Club Secretariat.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Main Component ─────────────────────────────────────────────────────────
 
 export default function MemberPortalPage() {
@@ -725,6 +771,26 @@ export default function MemberPortalPage() {
       ),
       badge: unreadMessages,
     },
+    {
+      id: "constitution",
+      label: "Constitution",
+      icon: (
+        <svg
+          width={18}
+          height={18}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10 9 9 9 8 9" />
+        </svg>
+      ),
+    },
   ];
 
   const tabContent: Record<Tab, React.ReactNode> = {
@@ -733,6 +799,7 @@ export default function MemberPortalPage() {
     matches: <MatchesTab />,
     membership: <MembershipTab />,
     messages: <MessagesTab />,
+    constitution: <ConstitutionTab />,
   };
 
   return (
