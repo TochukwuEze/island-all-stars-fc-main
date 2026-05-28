@@ -80,7 +80,7 @@ export function Hero() {
             onClick={() => setCurrentSlide(index)}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
               index === currentSlide
-                ? "bg-primaryColor scale-125 shadow-[0_0_10px_rgba(20,105,180,0.8)]"
+                ? "bg-primaryColor scale-125 shadow-[0_0_10px_rgba(32,82,218,0.8)]"
                 : "bg-white/40 hover:bg-white/80"
             }`}
             aria-label={`Go to slide ${index + 1}`}

@@ -115,7 +115,7 @@ function NavItem({
       onClick={onClick}
       className={`w-full flex items-center gap-3 px-4 py-3 rounded-full text-sm font-semibold transition-all duration-200 relative ${
         active
-          ? "bg-primaryColor text-white shadow-[0_4px_14px_rgba(20,105,180,0.35)]"
+          ? "bg-primaryColor text-white shadow-[0_4px_14px_rgba(32,82,218,0.35)]"
           : "text-gray-500 hover:bg-gray-50 hover:text-[#001429]"
       }`}
     >
@@ -162,7 +162,7 @@ function DashboardTab() {
   return (
     <div className="flex flex-col gap-8">
       {/* Welcome Banner */}
-      <div className="relative rounded-md overflow-hidden bg-gradient-to-r from-[#001429] to-[#1469B4] p-8 text-white">
+      <div className="relative rounded-md overflow-hidden bg-gradient-to-r from-[#001429] to-[#2052DA] p-8 text-white">
         <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/5 -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-1/3 w-40 h-40 rounded-full bg-white/5 translate-y-1/2" />
         <div className="relative z-10">
@@ -233,7 +233,7 @@ function DashboardTab() {
                     height={20}
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#1469B4"
+                    stroke="#2052DA"
                     strokeWidth="2"
                   >
                     <circle cx="12" cy="12" r="10" />
@@ -472,7 +472,7 @@ function MatchesTab() {
 function MembershipTab() {
   return (
     <div className="flex flex-col gap-6">
-      <div className="relative bg-gradient-to-r from-[#001429] to-[#1469B4] rounded-md p-8 text-white overflow-hidden">
+      <div className="relative bg-gradient-to-r from-[#001429] to-[#2052DA] rounded-md p-8 text-white overflow-hidden">
         <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-white/5 -translate-y-1/3 translate-x-1/3" />
         <p className="text-xs font-bold uppercase tracking-widest text-white/60 mb-2">
           Your Membership
@@ -519,7 +519,7 @@ function MembershipTab() {
                   height={10}
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#1469B4"
+                  stroke="#2052DA"
                   strokeWidth="3"
                 >
                   <polyline points="20 6 9 17 4 12" />

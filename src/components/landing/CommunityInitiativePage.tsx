@@ -126,7 +126,7 @@ export default function CommunityInitiativePage() {
 
       {/* Get Involved */}
       <section className="max-w-5xl mx-auto px-4 md:px-6 pb-20">
-        <div className="bg-gradient-to-r from-[#001429] to-[#1469B4] rounded-3xl p-10 md:p-16 text-center text-white shadow-2xl relative overflow-hidden">
+        <div className="bg-gradient-to-r from-[#001429] to-[#2052DA] rounded-3xl p-10 md:p-16 text-center text-white shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
           

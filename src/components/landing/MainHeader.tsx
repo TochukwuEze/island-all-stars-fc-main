@@ -13,9 +13,7 @@ import {
 } from "@/components/ui/sheet";
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
-
-
-import logo from "../../../public/images/logos/ifc-logo.png";
+import logo from "../../../public/images/logos/iasf-logo.webp";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -50,7 +48,7 @@ export function MainHeader() {
 
   return (
     <header className="w-full bg-white py-3 px-6 flex justify-between items-center sticky top-0 z-50 shadow-sm">
-      <Link href="/" className="flex items-center">
+      <Link href="/" className="flex flex-col items-center">
         <Image
           src={logo}
           alt="Logo"
@@ -58,6 +56,7 @@ export function MainHeader() {
           height={200}
           className="h-12 md:h-14 w-auto aspect-auto object-contain"
         />
+        <span className="text-xs font-bold text-neutral-700">Island All Stars FC</span>
       </Link>
 
       {/* Desktop Buttons / Profile */}

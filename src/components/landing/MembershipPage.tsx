@@ -14,7 +14,7 @@ const membershipTiers = [
     price: "₦20,000",
     period: "/ year",
     description: "Perfect for fans who want to stay connected and support the club.",
-    icon: <Users className="w-8 h-8 text-[#1469B4]" />,
+    icon: <Users className="w-8 h-8 text-[#2052DA]" />,
     features: [
       "Access to online Member Portal",
       "Exclusive club news and match updates",
@@ -48,7 +48,7 @@ const membershipTiers = [
     price: "₦150,000",
     period: "/ year",
     description: "Exclusive access and premium benefits for our most dedicated patrons.",
-    icon: <Trophy className="w-8 h-8 text-[#1469B4]" />,
+    icon: <Trophy className="w-8 h-8 text-[#2052DA]" />,
     features: [
       "Everything in Premium, plus:",
       "Guaranteed VIP seating for home matches",
@@ -179,7 +179,7 @@ export default function MembershipPage() {
                 <div 
                   className={`relative h-full rounded-3xl overflow-hidden transition-all duration-300 ${
                     tier.highlight 
-                      ? "bg-gradient-to-b from-[#001429] to-[#1469B4] text-white shadow-2xl scale-100 lg:scale-105 z-10 border border-[#1a7cd4]" 
+                      ? "bg-gradient-to-b from-[#001429] to-[#2052DA] text-white shadow-2xl scale-100 lg:scale-105 z-10 border border-[#386bf2]" 
                       : "bg-white text-[#001429] shadow-lg hover:shadow-xl border border-gray-100"
                   }`}
                 >
@@ -256,7 +256,7 @@ export default function MembershipPage() {
             Join hundreds of members who are already enjoying the exclusive benefits of Island Football Club. Don't just watch the game—live it.
           </p>
           <Link href="/join-ifc">
-            <button className="px-10 py-4 bg-primaryColor text-white rounded-full font-bold uppercase tracking-widest text-sm hover:bg-blue-600 hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(20,105,180,0.4)]">
+            <button className="px-10 py-4 bg-primaryColor text-white rounded-full font-bold uppercase tracking-widest text-sm hover:bg-blue-600 hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(32,82,218,0.4)]">
               Register Now
             </button>
           </Link>

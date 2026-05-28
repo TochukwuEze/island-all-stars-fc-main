@@ -1,4 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
+
+import logo from "../../../public/images/logos/iasf-logo.webp";
 
 const FacebookIcon = ({ size = 24 }: { size?: number }) => (
   <svg
@@ -68,6 +71,15 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 mb-24">
           {/* Left Column: Contact Details */}
           <div className="md:col-span-3 flex flex-col gap-8 text-[15px] text-gray-400">
+            <div className="items-start">
+              <Image
+                src={logo}
+                alt="Logo"
+                width={250}
+                height={200}
+                className="h-12 md:h-14 w-auto aspect-auto object-contain"
+              />
+            </div>
             <div>
               <p>Italian School,Sikiru Alade-Oloko</p>
               <p>Crescent, Off Adebayo Doherty Street</p>
@@ -139,7 +151,7 @@ const Footer = () => {
               <TwitterIcon size={18} />
             </a>
             <a
-              href="https://www.instagram.com/ifclekki/"
+              href="https://www.instagram.com/islandallstarssportsclublagos/"
               target="_blank"
               rel="noopener noreferrer"
               className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-all"
