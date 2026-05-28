@@ -81,8 +81,8 @@ const GalleryPage = () => {
                 }}
                 className={`px-5 md:px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 border ${
                   activeTab === tab
-                    ? "bg-[#1469B4] text-white border-[#1469B4] shadow-lg shadow-[#1469B4]/30"
-                    : "bg-white text-gray-600 border-gray-200 hover:border-[#1469B4] hover:text-[#1469B4]"
+                    ? "bg-[#2052DA] text-white border-[#2052DA] shadow-lg shadow-[#2052DA]/30"
+                    : "bg-white text-gray-600 border-gray-200 hover:border-[#2052DA] hover:text-[#2052DA]"
                 }`}
               >
                 {tab === "all"
@@ -139,7 +139,7 @@ const GalleryPage = () => {
                   {/* Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     {item.type === "video" ? (
-                      <div className="w-16 h-16 bg-[#1469B4] rounded-full flex items-center justify-center shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      <div className="w-16 h-16 bg-[#2052DA] rounded-full flex items-center justify-center shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                         <Play className="text-white fill-current w-8 h-8 ml-1" />
                       </div>
                     ) : (
@@ -153,9 +153,9 @@ const GalleryPage = () => {
                   <div className="absolute top-4 left-4 z-10">
                     <div className="bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-sm">
                       {item.type === "video" ? (
-                        <VideoIcon className="w-5 h-5 text-[#1469B4]" />
+                        <VideoIcon className="w-5 h-5 text-[#2052DA]" />
                       ) : (
-                        <ImageIcon className="w-5 h-5 text-[#1469B4]" />
+                        <ImageIcon className="w-5 h-5 text-[#2052DA]" />
                       )}
                     </div>
                   </div>

@@ -47,7 +47,7 @@ const News = () => {
           </div>
           <div className="md:w-2/3 md:text-right">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight uppercase leading-[1.1]">
-              Latest <span className="bg-[#1469B4] px-3 py-1 inline-block transform -skew-x-6">News</span> And Insights <br className="hidden lg:block" /> From The Industry
+              Latest <span className="bg-[#2052DA] px-3 py-1 inline-block transform -skew-x-6">News</span> And Insights <br className="hidden lg:block" /> From The Industry
             </h2>
           </div>
         </div>
@@ -72,7 +72,7 @@ const News = () => {
                 <p className="text-gray-500 text-[10px] font-bold tracking-widest uppercase">
                   {item.category}
                 </p>
-                <h3 className="text-lg font-bold leading-tight uppercase group-hover:text-[#1469B4] transition-colors duration-300 line-clamp-2">
+                <h3 className="text-lg font-bold leading-tight uppercase group-hover:text-[#2052DA] transition-colors duration-300 line-clamp-2">
                   {item.title}
                 </h3>
                 <div className="flex items-center gap-2 text-gray-500 text-[11px] font-medium uppercase">

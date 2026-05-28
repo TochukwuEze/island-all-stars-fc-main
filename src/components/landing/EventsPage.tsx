@@ -139,7 +139,7 @@ export default function EventsPage() {
           <div className="space-y-8">
             {/* VIP Box */}
             <FadeIn direction="left">
-              <div className="bg-gradient-to-br from-[#001429] to-[#1469B4] rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
+              <div className="bg-gradient-to-br from-[#001429] to-[#2052DA] rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
                 <Star className="w-10 h-10 text-yellow-400 mb-6" />
                 <h3 className="text-2xl font-black uppercase mb-3">Host Your Event With Us</h3>
