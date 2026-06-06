@@ -50,6 +50,15 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
       // 2. Check Local Members DB
       const member = findMemberByEmail(normalizedEmail);
       if (member && member.password === password) {
+        if (member.status === "suspended") {
+          setError("Your account has been suspended. Please contact the Club Administrator.");
+          setShouldShake(true);
+          setIsSubmitting(false);
+          setTimeout(() => {
+            setShouldShake(false);
+          }, 500);
+          return;
+        }
         // Exclude password from current user session data
         const { password: _, ...userSession } = member;
         setCurrentUser({ ...userSession, role: "member" });

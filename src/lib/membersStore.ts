@@ -34,6 +34,7 @@ export interface Member {
   stats: MemberStats;
   activity: MemberActivity[];
   messages: MemberMessage[];
+  status?: "active" | "suspended";
 }
 
 const DEFAULT_MEMBERS: Member[] = [
@@ -86,6 +87,7 @@ const DEFAULT_MEMBERS: Member[] = [
         read: false,
       },
     ],
+    status: "active",
   },
   {
     name: "John Doe",
@@ -116,6 +118,7 @@ const DEFAULT_MEMBERS: Member[] = [
         read: false,
       },
     ],
+    status: "active",
   },
 ];
 

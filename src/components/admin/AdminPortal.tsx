@@ -109,7 +109,8 @@ export default function AdminPortal() {
           time: "Just now",
           read: false
         }
-      ]
+      ],
+      status: "active"
     };
 
     const added = addMember(newMember);
@@ -183,6 +184,24 @@ export default function AdminPortal() {
       saveMembers(filtered);
       refreshMembers();
       showToast("success", "Member successfully deleted.");
+    }
+  };
+
+  const handleToggleSuspend = (email: string, currentStatus?: "active" | "suspended") => {
+    const newStatus = currentStatus === "suspended" ? "active" : "suspended";
+    const statusText = newStatus === "suspended" ? "suspended" : "reactivated";
+    
+    const currentMembers = getMembers();
+    const target = currentMembers.find(m => m.email.toLowerCase() === email.toLowerCase());
+    if (target) {
+      target.status = newStatus;
+      target.activity = [
+        { type: "system", label: `Account ${statusText} by Admin`, time: "Just now" },
+        ...target.activity
+      ];
+      saveMembers(currentMembers);
+      refreshMembers();
+      showToast("success", `Successfully ${statusText} account for ${target.name}`);
     }
   };
 
@@ -559,24 +578,43 @@ export default function AdminPortal() {
                               {m.number}
                             </td>
                             <td className="px-6 py-4">
-                              <span className={`px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider ${
-                                m.membershipType.toLowerCase() === "premium" 
-                                  ? "bg-blue-50 text-blue-600 border border-blue-100" 
-                                  : "bg-gray-50 text-gray-600 border border-gray-200"
-                              }`}>
-                                {m.membershipType}
-                              </span>
+                              <div className="flex flex-col gap-1 items-start">
+                                <span className={`px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider ${
+                                  m.membershipType.toLowerCase() === "premium" 
+                                    ? "bg-blue-50 text-blue-600 border border-blue-100" 
+                                    : "bg-gray-50 text-gray-600 border border-gray-200"
+                                }`}>
+                                  {m.membershipType}
+                                </span>
+                                {m.status === "suspended" && (
+                                  <span className="px-2 py-0.5 rounded-full text-[8px] font-bold uppercase bg-red-55 text-red-600 border border-red-100">
+                                    Suspended
+                                  </span>
+                                )}
+                              </div>
                             </td>
                             <td className="px-6 py-4 text-gray-500 font-semibold">
                               {m.joined}
                             </td>
                             <td className="px-6 py-4 text-center">
-                              <button 
-                                onClick={() => handleDeleteMember(m.email)}
-                                className="text-red-500 hover:text-red-700 font-bold px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors cursor-pointer"
-                              >
-                                Delete
-                              </button>
+                              <div className="flex justify-center gap-2">
+                                <button 
+                                  onClick={() => handleToggleSuspend(m.email, m.status)}
+                                  className={`font-bold px-2.5 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                                    m.status === "suspended"
+                                      ? "text-green-600 hover:bg-green-50"
+                                      : "text-amber-600 hover:bg-amber-50"
+                                  }`}
+                                >
+                                  {m.status === "suspended" ? "Unsuspend" : "Suspend"}
+                                </button>
+                                <button 
+                                  onClick={() => handleDeleteMember(m.email)}
+                                  className="text-red-500 hover:text-red-750 font-bold px-2.5 py-1.5 rounded-lg hover:bg-red-50 transition-colors cursor-pointer text-xs"
+                                >
+                                  Delete
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         ))}
