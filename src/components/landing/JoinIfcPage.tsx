@@ -1,55 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { User, Mail, Phone, Calendar, Shield, Trophy, Users, CheckCircle2, ArrowRight } from "lucide-react";
+import { Shield, Trophy, Users, AlertTriangle, ArrowRight, Mail, Phone, MapPin } from "lucide-react";
 import FadeIn from "@/components/ui/FadeIn";
 
 export default function JoinIfcPage() {
-  const [formStep, setFormStep] = useState(1);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (formStep === 1) {
-      setFormStep(2);
-      return;
-    }
-    
-    setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-    }, 1500);
-  };
-
-  if (isSuccess) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center p-4">
-        <FadeIn className="max-w-md w-full text-center">
-          <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8 animate-bounce">
-            <CheckCircle2 className="w-12 h-12 text-green-600" />
-          </div>
-          <h2 className="text-3xl font-black text-[#001429] uppercase mb-4">Registration Successful!</h2>
-          <p className="text-gray-500 mb-10 leading-relaxed">
-            Welcome to the Island Football Club family. Your membership application has been received. Please check your email for the next steps.
-          </p>
-          <button 
-            onClick={() => window.location.href = "/member-portal"}
-            className="w-full py-4 bg-primaryColor text-white font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20"
-          >
-            Go to Portal
-          </button>
-        </FadeIn>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-white">
       {/* Left Side: Branding/Info */}
       <FadeIn direction="right" className="hidden lg:flex lg:w-1/2 bg-[#001429] relative overflow-hidden flex-col justify-center p-20 text-white">
         <div className="absolute inset-0 opacity-20">
@@ -96,136 +55,63 @@ export default function JoinIfcPage() {
         </div>
       </FadeIn>
 
-      {/* Right Side: Form */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center p-6 sm:p-12 md:p-20 bg-white overflow-y-auto">
+      {/* Right Side: Informational Message */}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center p-6 sm:p-12 md:p-20 bg-white">
         <FadeIn direction="left" className="max-w-md w-full mx-auto">
-          <div className="mb-10">
-            <h2 className="text-3xl font-black text-[#001429] uppercase mb-2">Create Account</h2>
-            <p className="text-gray-400">Step {formStep} of 2: {formStep === 1 ? "Personal Details" : "Membership Preferences"}</p>
+          {/* Restriction Alert Icon */}
+          <div className="w-16 h-16 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex items-center justify-center mb-6">
+            <AlertTriangle className="w-8 h-8 text-amber-500" />
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {formStep === 1 ? (
-              <div className="space-y-4">
-                {/* Name */}
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Full Name</label>
-                  <div className="relative">
-                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    <input 
-                      required
-                      type="text"
-                      placeholder="e.g. John Doe"
-                      className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-sm font-semibold text-[#001429]"
-                    />
-                  </div>
-                </div>
+          <div className="mb-8">
+            <h2 className="text-3xl font-black text-[#001429] uppercase mb-3">Registration Restricted</h2>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              Self-registration is currently disabled for Island Football Club. To maintain the exclusivity of our network, accounts are strictly managed and created by the Club Secretariat.
+            </p>
+          </div>
 
-                {/* Email */}
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
-                  <div className="relative">
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    <input 
-                      required
-                      type="email"
-                      placeholder="john@example.com"
-                      className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-sm font-semibold text-[#001429]"
-                    />
-                  </div>
-                </div>
+          {/* Action Card */}
+          <div className="bg-gray-50 border border-gray-100 rounded-2xl p-6 mb-8 space-y-4">
+            <h3 className="font-bold uppercase text-xs tracking-wider text-[#001429]">How to Join IFC</h3>
+            <p className="text-xs text-gray-500 leading-relaxed">
+              If you have applied for membership and your application has been approved, your account details will be sent to your email. If you need a new account, please contact the Club Administrator.
+            </p>
 
-                {/* Phone & DOB Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Phone Number</label>
-                    <div className="relative">
-                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                      <input 
-                        required
-                        type="tel"
-                        placeholder="+234..."
-                        className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-sm font-semibold text-[#001429]"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Date of Birth</label>
-                    <div className="relative">
-                      <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                      <input 
-                        required
-                        type="date"
-                        className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-sm font-semibold text-[#001429]"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <button 
-                  type="button"
-                  onClick={() => setFormStep(2)}
-                  className="w-full py-4 bg-[#001429] text-white font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-primaryColor transition-all shadow-lg"
-                >
-                  Continue
-                </button>
+            {/* Club contact information */}
+            <div className="pt-2 space-y-2.5 text-xs text-gray-600 font-semibold border-t border-gray-200/50">
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-primaryColor" />
+                <span>info@islandfc.com.ng</span>
               </div>
-            ) : (
-              <div className="space-y-4">
-                {/* Tier Selection */}
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Select Membership Tier</label>
-                  <select className="w-full px-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-sm font-semibold text-[#001429] appearance-none">
-                    <option>Basic Member</option>
-                    <option>Premium Member</option>
-                    <option>Platinum Member</option>
-                    <option>Youth Academy Player</option>
-                  </select>
-                </div>
-
-                {/* Interest Category */}
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Primary Interest</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {["Playing", "Supporting", "Networking", "Academy"].map((cat) => (
-                      <button 
-                        key={cat}
-                        type="button"
-                        className="py-3 px-4 rounded-xl border border-gray-100 text-xs font-bold text-gray-500 hover:border-primaryColor hover:text-primaryColor transition-all"
-                      >
-                        {cat}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex gap-4 pt-4">
-                  <button 
-                    type="button"
-                    onClick={() => setFormStep(1)}
-                    className="flex-1 py-4 bg-gray-100 text-[#001429] font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-gray-200 transition-all"
-                  >
-                    Back
-                  </button>
-                  <button 
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="flex-[2] py-4 bg-primaryColor text-white font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-70 flex items-center justify-center gap-2"
-                  >
-                    {isSubmitting ? (
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    ) : (
-                      "Complete Registration"
-                    )}
-                  </button>
-                </div>
+              <div className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-primaryColor" />
+                <span>+234 803 325 3625</span>
               </div>
-            )}
-          </form>
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-primaryColor" />
+                <span>Lekki, Lagos, Nigeria</span>
+              </div>
+            </div>
+          </div>
 
-          <p className="mt-10 text-center text-xs text-gray-400 font-medium">
-            Already have an account? <Link href="/login" className="text-primaryColor font-bold hover:underline">Sign In</Link>
-          </p>
+          {/* Action buttons */}
+          <div className="space-y-4">
+            <Link href="/member-portal" className="block w-full">
+              <button 
+                className="w-full py-4 bg-primaryColor text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/15 flex items-center justify-center gap-2 group cursor-pointer"
+              >
+                <span>Go to Portal Login</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
+
+            <p className="text-center text-xs text-gray-400 font-semibold">
+              Already have credentials?{" "}
+              <Link href="/member-portal" className="text-primaryColor font-bold hover:underline">
+                Sign In
+              </Link>
+            </p>
+          </div>
         </FadeIn>
       </div>
     </div>
