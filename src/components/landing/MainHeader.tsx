@@ -11,7 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import logo from "../../../public/images/logos/iasf-logo.webp";
 
@@ -44,7 +44,41 @@ export function MainHeader() {
   const [isEventsOpen, setIsEventsOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const pathname = usePathname();
-  const isLoggedIn = pathname.startsWith("/member-portal");
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const stored = localStorage.getItem("ifc_current_user");
+      if (stored) {
+        try {
+          setCurrentUser(JSON.parse(stored));
+        } catch (e) {
+          setCurrentUser(null);
+        }
+      } else {
+        setCurrentUser(null);
+      }
+    };
+    checkAuth();
+    window.addEventListener("auth-change", checkAuth);
+    window.addEventListener("storage", checkAuth);
+    return () => {
+      window.removeEventListener("auth-change", checkAuth);
+      window.removeEventListener("storage", checkAuth);
+    };
+  }, []);
+
+  const isLoggedIn = !!currentUser;
+
+  const getUserInitials = (name: string) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase();
+  };
 
   return (
     <header className="w-full bg-white py-3 px-6 flex justify-between items-center sticky top-0 z-50 shadow-sm">
@@ -61,14 +95,16 @@ export function MainHeader() {
 
       {/* Desktop Buttons / Profile */}
       <div className="hidden lg:flex items-center gap-3 mr-4">
-        {isLoggedIn ? (
+        {isLoggedIn && currentUser ? (
           <Link href="/member-portal" className="flex items-center gap-3 group">
             <div className="flex flex-col items-end">
-              <span className="text-sm font-bold text-[#001429]">Emeka Okafor</span>
-              <span className="text-[10px] font-bold text-primaryColor uppercase tracking-widest">Premium Member</span>
+              <span className="text-sm font-bold text-[#001429]">{currentUser.name}</span>
+              <span className="text-[10px] font-bold text-primaryColor uppercase tracking-widest">
+                {currentUser.membershipType === "Club Admin" ? "Admin" : `${currentUser.membershipType} Member`}
+              </span>
             </div>
             <div className="w-11 h-11 rounded-full bg-gradient-to-br from-primaryColor to-[#001429] flex items-center justify-center text-white font-black text-sm border-2 border-white shadow-sm group-hover:scale-105 transition-transform">
-              EO
+              {getUserInitials(currentUser.name)}
             </div>
           </Link>
         ) : (
@@ -198,16 +234,18 @@ export function MainHeader() {
               </nav>
 
               <div className="flex flex-col gap-3 mt-6">
-                {isLoggedIn ? (
-                  <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                {isLoggedIn && currentUser ? (
+                  <Link href="/member-portal" className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primaryColor to-[#001429] flex items-center justify-center text-white font-black text-lg">
-                      EO
+                      {getUserInitials(currentUser.name)}
                     </div>
                     <div>
-                      <p className="font-bold text-[#001429]">Emeka Okafor</p>
-                      <p className="text-xs text-gray-400 font-semibold uppercase tracking-widest">Premium Member</p>
+                      <p className="font-bold text-[#001429]">{currentUser.name}</p>
+                      <p className="text-xs text-gray-400 font-semibold uppercase tracking-widest">
+                        {currentUser.membershipType === "Club Admin" ? "Admin" : `${currentUser.membershipType} Member`}
+                      </p>
                     </div>
-                  </div>
+                  </Link>
                 ) : (
                   <>
                     <Link href="/membership">

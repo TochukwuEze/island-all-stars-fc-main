@@ -1,55 +1,47 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Breadcrumb from "@/components/landing/Breadcrumb";
 import Link from "next/link";
 import { constitutionSections } from "@/data/constitution";
+import LoginPage from "@/components/auth/LoginPage";
+import AdminPortal from "@/components/admin/AdminPortal";
+import { 
+  getCurrentUser, 
+  clearCurrentUser, 
+  findMemberByEmail, 
+  updateMemberProfile, 
+  Member 
+} from "@/lib/membersStore";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
 type Tab = "dashboard" | "profile" | "matches" | "membership" | "messages" | "constitution";
 
-// ── Mock Data ──────────────────────────────────────────────────────────────
-
-const member = {
-  name: "Emeka Okafor",
-  role: "Senior Player",
-  number: "#14",
-  position: "Midfielder",
-  joined: "January 2023",
-  membershipType: "Premium",
-  membershipExpiry: "December 2025",
-  avatar: null,
-  stats: {
-    matches: 32,
-    goals: 7,
-    assists: 11,
-    rating: 7.8,
-  },
-};
+// ── Mock Data Fallbacks ─────────────────────────────────────────────────────
 
 const upcomingMatches = [
   {
-    date: "May 18, 2026",
+    date: "June 18, 2026",
     opponent: "Lagos United FC",
     venue: "Home",
     time: "4:00 PM",
   },
   {
-    date: "May 25, 2026",
+    date: "June 25, 2026",
     opponent: "Victoria Island Stars",
     venue: "Away",
     time: "3:30 PM",
   },
   {
-    date: "Jun 1, 2026",
+    date: "July 1, 2026",
     opponent: "Lekki Rovers",
     venue: "Home",
     time: "5:00 PM",
   },
 ];
 
-const recentActivity = [
+const recentActivityFallback = [
   { type: "match", label: "Match vs Apapa FC — Won 3-1", time: "2 days ago" },
   {
     type: "training",
@@ -60,38 +52,6 @@ const recentActivity = [
     type: "payment",
     label: "Membership Renewed — ₦50,000",
     time: "1 week ago",
-  },
-  {
-    type: "match",
-    label: "Match vs Bar Beach Boys — Draw 1-1",
-    time: "2 weeks ago",
-  },
-];
-
-const messages = [
-  {
-    from: "Coach Tunde",
-    subject: "Training update for next week",
-    time: "2h ago",
-    read: false,
-  },
-  {
-    from: "Club Admin",
-    subject: "Membership renewal confirmation",
-    time: "1d ago",
-    read: true,
-  },
-  {
-    from: "Coach Tunde",
-    subject: "Team selection for Saturday",
-    time: "3d ago",
-    read: true,
-  },
-  {
-    from: "IFC Events",
-    subject: "Annual Club Gala — RSVP Required",
-    time: "5d ago",
-    read: false,
   },
 ];
 
@@ -158,7 +118,11 @@ function StatCard({
 
 // ── Dashboard Tab ──────────────────────────────────────────────────────────
 
-function DashboardTab() {
+function DashboardTab({ member }: { member: Member }) {
+  const activityList = member.activity && member.activity.length > 0 
+    ? member.activity 
+    : recentActivityFallback;
+
   return (
     <div className="flex flex-col gap-8">
       {/* Welcome Banner */}
@@ -194,22 +158,22 @@ function DashboardTab() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard
             label="Matches"
-            value={member.stats.matches}
+            value={member.stats?.matches ?? 0}
             sub="This season"
           />
           <StatCard
             label="Goals"
-            value={member.stats.goals}
+            value={member.stats?.goals ?? 0}
             sub="All competitions"
           />
           <StatCard
             label="Assists"
-            value={member.stats.assists}
+            value={member.stats?.assists ?? 0}
             sub="All competitions"
           />
           <StatCard
             label="Avg Rating"
-            value={member.stats.rating}
+            value={member.stats?.rating ?? 6.0}
             sub="Out of 10"
           />
         </div>
@@ -265,7 +229,7 @@ function DashboardTab() {
           Recent Activity
         </p>
         <div className="bg-white border border-gray-100 rounded-md divide-y divide-gray-50 shadow-sm">
-          {recentActivity.map((a, i) => (
+          {activityList.map((a, i) => (
             <div key={i} className="flex items-center gap-4 px-5 py-4">
               <div
                 className={`w-2 h-2 rounded-full flex-shrink-0 ${a.type === "match" ? "bg-primaryColor" : a.type === "training" ? "bg-green-400" : "bg-amber-400"}`}
@@ -282,16 +246,32 @@ function DashboardTab() {
 
 // ── Profile Tab ────────────────────────────────────────────────────────────
 
-function ProfileTab() {
+function ProfileTab({ member, onUpdate }: { member: Member; onUpdate: () => void }) {
   const [editing, setEditing] = useState(false);
+  const [name, setName] = useState(member.name);
+  const [position, setPosition] = useState(member.position);
+  const [number, setNumber] = useState(member.number);
+  const [role, setRole] = useState(member.role);
+
+  const handleSave = () => {
+    updateMemberProfile(member.email, {
+      name: name.trim(),
+      position,
+      number,
+      role
+    });
+    setEditing(false);
+    onUpdate();
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <div className="bg-white border border-gray-100 rounded-md p-8 shadow-sm">
         <div className="flex items-center gap-6 mb-8">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primaryColor to-[#001429] flex items-center justify-center text-white text-3xl font-black">
+          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primaryColor to-[#001429] flex items-center justify-center text-white text-3xl font-black uppercase">
             {member.name
               .split(" ")
-              .map((n) => n[0])
+              .map((n: string) => n[0])
               .join("")}
           </div>
           <div>
@@ -306,42 +286,82 @@ function ProfileTab() {
             </p>
           </div>
           <button
-            onClick={() => setEditing((e) => !e)}
-            className="ml-auto px-5 py-2.5 border border-primaryColor text-primaryColor text-xs font-bold uppercase tracking-widest rounded-md hover:bg-primaryColor hover:text-white transition-all"
+            onClick={() => {
+              if (editing) {
+                setName(member.name);
+                setPosition(member.position);
+                setNumber(member.number);
+                setRole(member.role);
+              }
+              setEditing((e) => !e);
+            }}
+            className="ml-auto px-5 py-2.5 border border-primaryColor text-primaryColor text-xs font-bold uppercase tracking-widest rounded-md hover:bg-primaryColor hover:text-white transition-all cursor-pointer"
           >
             {editing ? "Cancel" : "Edit Profile"}
           </button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          {[
-            { label: "Full Name", value: member.name },
-            { label: "Position", value: member.position },
-            { label: "Jersey Number", value: member.number },
-            { label: "Role", value: member.role },
-            { label: "Email", value: "emeka.okafor@email.com" },
-            { label: "Phone", value: "+234 812 345 6789" },
-          ].map(({ label, value }) => (
-            <div key={label} className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold uppercase tracking-widest text-gray-400">
-                {label}
-              </label>
-              {editing ? (
-                <input
-                  defaultValue={value}
-                  className="border border-gray-200 rounded-md px-4 py-2.5 text-sm text-gray-800 outline-none focus:ring-2 focus:ring-primaryColor/30 focus:border-primaryColor transition-all"
-                />
-              ) : (
-                <p className="text-sm font-semibold text-[#001429] bg-gray-50 px-4 py-2.5 rounded-md">
-                  {value}
-                </p>
-              )}
-            </div>
-          ))}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Full Name</label>
+            {editing ? (
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="border border-gray-200 rounded-md px-4 py-2.5 text-sm text-gray-800 outline-none focus:ring-2 focus:ring-primaryColor/30 focus:border-primaryColor transition-all"
+              />
+            ) : (
+              <p className="text-sm font-semibold text-[#001429] bg-gray-50 px-4 py-2.5 rounded-md">{member.name}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Position</label>
+            {editing ? (
+              <input
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
+                className="border border-gray-200 rounded-md px-4 py-2.5 text-sm text-gray-800 outline-none focus:ring-2 focus:ring-primaryColor/30 focus:border-primaryColor transition-all"
+              />
+            ) : (
+              <p className="text-sm font-semibold text-[#001429] bg-gray-50 px-4 py-2.5 rounded-md">{member.position}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Jersey Number</label>
+            {editing ? (
+              <input
+                value={number}
+                onChange={(e) => setNumber(e.target.value)}
+                className="border border-gray-200 rounded-md px-4 py-2.5 text-sm text-gray-800 outline-none focus:ring-2 focus:ring-primaryColor/30 focus:border-primaryColor transition-all"
+              />
+            ) : (
+              <p className="text-sm font-semibold text-[#001429] bg-gray-50 px-4 py-2.5 rounded-md">{member.number}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Role</label>
+            {editing ? (
+              <input
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="border border-gray-200 rounded-md px-4 py-2.5 text-sm text-gray-800 outline-none focus:ring-2 focus:ring-primaryColor/30 focus:border-primaryColor transition-all"
+              />
+            ) : (
+              <p className="text-sm font-semibold text-[#001429] bg-gray-50 px-4 py-2.5 rounded-md">{member.role}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Email Address</label>
+            <p className="text-sm font-semibold text-[#001429] bg-gray-100 px-4 py-2.5 rounded-md opacity-80">{member.email}</p>
+          </div>
         </div>
         {editing && (
           <button
-            onClick={() => setEditing(false)}
-            className="mt-6 px-8 py-3 bg-primaryColor text-white font-bold uppercase tracking-widest text-xs rounded-md hover:bg-[#0f55a0] transition-colors"
+            onClick={handleSave}
+            className="mt-6 px-8 py-3 bg-primaryColor text-white font-bold uppercase tracking-widest text-xs rounded-md hover:bg-[#0f55a0] transition-colors cursor-pointer"
           >
             Save Changes
           </button>
@@ -353,7 +373,7 @@ function ProfileTab() {
 
 // ── Matches Tab ────────────────────────────────────────────────────────────
 
-function MatchesTab() {
+function MatchesTab({ member }: { member: Member }) {
   const history = [
     {
       date: "May 3, 2026",
@@ -394,7 +414,7 @@ function MatchesTab() {
       <div className="bg-white border border-gray-100 rounded-md overflow-hidden shadow-sm">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-gray-50 border-b border-gray-100">
+            <tr className="bg-gray-55 border-b border-gray-100">
               <th className="text-left px-5 py-4 text-xs font-bold uppercase tracking-widest text-gray-400">
                 Date
               </th>
@@ -411,7 +431,7 @@ function MatchesTab() {
           </thead>
           <tbody className="divide-y divide-gray-50">
             {history.map((m, i) => (
-              <tr key={i} className="hover:bg-gray-50/60 transition-colors">
+              <tr key={i} className="hover:bg-gray-55/60 transition-colors">
                 <td className="px-5 py-4 text-gray-500">{m.date}</td>
                 <td className="px-5 py-4 font-semibold text-[#001429]">
                   {m.opponent}
@@ -469,7 +489,7 @@ function MatchesTab() {
 
 // ── Membership Tab ─────────────────────────────────────────────────────────
 
-function MembershipTab() {
+function MembershipTab({ member }: { member: Member }) {
   return (
     <div className="flex flex-col gap-6">
       <div className="relative bg-gradient-to-r from-[#001429] to-[#2052DA] rounded-md p-8 text-white overflow-hidden">
@@ -538,21 +558,15 @@ function MembershipTab() {
         <div className="flex flex-col divide-y divide-gray-50">
           {[
             {
-              desc: "Premium Renewal – 2025/2026",
-              amount: "₦50,000",
+              desc: `${member.membershipType} Renewal – 2025/2026`,
+              amount: member.membershipType.toLowerCase() === "premium" ? "₦50,000" : "₦10,000",
               date: "Jan 10, 2026",
               status: "Paid",
             },
             {
-              desc: "Premium Renewal – 2024/2025",
-              amount: "₦45,000",
+              desc: `${member.membershipType} Renewal – 2024/2025`,
+              amount: member.membershipType.toLowerCase() === "premium" ? "₦45,000" : "₦10,000",
               date: "Jan 8, 2025",
-              status: "Paid",
-            },
-            {
-              desc: "Registration Fee",
-              amount: "₦10,000",
-              date: "Jan 5, 2023",
               status: "Paid",
             },
           ].map((p, i) => (
@@ -577,15 +591,17 @@ function MembershipTab() {
 
 // ── Messages Tab ───────────────────────────────────────────────────────────
 
-function MessagesTab() {
+function MessagesTab({ member }: { member: Member }) {
   const [selected, setSelected] = useState<number | null>(null);
+  const messageList = member.messages || [];
+
   return (
     <div className="flex flex-col gap-4">
       <p className="text-xs font-bold uppercase tracking-widest text-primaryColor">
         Inbox
       </p>
       <div className="bg-white border border-gray-100 rounded-md overflow-hidden shadow-sm divide-y divide-gray-50">
-        {messages.map((msg, i) => (
+        {messageList.map((msg, i) => (
           <button
             key={i}
             onClick={() => setSelected(selected === i ? null : i)}
@@ -620,12 +636,19 @@ function MessagesTab() {
             </div>
           </button>
         ))}
+
+        {messageList.length === 0 && (
+          <p className="text-center text-xs text-zinc-400 py-10 bg-white">
+            Your inbox is currently empty.
+          </p>
+        )}
       </div>
     </div>
   );
 }
 
 // ── Constitution Tab ────────────────────────────────────────────────────────
+
 function ConstitutionTab() {
   return (
     <div className="flex flex-col gap-6">
@@ -653,7 +676,7 @@ function ConstitutionTab() {
                 <span className="w-1 h-6 bg-primaryColor rounded-full" />
                 {section.title}
               </h3>
-              <p className="text-gray-500 leading-relaxed pl-4">
+              <p className="text-gray-505 leading-relaxed pl-4">
                 {section.content}
               </p>
             </div>
@@ -673,10 +696,60 @@ function ConstitutionTab() {
 // ── Main Component ─────────────────────────────────────────────────────────
 
 export default function MemberPortalPage() {
+  const [mounted, setMounted] = useState(false);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<Tab>("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const unreadMessages = messages.filter((m) => !m.read).length;
+  useEffect(() => {
+    setMounted(true);
+    const checkAuth = () => {
+      const user = getCurrentUser();
+      setCurrentUser(user);
+    };
+    checkAuth();
+    window.addEventListener("auth-change", checkAuth);
+    return () => {
+      window.removeEventListener("auth-change", checkAuth);
+    };
+  }, []);
+
+  // Force loading spinner until client-side hydration completes
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-[#f7f9fc] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-primaryColor border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  // 1. Unauthenticated -> Show login page
+  if (!currentUser) {
+    return <LoginPage onLoginSuccess={setCurrentUser} />;
+  }
+
+  // 2. Admin -> Show admin portal component
+  if (currentUser.role === "admin") {
+    return <AdminPortal />;
+  }
+
+  // 3. Member -> Show member dashboard with dynamic data
+  const memberData = findMemberByEmail(currentUser.email) || {
+    name: currentUser.name,
+    email: currentUser.email,
+    role: currentUser.role || "Member",
+    number: currentUser.number || "#-",
+    position: currentUser.position || "Player",
+    joined: currentUser.joined || "N/A",
+    membershipType: currentUser.membershipType || "Basic",
+    membershipExpiry: currentUser.membershipExpiry || "N/A",
+    avatar: null,
+    stats: { matches: 0, goals: 0, assists: 0, rating: 6.0 },
+    activity: [],
+    messages: []
+  };
+
+  const unreadMessages = (memberData.messages || []).filter((m) => !m.read).length;
 
   const navItems: {
     id: Tab;
@@ -793,12 +866,17 @@ export default function MemberPortalPage() {
     },
   ];
 
+  const handleProfileUpdate = () => {
+    // Simply forces component update to pull newly modified localStorage state
+    setCurrentUser(getCurrentUser());
+  };
+
   const tabContent: Record<Tab, React.ReactNode> = {
-    dashboard: <DashboardTab />,
-    profile: <ProfileTab />,
-    matches: <MatchesTab />,
-    membership: <MembershipTab />,
-    messages: <MessagesTab />,
+    dashboard: <DashboardTab member={memberData} />,
+    profile: <ProfileTab member={memberData} onUpdate={handleProfileUpdate} />,
+    matches: <MatchesTab member={memberData} />,
+    membership: <MembershipTab member={memberData} />,
+    messages: <MessagesTab member={memberData} />,
     constitution: <ConstitutionTab />,
   };
 
@@ -813,24 +891,24 @@ export default function MemberPortalPage() {
             {/* Member card */}
             <div className="bg-white border border-gray-100 rounded-md p-5 shadow-sm mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primaryColor to-[#001429] flex items-center justify-center text-white font-black text-lg">
-                  {member.name
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primaryColor to-[#001429] flex items-center justify-center text-white font-black text-lg uppercase">
+                  {memberData.name
                     .split(" ")
-                    .map((n) => n[0])
+                    .map((n: string) => n[0])
                     .join("")}
                 </div>
                 <div className="min-w-0">
                   <p className="font-bold text-[#001429] text-sm truncate">
-                    {member.name}
+                    {memberData.name}
                   </p>
                   <p className="text-xs text-gray-400 truncate">
-                    {member.role}
+                    {memberData.role}
                   </p>
                 </div>
               </div>
               <div className="mt-3 pt-3 border-t border-gray-50 flex items-center justify-between">
                 <span className="text-xs font-bold text-primaryColor uppercase tracking-wide">
-                  {member.membershipType}
+                  {memberData.membershipType}
                 </span>
                 <span
                   className="w-2 h-2 rounded-full bg-green-400 inline-block"
@@ -851,9 +929,9 @@ export default function MemberPortalPage() {
             ))}
 
             <div className="mt-4 pt-4 border-t border-gray-200">
-              <Link
-                href="/contact"
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-md text-sm font-semibold text-gray-400 hover:bg-gray-50 hover:text-red-500 transition-all"
+              <button
+                onClick={clearCurrentUser}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-md text-sm font-semibold text-gray-400 hover:bg-gray-50 hover:text-red-500 transition-all cursor-pointer text-left"
               >
                 <svg
                   width={18}
@@ -868,7 +946,7 @@ export default function MemberPortalPage() {
                   <line x1="21" y1="12" x2="9" y2="12" />
                 </svg>
                 Sign Out
-              </Link>
+              </button>
             </div>
           </aside>
 
@@ -892,7 +970,7 @@ export default function MemberPortalPage() {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="2.5"
                 className={`text-gray-400 transition-transform duration-200 ${sidebarOpen ? "rotate-180" : ""}`}
               >
                 <path d="M6 9l6 6 6-6" />
@@ -934,9 +1012,9 @@ export default function MemberPortalPage() {
                   </button>
                 ))}
                 <div className="bg-gray-50 p-2">
-                  <Link
-                    href="/contact"
-                    className="w-full flex items-center gap-3 px-4 py-3 rounded-md text-sm font-semibold text-gray-500 hover:bg-white hover:text-red-500 transition-all shadow-sm border border-transparent hover:border-gray-200"
+                  <button
+                    onClick={clearCurrentUser}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-md text-sm font-semibold text-gray-500 hover:bg-white hover:text-red-500 transition-all shadow-sm border border-transparent hover:border-gray-200 cursor-pointer text-left justify-center"
                   >
                     <svg
                       width={18}
@@ -951,7 +1029,7 @@ export default function MemberPortalPage() {
                       <line x1="21" y1="12" x2="9" y2="12" />
                     </svg>
                     SIGN OUT
-                  </Link>
+                  </button>
                 </div>
               </div>
             )}
