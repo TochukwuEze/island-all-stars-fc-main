@@ -632,16 +632,14 @@ export default function AdminPortal() {
                             <td className="px-6 py-4 text-center">
                               <div className="flex justify-center gap-2">
                                 <AlertDialog>
-                                  <AlertDialogTrigger asChild>
-                                    <button 
-                                      className={`font-bold px-2.5 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                                        m.status === "suspended"
-                                          ? "text-green-600 hover:bg-green-50"
-                                          : "text-amber-600 hover:bg-amber-50"
-                                      }`}
-                                    >
-                                      {m.status === "suspended" ? "Unsuspend" : "Suspend"}
-                                    </button>
+                                  <AlertDialogTrigger
+                                    className={`font-bold px-2.5 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                                      m.status === "suspended"
+                                        ? "text-green-600 hover:bg-green-50"
+                                        : "text-amber-600 hover:bg-amber-50"
+                                    }`}
+                                  >
+                                    {m.status === "suspended" ? "Unsuspend" : "Suspend"}
                                   </AlertDialogTrigger>
                                   <AlertDialogContent className="bg-white border-gray-100 rounded-xl">
                                     <AlertDialogHeader>
@@ -660,12 +658,10 @@ export default function AdminPortal() {
                                 </AlertDialog>
 
                                 <AlertDialog>
-                                  <AlertDialogTrigger asChild>
-                                    <button 
-                                      className="text-red-500 hover:text-red-750 font-bold px-2.5 py-1.5 rounded-lg hover:bg-red-50 transition-colors cursor-pointer text-xs"
-                                    >
-                                      Delete
-                                    </button>
+                                  <AlertDialogTrigger
+                                    className="text-red-500 hover:text-red-750 font-bold px-2.5 py-1.5 rounded-lg hover:bg-red-50 transition-colors cursor-pointer text-xs"
+                                  >
+                                    Delete
                                   </AlertDialogTrigger>
                                   <AlertDialogContent className="bg-white border-gray-100 rounded-xl">
                                     <AlertDialogHeader>
