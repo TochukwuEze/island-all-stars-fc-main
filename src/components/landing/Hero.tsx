@@ -1,25 +1,28 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import MemberImage5 from "../../../public/images/members/memberImage5.webp";
+import MemberImage6 from "../../../public/images/members/memberImage6.webp";
+import MemberImage7 from "../../../public/images/members/memberImage7.webp";
 
 const slides = [
   {
-    image: "/images/hero-bg.webp",
-    title1: "Get Empowered With",
-    title2: "Your Football Skills",
-    tags: ["Learn", "Accelerate", "Scale"],
+    image: MemberImage7,
+    title1: "Together We Do",
+    title2: "Great Things",
+    tags: ["Fun", "Friendship", "Fitness"],
   },
   {
     image: "/images/hero-bg-2.webp",
-    title1: "Professional Academy",
-    title2: "Training Programs",
-    tags: ["Develop", "Compete", "Succeed"],
+    title1: "A Close-Knit",
+    title2: "Family Oriented Club",
+    tags: ["Social", "Family", "Networking"],
   },
   {
     image: "/images/hero-bg-3.webp",
-    title1: "Join Our Elite",
-    title2: "Football Community",
-    tags: ["Connect", "Play", "Grow"],
+    title1: "Vision 2027:",
+    title2: "Top 10 Sports Club",
+    tags: ["Health", "Wealth", "Community"],
   },
 ];
 

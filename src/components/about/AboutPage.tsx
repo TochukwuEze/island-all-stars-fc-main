@@ -10,9 +10,9 @@ const stats = [
   { value: "60%", label: "Win Rate" },
   { value: "35+", label: "Trophies" },
   { value: "8", label: "Champions" },
-  { value: "250+", label: "Members" },
-  { value: "77", label: "Coaches" },
-  { value: "24", label: "Nations" },
+  { value: "400+", label: "Members" },
+  { value: "25", label: "Coaches" },
+  { value: "10", label: "Nations" },
 ];
 
 const teamMembers = [
@@ -30,9 +30,9 @@ const teamMembers = [
 
 const faqs = [
   {
-    question: "How do I join Island Football Club?",
+    question: "How do I join Island Allstars Sports Club?",
     answer:
-      "You can join IFC by completing our online membership form on the Join IFC page. Our team will review your application and get in touch within 48 hours to guide you through the next steps, including a trial session at our Lekki facility.",
+      "You can join Island Allstars Sports Club by completing our online membership form on the Join our club page. Our team will review your application and get in touch within 48 hours to guide you through the next steps, including a trial session at our Lekki facility.",
   },
   {
     question: "What age groups does the academy cater to?",
@@ -40,14 +40,15 @@ const faqs = [
       "Our academy programmes cater to players aged 6 and above, with dedicated streams for Under-8s, Under-10s, Under-12s, Under-16s, and our senior development squad. Each group trains with age-appropriate coaching methodology.",
   },
   {
-    question: "Where are Island FC training facilities located?",
+    question:
+      "Where are Island Allstars Sports Club training facilities located?",
     answer:
-      "Our primary training ground is located at the Italian School, Sikiru Alade-Oloko Crescent, off Adebayo Doherty Street, Lekki, Lagos. We also partner with additional venues across the Island for specialist sessions.",
+      "Our primary training ground is located at the Lagos Business School, Ajah, Lekki, Lagos. We also partner with additional venues across the Island for specialist sessions.",
   },
   {
     question: "Do you offer professional development pathways?",
     answer:
-      "Yes. Island FC actively scouts and develops talent for higher-level football. We have established relationships with clubs and academies regionally and internationally, providing our top performers with exposure and progression opportunities.",
+      "Yes. Island Allstars Sports Club actively scouts and develops talent for higher-level football. We have established relationships with clubs and academies regionally and internationally, providing our top performers with exposure and progression opportunities.",
   },
   {
     question: "How often do teams train per week?",
@@ -64,7 +65,7 @@ function HeroSection() {
       <div className="absolute inset-0">
         <Image
           src="/images/members/memberImage1.webp"
-          alt="Island FC hero"
+          alt="Island Allstars Sports Club hero"
           fill
           priority
           className="object-cover opacity-80"
@@ -89,15 +90,14 @@ function HeroSection() {
           </h1>{" "}
           <p className="text-zinc-300 text-[15px] leading-relaxed max-w-xl mb-8">
             {" "}
-            Island AllStars Sports Club (IASC) is a community of passionate
-            football lovers brought together by friendship, tradition, and a
-            shared love for the beautiful game. What started as a simple Sunday
-            gathering among friends has grown into a respected football
-            community where players of all skill levels come together to
-            compete, connect, and enjoy the spirit of the game. At Island
-            AllStars Sports Club (IASC), football is more than a sport — it is a
-            bond that unites generations through passion, teamwork, and
-            unforgettable moments on the pitch.{" "}
+            ISLAND ALLSTARS SPORTS CLUB has grown from an initial group of five
+            (5) men, playing football in a relatively obscure land setting
+            somewhere in Abraham Adesanya Estate Ajah, to a large group of more
+            than 400 active members. Our members are drawn from across various
+            professions, tribes, and religions, playing football and other
+            sports in a much more organized and urbane fashion within the
+            premises of the prestigious Lagos Business School in Ajah, Lekki,
+            Lagos.{" "}
           </p>{" "}
           <div className="flex items-center gap-4 flex-wrap">
             {" "}
@@ -133,7 +133,7 @@ function HeroSection() {
               <p className="text-[10px] font-black uppercase tracking-widest text-primaryColor mb-1">
                 Founded
               </p>
-              <p className="text-white text-4xl font-black">2012</p>
+              <p className="text-white text-4xl font-black">2008</p>
             </div>
             {/* corner accent */}
             <div className="absolute -top-3 -right-3 w-8 h-8 bg-primaryColor" />
@@ -181,19 +181,18 @@ function MissionSection() {
             Our Mission
           </p>
           <h2 className="text-3xl md:text-4xl font-black uppercase leading-tight tracking-tight text-[#1a1a1a] mb-6">
-            INSPIRED BY THE LOVE OF THE GAME
+            OUR MISSION
           </h2>
           <p className="text-zinc-500 text-[15px] leading-relaxed mb-6">
-            At Island AllStars Sports Club (IASC), we believe football is a
-            transformative force. Our mission is to develop well-rounded
-            athletes who excel on and off the pitch — through world-class
-            coaching, a positive club culture, and a relentless pursuit of
-            excellence.
+            To improve the quality of life for its members through fun,
+            friendship, fitness, wealth creation and connection to our
+            community.
           </p>
           <p className="text-zinc-500 text-[15px] leading-relaxed mb-8">
-            We provide every member — from junior academy players to senior
-            squad athletes — with the resources, mentorship, and competitive
-            exposure they need to reach their full potential.
+            Our Club has gradually progressed from an individualistic entity to
+            a close-knit-family-oriented one, recognizing our African culture
+            that an individual cannot be balanced and complete without his
+            family.
           </p>
           <Link
             href="/join-ifc"
@@ -270,7 +269,7 @@ function StatsSection() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
           <p className="text-primaryColor text-[10px] font-black uppercase tracking-[0.4em] mb-3">
-            Island FC Milestones
+            Island Allstars Milestones
           </p>
           <h2 className="text-white text-2xl md:text-3xl font-black uppercase tracking-tight">
             OUR NUMBERS SPEAK FOR THEMSELVES
@@ -307,12 +306,10 @@ function QuoteSection() {
           &ldquo;
         </div>
         <blockquote className="text-white text-xl md:text-2xl lg:text-3xl font-black uppercase leading-snug tracking-tight mb-8">
-          AT ISLAND ALLSTARS SPORTS CLUB (IASC), WE&apos;RE SHAPING
-          TOMORROW&apos;S FOOTBALL BY NURTURING YOUNG TALENT, INSPIRING PASSION,
-          AND DRIVING EXCELLENCE THROUGH EDUCATION, TEAMWORK, AND INNOVATION.
+          VISION 2027: TO BE AMONG THE TOP 10 SPORTS CLUB IN LAGOS.
         </blockquote>
         <p className="text-primaryColor text-[11px] font-black uppercase tracking-[0.3em] mb-10">
-          — Island Football Club, Lekki Lagos
+          — Island Allstars Sports Club, Lagos
         </p>
         <Link
           href="/join-ifc"
@@ -424,8 +421,8 @@ function FAQSection() {
             FREQUENTLY ASKED QUESTIONS
           </h2>
           <p className="text-zinc-500 text-[15px] leading-relaxed mb-8 max-w-sm">
-            Everything you need to know about joining Island FC, our programmes,
-            and how we develop players at every level.
+            Everything you need to know about joining Island Allstars Sports
+            Club, our programmes, and how we develop players at every level.
           </p>
           <Link
             href="/contact"

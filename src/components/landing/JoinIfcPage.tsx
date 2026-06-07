@@ -116,7 +116,7 @@ export default function JoinIfcPage() {
               Registration Restricted
             </h2>
             <p className="text-gray-500 text-sm leading-relaxed">
-              Self-registration is currently disabled for Island Allstars sports
+              Self-registration is currently disabled for Island Allstars Sports
               Club. To maintain the exclusivity of our network, accounts are
               strictly managed and created by the Club Secretariat.
             </p>

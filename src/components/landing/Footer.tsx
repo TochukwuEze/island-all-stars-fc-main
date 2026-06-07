@@ -127,9 +127,7 @@ const Footer = () => {
               GAME WE LOVE
             </h2>
             <p className="text-[15px] text-gray-400 max-w-lg leading-relaxed">
-              Be part of our growing football community. Follow updates, match
-              highlights, and exclusive club news. Train harder, play smarter,
-              and never miss a moment.
+              ISLAND ALLSTARS SPORTS CLUB is a non-religious, non-tribal and non-ethnic, social and fraternal organisation brought together by our love for sports and knitted as one indivisible family. Together we do great things.
             </p>
           </div>
         </div>
