@@ -81,22 +81,21 @@ const Footer = () => {
               />
             </div>
             <div>
-              <p>Italian School,Sikiru Alade-Oloko</p>
-              <p>Crescent, Off Adebayo Doherty Street</p>
-              <p>Lekki, Lagos</p>
+              <p>Lagos Business School</p>
+              <p>KM 22, Lekki-Epe Expressway, Ajah, Lagos, Nigeria</p>
             </div>
             <div>
               <a
-                href="mailto:info@islandfc.com.ng"
+                href="mailto:islandallstarssc@gmail.com"
                 className="hover:text-primaryColor transition-colors block"
               >
-                info@islandfc.com.ng
+                islandallstarssc@gmail.com
               </a>
               <a
-                href="tel:+2348033253625"
+                href="tel:+2349155172547"
                 className="hover:text-primaryColor transition-colors block mt-1"
               >
-                +2348033253625
+                +2349155172547
               </a>
             </div>
           </div>

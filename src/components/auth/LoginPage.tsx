@@ -51,7 +51,9 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
       const member = findMemberByEmail(normalizedEmail);
       if (member && member.password === password) {
         if (member.status === "suspended") {
-          setError("Your account has been suspended. Please contact the Club Administrator.");
+          setError(
+            "Your account has been suspended. Please contact the Club Administrator.",
+          );
           setShouldShake(true);
           setIsSubmitting(false);
           setTimeout(() => {
@@ -73,7 +75,7 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
       setError("Invalid email or password. Please try again.");
       setShouldShake(true);
       setIsSubmitting(false);
-      
+
       // Reset shake animation
       setTimeout(() => {
         setShouldShake(false);
@@ -84,7 +86,9 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
   return (
     <div className="relative min-h-[85vh] flex items-center justify-center px-4 py-16 bg-[#000a14] overflow-hidden">
       {/* CSS Animations style tag */}
-      <style dangerouslySetInnerHTML={{__html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         @keyframes shake {
           0%, 100% { transform: translateX(0); }
           10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
@@ -96,24 +100,32 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
         .bg-glow-orb {
           filter: blur(120px);
         }
-      `}} />
+      `,
+        }}
+      />
 
       {/* Decorative Premium Glow Background Orbs */}
       <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-primaryColor/20 rounded-full bg-glow-orb -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-600/10 rounded-full bg-glow-orb translate-x-1/2 translate-y-1/2" />
 
       <FadeIn className="max-w-md w-full relative z-10">
-        <div 
+        <div
           className={`backdrop-blur-xl bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8 md:p-10 shadow-2xl transition-transform ${
-            shouldShake ? "animate-shake border-red-500/50 shadow-red-500/5" : ""
+            shouldShake
+              ? "animate-shake border-red-500/50 shadow-red-500/5"
+              : ""
           }`}
         >
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-primaryColor/10 border border-primaryColor/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <span className="text-primaryColor font-black text-2xl tracking-tighter">IFC</span>
+            <div className="w-24 h-16 bg-primaryColor/10 border border-primaryColor/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <span className="text-primaryColor font-black text-2xl tracking-tighter">
+                IASC
+              </span>
             </div>
-            <h2 className="text-2xl font-black tracking-tight text-white uppercase">Member Portal</h2>
+            <h2 className="text-2xl font-black tracking-tight text-white uppercase">
+              Member Portal
+            </h2>
             <p className="text-zinc-400 text-xs mt-1 uppercase tracking-widest font-semibold">
               Sign In to your Account
             </p>
@@ -157,7 +169,9 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
                     href="#forgot"
                     onClick={(e) => {
                       e.preventDefault();
-                      alert("Please contact the Club Secretariat to reset your password.");
+                      alert(
+                        "Please contact the Club Secretariat to reset your password.",
+                      );
                     }}
                     className="text-[10px] font-bold text-primaryColor hover:underline uppercase tracking-wider"
                   >
@@ -179,7 +193,11 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center text-zinc-500 hover:text-white"
                   >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {showPassword ? (
+                      <EyeOff className="w-4 h-4" />
+                    ) : (
+                      <Eye className="w-4 h-4" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -203,12 +221,14 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
           </form>
 
           <p className="mt-8 text-center text-xs text-zinc-500 font-medium">
-            New to IFC?{" "}
+            New to IASC?{" "}
             <a
               href="#join"
               onClick={(e) => {
                 e.preventDefault();
-                alert("Only the Club Administrator can register new accounts. Please contact administration.");
+                alert(
+                  "Only the Club Administrator can register new accounts. Please contact administration.",
+                );
               }}
               className="text-primaryColor font-bold hover:underline"
             >

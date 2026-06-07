@@ -10,55 +10,24 @@ import FadeIn from "@/components/ui/FadeIn";
 
 const membershipTiers = [
   {
-    name: "Basic",
-    price: "₦20,000",
+    name: "Club Membership",
+    price: "₦50,000",
     period: "/ year",
-    description: "Perfect for fans who want to stay connected and support the club.",
-    icon: <Users className="w-8 h-8 text-[#2052DA]" />,
+    description: "The ultimate package to stay connected, play, and support the club.",
+    icon: <Star className="w-8 h-8 text-white" />,
     features: [
       "Access to online Member Portal",
       "Exclusive club news and match updates",
-      "Standard priority for match tickets",
-      "Digital membership card",
-      "5% discount on club merchandise",
-    ],
-    highlight: false,
-    buttonText: "Join Basic",
-  },
-  {
-    name: "Premium",
-    price: "₦50,000",
-    period: "/ year",
-    description: "The ultimate package for passionate supporters and active players.",
-    icon: <Star className="w-8 h-8 text-white" />,
-    features: [
-      "Everything in Basic, plus:",
       "VIP match ticket access",
       "Access to IFC member lounge",
       "Exclusive training sessions with coaches",
       "Monthly performance reports",
-      "20% discount on club merchandise",
-      "Priority registration for tournaments",
+      "10% discount on club merchandise",
+      "Priority registration for tournaments & events",
+      "Digital membership card",
     ],
     highlight: true,
-    buttonText: "Join Premium",
-  },
-  {
-    name: "Platinum",
-    price: "₦150,000",
-    period: "/ year",
-    description: "Exclusive access and premium benefits for our most dedicated patrons.",
-    icon: <Trophy className="w-8 h-8 text-[#2052DA]" />,
-    features: [
-      "Everything in Premium, plus:",
-      "Guaranteed VIP seating for home matches",
-      "Invitation to exclusive club galas",
-      "Meet & greet sessions with the squad",
-      "Free official club jersey each season",
-      "Dedicated account manager",
-    ],
-    highlight: false,
-    buttonText: "Join Platinum",
+    buttonText: "Join Now",
   },
 ];
 
@@ -152,50 +121,27 @@ export default function MembershipPage() {
       <section className="py-20 bg-[#f7f9fc]">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-black text-[#001429] uppercase mb-4">Membership Plans</h2>
-            <p className="text-gray-500 mb-8 max-w-2xl mx-auto">Choose the tier that fits your passion. All memberships are billed annually and come with a welcome pack.</p>
-            
-            {/* Billing Toggle (Visual Only) */}
-            <div className="inline-flex items-center p-1 bg-gray-200/60 rounded-full">
-              <button 
-                onClick={() => setBillingCycle("monthly")}
-                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${billingCycle === "monthly" ? "bg-white text-[#001429] shadow-sm" : "text-gray-500 hover:text-[#001429]"}`}
-              >
-                Monthly
-              </button>
-              <button 
-                onClick={() => setBillingCycle("annual")}
-                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${billingCycle === "annual" ? "bg-white text-[#001429] shadow-sm" : "text-gray-500 hover:text-[#001429]"}`}
-              >
-                Annually
-                <span className="ml-2 text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full uppercase tracking-wider">Save 20%</span>
-              </button>
-            </div>
+            <h2 className="text-3xl md:text-4xl font-black text-[#001429] uppercase mb-4">Membership Plan</h2>
+            <p className="text-gray-500 mb-8 max-w-2xl mx-auto">Unlock exclusive benefits, access the member portal, and support the club. All memberships are billed annually and come with a welcome pack.</p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center max-w-6xl mx-auto">
+          <div className="flex justify-center max-w-2xl mx-auto w-full">
             {membershipTiers.map((tier, idx) => (
-              <FadeIn key={idx} delay={idx * 0.15} className="h-full">
+              <FadeIn key={idx} delay={idx * 0.15} className="w-full">
                 <div 
-                  className={`relative h-full rounded-3xl overflow-hidden transition-all duration-300 ${
-                    tier.highlight 
-                      ? "bg-gradient-to-b from-[#001429] to-[#2052DA] text-white shadow-2xl scale-100 lg:scale-105 z-10 border border-[#386bf2]" 
-                      : "bg-white text-[#001429] shadow-lg hover:shadow-xl border border-gray-100"
-                  }`}
+                  className="relative rounded-3xl overflow-hidden transition-all duration-300 bg-gradient-to-b from-[#001429] to-[#2052DA] text-white shadow-2xl border border-[#386bf2] w-full"
                 >
-                  {tier.highlight && (
-                    <div className="absolute top-0 left-0 right-0 bg-primaryColor text-white text-[10px] font-black uppercase tracking-[0.2em] text-center py-2">
-                      Most Popular
-                    </div>
-                  )}
+                  <div className="absolute top-0 left-0 right-0 bg-primaryColor text-white text-[10px] font-black uppercase tracking-[0.2em] text-center py-2">
+                    Official Membership
+                  </div>
                   
-                  <div className={`p-8 md:p-10 ${tier.highlight ? "pt-12" : ""}`}>
+                  <div className="p-8 md:p-10 pt-12">
                     <div className="flex justify-between items-center mb-6">
                       <div>
-                        <h3 className={`text-2xl font-black uppercase ${tier.highlight ? "text-white" : "text-[#001429]"}`}>
+                        <h3 className="text-2xl font-black uppercase text-white">
                           {tier.name}
                         </h3>
-                        <p className={`text-sm mt-2 ${tier.highlight ? "text-blue-100" : "text-gray-500"}`}>
+                        <p className="text-sm mt-2 text-blue-100">
                           {tier.description}
                         </p>
                       </div>
@@ -203,33 +149,29 @@ export default function MembershipPage() {
                     
                     <div className="mb-8 flex items-end gap-1">
                       <span className="text-4xl md:text-5xl font-black">{tier.price}</span>
-                      <span className={`text-sm font-semibold pb-1 ${tier.highlight ? "text-blue-200" : "text-gray-400"}`}>
+                      <span className="text-sm font-semibold pb-1 text-blue-200">
                         {tier.period}
                       </span>
                     </div>
 
                     <Link href="/join-ifc" className="block w-full">
                       <button 
-                        className={`w-full py-4 rounded-xl font-bold uppercase tracking-wider text-sm transition-all duration-300 ${
-                          tier.highlight 
-                            ? "bg-white text-primaryColor hover:bg-gray-100 hover:shadow-lg" 
-                            : "bg-[#f4f7f9] text-[#001429] hover:bg-primaryColor hover:text-white"
-                        }`}
+                        className="w-full py-4 rounded-xl font-bold uppercase tracking-wider text-sm transition-all duration-300 bg-white text-primaryColor hover:bg-gray-100 hover:shadow-lg"
                       >
                         {tier.buttonText}
                       </button>
                     </Link>
                   </div>
 
-                  <div className={`p-8 md:p-10 border-t ${tier.highlight ? "border-blue-800/50 bg-black/10" : "border-gray-50 bg-gray-50/50"}`}>
-                    <p className={`text-xs font-bold uppercase tracking-widest mb-6 ${tier.highlight ? "text-blue-200" : "text-gray-400"}`}>
+                  <div className="p-8 md:p-10 border-t border-blue-800/50 bg-black/10">
+                    <p className="text-xs font-bold uppercase tracking-widest text-blue-200 mb-6">
                       What's included
                     </p>
                     <ul className="space-y-4">
                       {tier.features.map((feature, fIdx) => (
                         <li key={fIdx} className="flex items-start gap-3">
-                          <Check className={`w-5 h-5 flex-shrink-0 ${tier.highlight ? "text-blue-300" : "text-primaryColor"}`} />
-                          <span className={`text-sm leading-tight ${tier.highlight ? "text-white" : "text-gray-600"}`}>
+                          <Check className="w-5 h-5 flex-shrink-0 text-blue-300" />
+                          <span className="text-sm leading-tight text-white">
                             {feature}
                           </span>
                         </li>

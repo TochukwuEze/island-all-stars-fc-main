@@ -28,7 +28,7 @@ const eventsDropdownItems = [
 
 export function Navbar() {
   return (
-    <nav className="w-full bg-[#2A2A2A] text-white px-6 h-14 hidden lg:flex items-center justify-between border-t border-white/10">
+    <nav className="w-full bg-[#2A2A2A] text-white px-6 h-14 hidden lg:flex items-center justify-between border-t-3 border-[#FAEC15]">
       <ul className="flex items-center h-full">
         {navItems.map((item, index) => (
           <li

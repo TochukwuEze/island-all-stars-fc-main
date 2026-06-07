@@ -1,7 +1,7 @@
 export const constitutionSections = [
   {
     title: "1. Name and Objective",
-    content: "The club shall be known as Island Football Club (IFC). The primary objective of the club is to promote the game of football, foster community spirit, and provide elite-level training and competitive opportunities for its members in Lagos."
+    content: "The club shall be known as Island Allstars Sports Club (IASC). The primary objective of the club is to promote sports and recreation, foster community spirit, and provide elite-level training and competitive opportunities for its members in Lagos."
   },
   {
     title: "2. Membership and Eligibility",

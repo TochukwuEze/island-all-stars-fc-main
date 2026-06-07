@@ -141,7 +141,7 @@ function DashboardTab({ member }: { member: Member }) {
           </p>
           <div className="mt-4 flex items-center gap-2">
             <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-wider">
-              {member.membershipType} Member
+              {member.membershipType}
             </span>
             <span className="px-3 py-1 bg-green-400/20 text-green-300 rounded-full text-xs font-bold">
               Active
@@ -521,7 +521,7 @@ function MembershipTab({ member }: { member: Member }) {
 
       <div className="bg-white border border-gray-100 rounded-md p-6 shadow-sm">
         <p className="text-xs font-bold uppercase tracking-widest text-primaryColor mb-5">
-          Premium Benefits
+          Membership Benefits
         </p>
         <div className="flex flex-col gap-3">
           {[
@@ -558,14 +558,14 @@ function MembershipTab({ member }: { member: Member }) {
         <div className="flex flex-col divide-y divide-gray-50">
           {[
             {
-              desc: `${member.membershipType} Renewal – 2025/2026`,
-              amount: member.membershipType.toLowerCase() === "premium" ? "₦50,000" : "₦10,000",
+              desc: "Annual Membership Renewal – 2025/2026",
+              amount: "₦50,000",
               date: "Jan 10, 2026",
               status: "Paid",
             },
             {
-              desc: `${member.membershipType} Renewal – 2024/2025`,
-              amount: member.membershipType.toLowerCase() === "premium" ? "₦45,000" : "₦10,000",
+              desc: "Annual Membership Renewal – 2024/2025",
+              amount: "₦45,000",
               date: "Jan 8, 2025",
               status: "Paid",
             },
@@ -741,7 +741,7 @@ export default function MemberPortalPage() {
     number: currentUser.number || "#-",
     position: currentUser.position || "Player",
     joined: currentUser.joined || "N/A",
-    membershipType: currentUser.membershipType || "Basic",
+    membershipType: currentUser.membershipType || "Member",
     membershipExpiry: currentUser.membershipExpiry || "N/A",
     avatar: null,
     stats: { matches: 0, goals: 0, assists: 0, rating: 6.0 },
