@@ -46,7 +46,7 @@ const DEFAULT_MEMBERS: Member[] = [
     number: "#14",
     position: "Midfielder",
     joined: "January 2023",
-    membershipType: "Premium",
+    membershipType: "Member",
     membershipExpiry: "December 2026",
     avatar: null,
     stats: {
@@ -81,7 +81,7 @@ const DEFAULT_MEMBERS: Member[] = [
         read: true,
       },
       {
-        from: "IFC Events",
+        from: "IASC Events",
         subject: "Annual Club Gala — RSVP Required",
         time: "5d ago",
         read: false,
@@ -97,7 +97,7 @@ const DEFAULT_MEMBERS: Member[] = [
     number: "#9",
     position: "Forward",
     joined: "March 2024",
-    membershipType: "Basic",
+    membershipType: "Member",
     membershipExpiry: "March 2027",
     avatar: null,
     stats: {
@@ -127,9 +127,9 @@ export const isClient = typeof window !== "undefined";
 export function getMembers(): Member[] {
   if (!isClient) return DEFAULT_MEMBERS;
   
-  const stored = localStorage.getItem("ifc_members");
+  const stored = localStorage.getItem("iasc_members");
   if (!stored) {
-    localStorage.setItem("ifc_members", JSON.stringify(DEFAULT_MEMBERS));
+    localStorage.setItem("iasc_members", JSON.stringify(DEFAULT_MEMBERS));
     return DEFAULT_MEMBERS;
   }
   
@@ -143,7 +143,7 @@ export function getMembers(): Member[] {
 
 export function saveMembers(members: Member[]) {
   if (!isClient) return;
-  localStorage.setItem("ifc_members", JSON.stringify(members));
+  localStorage.setItem("iasc_members", JSON.stringify(members));
 }
 
 export function findMemberByEmail(email: string): Member | undefined {
@@ -163,7 +163,7 @@ export function addMember(member: Member): boolean {
 
 export function getCurrentUser() {
   if (!isClient) return null;
-  const userStr = localStorage.getItem("ifc_current_user");
+  const userStr = localStorage.getItem("iasc_current_user");
   if (!userStr) return null;
   try {
     return JSON.parse(userStr);
@@ -174,13 +174,13 @@ export function getCurrentUser() {
 
 export function setCurrentUser(user: any) {
   if (!isClient) return;
-  localStorage.setItem("ifc_current_user", JSON.stringify(user));
+  localStorage.setItem("iasc_current_user", JSON.stringify(user));
   window.dispatchEvent(new Event("auth-change"));
 }
 
 export function clearCurrentUser() {
   if (!isClient) return;
-  localStorage.removeItem("ifc_current_user");
+  localStorage.removeItem("iasc_current_user");
   window.dispatchEvent(new Event("auth-change"));
 }
 

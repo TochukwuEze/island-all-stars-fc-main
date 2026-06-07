@@ -2,27 +2,79 @@
 
 import React from "react";
 import Image from "next/image";
+import President from "../../../public/images/executives/president1.webp";
+import VicePresident from "../../../public/images/executives/vp1.webp";
+import SecretaryGeneral from "../../../public/images/executives/secretaryGeneral1.webp";
+import AssistantSecretaryGeneral from "../../../public/images/executives/assistantSecretaryGeneral1.webp";
+import FinancialSecretary from "../../../public/images/executives/financialSecretary1.webp";
+import AssistantFinancialSecretary from "../../../public/images/executives/assistantFinancialSecretary1.webp";
+import WelfareDirector from "../../../public/images/executives/welfareDirector1.webp";
+import AssistantWelfareDirector from "../../../public/images/executives/assistantWelfareDirector1.webp";
+import PRO from "../../../public/images/executives/PRO1.webp";
+import AssistantPRO from "../../../public/images/executives/assistantPRO1.webp";
+import Provost from "../../../public/images/executives/provost1.webp";
+import AssistantProvost from "../../../public/images/executives/assistantProvost1.webp";
 
 const experts = [
   {
-    name: "LIAM HARRISON",
-    role: "Forward",
-    image: "/images/team/liam.png",
+    name: "Mr Okeke Azubugwu Kenneth",
+    role: "President",
+    image: President,
   },
   {
-    name: "GEFF BARKER",
-    role: "Forward",
-    image: "/images/team/geff.png",
+    name: "Mr Ijezie Ben",
+    role: "Vice President",
+    image: VicePresident,
   },
   {
-    name: "ROBERT THOMPSON",
-    role: "Defender",
-    image: "/images/team/robert.png",
+    name: "Mr Uche Onoro",
+    role: "Secretary General",
+    image: SecretaryGeneral,
   },
   {
-    name: "HUGO STONES",
-    role: "Forward",
-    image: "/images/team/hugo.png",
+    name: "Mr Nwankwo Reginald Emeka",
+    role: "Assistant Secretary General",
+    image: AssistantSecretaryGeneral,
+  },
+  {
+    name: "Mr Celestine Agba",
+    role: "Financial Secretary",
+    image: FinancialSecretary,
+  },
+  {
+    name: "Mr Ezeude Emmanuel Chukwunonso",
+    role: "Assistant Financial Secretary",
+    image: AssistantFinancialSecretary,
+  },
+  {
+    name: "Mr Anthony Molokwu",
+    role: "Welfare Director",
+    image: WelfareDirector,
+  },
+  {
+    name: "Mr Oscar Egwuonwu",
+    role: "Assistant Welfare Director",
+    image: AssistantWelfareDirector,
+  },
+  {
+    name: "Mr Emmanuel Emeka Agukwe",
+    role: "P.R.O",
+    image: PRO,
+  },
+  {
+    name: "Mr Obidike Nonso Christian",
+    role: "Assistant P.R.O",
+    image: AssistantPRO,
+  },
+  {
+    name: "Mr Okumbele Ogadi",
+    role: "Provost",
+    image: Provost,
+  },
+  {
+    name: "Mr Ernest Onyekwere",
+    role: "Assistan Provost",
+    image: AssistantProvost,
   },
 ];
 

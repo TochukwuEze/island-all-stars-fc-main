@@ -20,11 +20,24 @@ import {
   Mail,
   Phone,
   Hash,
-  Lock
+  Lock,
+  Download
 } from "lucide-react";
+import * as XLSX from "xlsx";
 import { getMembers, addMember, clearCurrentUser, Member, saveMembers } from "@/lib/membersStore";
 import Breadcrumb from "@/components/landing/Breadcrumb";
 import FadeIn from "@/components/ui/FadeIn";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 type AdminTab = "dashboard" | "directory" | "register" | "broadcast";
 
@@ -32,7 +45,7 @@ export default function AdminPortal() {
   const [activeTab, setActiveTab] = useState<AdminTab>("dashboard");
   const [members, setMembers] = useState<Member[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [tierFilter, setTierFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Form State
@@ -43,8 +56,8 @@ export default function AdminPortal() {
   const [dob, setDob] = useState("");
   const [jerseyNumber, setJerseyNumber] = useState("");
   const [position, setPosition] = useState("Midfielder");
-  const [role, setRole] = useState("Senior Player");
-  const [membershipTier, setMembershipTier] = useState("Premium Member");
+  const [role, setRole] = useState("Member");
+
   
   // Message Broadcast State
   const [msgRecipient, setMsgRecipient] = useState("all");
@@ -89,7 +102,7 @@ export default function AdminPortal() {
       number: formattedJersey,
       position,
       joined: new Date().toLocaleString("default", { month: "long", year: "numeric" }),
-      membershipType: membershipTier.replace(" Member", ""),
+      membershipType: "Member",
       membershipExpiry: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
         .toLocaleString("default", { month: "long", year: "numeric" }),
       avatar: null,
@@ -178,13 +191,11 @@ export default function AdminPortal() {
   };
 
   const handleDeleteMember = (emailToDelete: string) => {
-    if (confirm(`Are you sure you want to delete member with email: ${emailToDelete}?`)) {
-      const currentMembers = getMembers();
-      const filtered = currentMembers.filter(m => m.email.toLowerCase() !== emailToDelete.toLowerCase());
-      saveMembers(filtered);
-      refreshMembers();
-      showToast("success", "Member successfully deleted.");
-    }
+    const currentMembers = getMembers();
+    const filtered = currentMembers.filter(m => m.email.toLowerCase() !== emailToDelete.toLowerCase());
+    saveMembers(filtered);
+    refreshMembers();
+    showToast("success", "Member successfully deleted.");
   };
 
   const handleToggleSuspend = (email: string, currentStatus?: "active" | "suspended") => {
@@ -207,15 +218,11 @@ export default function AdminPortal() {
 
   // Dashboard calculations
   const totalMembers = members.length;
-  const premiumCount = members.filter(m => m.membershipType.toLowerCase() === "premium").length;
-  const basicCount = members.filter(m => m.membershipType.toLowerCase() === "basic").length;
+  const activeMembersCount = members.filter(m => m.status !== "suspended").length;
+  const suspendedMembersCount = members.filter(m => m.status === "suspended").length;
   
-  // Calculate mock income based on tier fees (Basic: N10,000, Premium: N50,000)
-  const totalFeesCollected = members.reduce((acc, m) => {
-    if (m.membershipType.toLowerCase() === "premium") return acc + 50000;
-    if (m.membershipType.toLowerCase() === "basic") return acc + 10000;
-    return acc + 10000; // default fee
-  }, 0);
+  // Calculate mock income based on fee of N50,000 per member
+  const totalFeesCollected = members.length * 50000;
 
   // Search and filter directory
   const filteredMembers = members.filter(m => {
@@ -224,11 +231,32 @@ export default function AdminPortal() {
       m.email.toLowerCase().includes(searchQuery.toLowerCase());
     
     const matchesFilter = 
-      tierFilter === "all" || 
-      m.membershipType.toLowerCase() === tierFilter.toLowerCase();
+      statusFilter === "all" || 
+      (statusFilter === "suspended" && m.status === "suspended") ||
+      (statusFilter === "active" && m.status !== "suspended");
 
     return matchesSearch && matchesFilter;
   });
+
+  const handleExportToExcel = () => {
+    const exportData = filteredMembers.map(m => ({
+      "Name": m.name,
+      "Email": m.email,
+      "Role": m.role,
+      "Position": m.position,
+      "Jersey Number": m.number,
+      "Membership Tier": m.membershipType,
+      "Joined Date": m.joined,
+      "Status": m.status,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Members Directory");
+    XLSX.writeFile(workbook, "IslandFC_Members_Directory.xlsx");
+    
+    showToast("success", "Members directory exported successfully.");
+  };
 
   const sidebarItems = [
     { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard size={18} /> },
@@ -411,8 +439,8 @@ export default function AdminPortal() {
                     </p>
                     <p className="text-4xl font-black text-[#001429]">{totalMembers}</p>
                     <div className="flex items-center gap-2 mt-4 text-xs font-bold text-gray-500">
-                      <span className="px-2 py-0.5 bg-gray-100 rounded-full">{premiumCount} Premium</span>
-                      <span className="px-2 py-0.5 bg-gray-100 rounded-full">{basicCount} Basic</span>
+                      <span className="px-2 py-0.5 bg-gray-100 rounded-full">{activeMembersCount} Active</span>
+                      <span className="px-2 py-0.5 bg-gray-100 rounded-full">{suspendedMembersCount} Suspended</span>
                     </div>
                   </div>
 
@@ -508,11 +536,20 @@ export default function AdminPortal() {
             {activeTab === "directory" && (
               <div className="flex flex-col gap-6">
                 {/* Title */}
-                <div>
-                  <h2 className="text-xl font-black text-[#001429] uppercase">Registered Members</h2>
-                  <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mt-0.5">
-                    View, search, or delete registered club users
-                  </p>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <div>
+                    <h2 className="text-xl font-black text-[#001429] uppercase">Registered Members</h2>
+                    <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mt-0.5">
+                      View, search, or delete registered club users
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleExportToExcel}
+                    className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-sm cursor-pointer"
+                  >
+                    <Download size={16} />
+                    Export to Excel
+                  </button>
                 </div>
 
                 {/* Filters Row */}
@@ -531,13 +568,13 @@ export default function AdminPortal() {
                   <div className="flex items-center gap-3 w-full sm:w-auto">
                     <Filter className="w-4 h-4 text-gray-400 hidden sm:block" />
                     <select 
-                      value={tierFilter}
-                      onChange={(e) => setTierFilter(e.target.value)}
+                      value={statusFilter}
+                      onChange={(e) => setStatusFilter(e.target.value)}
                       className="w-full sm:w-auto px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-xs font-semibold text-gray-500 appearance-none pr-8 relative cursor-pointer"
                     >
-                      <option value="all">All Membership Tiers</option>
-                      <option value="premium">Premium Tiers Only</option>
-                      <option value="basic">Basic Tiers Only</option>
+                      <option value="all">All Statuses</option>
+                      <option value="active">Active Only</option>
+                      <option value="suspended">Suspended Only</option>
                     </select>
                   </div>
                 </div>
@@ -579,11 +616,7 @@ export default function AdminPortal() {
                             </td>
                             <td className="px-6 py-4">
                               <div className="flex flex-col gap-1 items-start">
-                                <span className={`px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider ${
-                                  m.membershipType.toLowerCase() === "premium" 
-                                    ? "bg-blue-50 text-blue-600 border border-blue-100" 
-                                    : "bg-gray-50 text-gray-600 border border-gray-200"
-                                }`}>
+                                <span className="px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-blue-50 text-blue-600 border border-blue-100">
                                   {m.membershipType}
                                 </span>
                                 {m.status === "suspended" && (
@@ -598,22 +631,57 @@ export default function AdminPortal() {
                             </td>
                             <td className="px-6 py-4 text-center">
                               <div className="flex justify-center gap-2">
-                                <button 
-                                  onClick={() => handleToggleSuspend(m.email, m.status)}
-                                  className={`font-bold px-2.5 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                                    m.status === "suspended"
-                                      ? "text-green-600 hover:bg-green-50"
-                                      : "text-amber-600 hover:bg-amber-50"
-                                  }`}
-                                >
-                                  {m.status === "suspended" ? "Unsuspend" : "Suspend"}
-                                </button>
-                                <button 
-                                  onClick={() => handleDeleteMember(m.email)}
-                                  className="text-red-500 hover:text-red-750 font-bold px-2.5 py-1.5 rounded-lg hover:bg-red-50 transition-colors cursor-pointer text-xs"
-                                >
-                                  Delete
-                                </button>
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <button 
+                                      className={`font-bold px-2.5 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+                                        m.status === "suspended"
+                                          ? "text-green-600 hover:bg-green-50"
+                                          : "text-amber-600 hover:bg-amber-50"
+                                      }`}
+                                    >
+                                      {m.status === "suspended" ? "Unsuspend" : "Suspend"}
+                                    </button>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent className="bg-white border-gray-100 rounded-xl">
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle className="text-xl font-black text-[#001429] uppercase">Are you sure?</AlertDialogTitle>
+                                      <AlertDialogDescription className="text-sm font-semibold text-gray-500">
+                                        This action will {m.status === "suspended" ? "unsuspend" : "suspend"} the member <strong className="text-[#001429]">{m.name}</strong> ({m.email}).
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                      <AlertDialogCancel className="font-bold uppercase tracking-wider text-xs rounded-xl cursor-pointer">Cancel</AlertDialogCancel>
+                                      <AlertDialogAction onClick={() => handleToggleSuspend(m.email, m.status)} className="font-bold uppercase tracking-wider text-xs rounded-xl bg-primaryColor hover:bg-blue-600 text-white cursor-pointer">
+                                        Continue
+                                      </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
+
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <button 
+                                      className="text-red-500 hover:text-red-750 font-bold px-2.5 py-1.5 rounded-lg hover:bg-red-50 transition-colors cursor-pointer text-xs"
+                                    >
+                                      Delete
+                                    </button>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent className="bg-white border-gray-100 rounded-xl">
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle className="text-xl font-black text-red-600 uppercase">Are you absolutely sure?</AlertDialogTitle>
+                                      <AlertDialogDescription className="text-sm font-semibold text-gray-500">
+                                        This action cannot be undone. This will permanently delete <strong className="text-[#001429]">{m.name}</strong> from the directory.
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                      <AlertDialogCancel className="font-bold uppercase tracking-wider text-xs rounded-xl cursor-pointer">Cancel</AlertDialogCancel>
+                                      <AlertDialogAction onClick={() => handleDeleteMember(m.email)} className="font-bold uppercase tracking-wider text-xs rounded-xl bg-red-600 text-white hover:bg-red-700 cursor-pointer">
+                                        Delete
+                                      </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
                               </div>
                             </td>
                           </tr>
@@ -743,7 +811,7 @@ export default function AdminPortal() {
                     </div>
 
                     {/* Preferences & Tier */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-gray-100 pt-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-gray-100 pt-5">
                       {/* Position */}
                       <div className="space-y-1.5">
                         <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Position</label>
@@ -767,25 +835,10 @@ export default function AdminPortal() {
                           onChange={(e) => setRole(e.target.value)}
                           className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-xs font-semibold text-gray-500 appearance-none cursor-pointer"
                         >
-                          <option>Senior Player</option>
-                          <option>Regular Player</option>
-                          <option>Youth Player</option>
-                          <option>Coach</option>
-                        </select>
-                      </div>
-
-                      {/* Membership Tier */}
-                      <div className="space-y-1.5">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Membership Tier</label>
-                        <select 
-                          value={membershipTier}
-                          onChange={(e) => setMembershipTier(e.target.value)}
-                          className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-xs font-semibold text-gray-500 appearance-none cursor-pointer"
-                        >
-                          <option>Premium Member</option>
-                          <option>Basic Member</option>
-                          <option>Platinum Member</option>
-                          <option>Youth Academy Player</option>
+                          <option>President</option>
+                          <option>Vice President</option>
+                          <option>Executive</option>
+                          <option>Member</option>
                         </select>
                       </div>
                     </div>

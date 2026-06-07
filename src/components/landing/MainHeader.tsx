@@ -48,7 +48,7 @@ export function MainHeader() {
 
   useEffect(() => {
     const checkAuth = () => {
-      const stored = localStorage.getItem("ifc_current_user");
+      const stored = localStorage.getItem("iasc_current_user");
       if (stored) {
         try {
           setCurrentUser(JSON.parse(stored));
@@ -81,16 +81,18 @@ export function MainHeader() {
   };
 
   return (
-    <header className="w-full bg-white py-3 px-6 flex justify-between items-center sticky top-0 z-50 shadow-sm">
+    <header className="w-full bg-white py-2 px-6 flex justify-between items-center sticky top-0 z-50 shadow-sm">
       <Link href="/" className="flex flex-col items-center">
         <Image
           src={logo}
           alt="Logo"
           width={250}
           height={200}
-          className="h-12 md:h-14 w-auto aspect-auto object-contain"
+          className="h-10 md:h-12 w-auto aspect-auto object-contain"
         />
-        <span className="text-xs font-bold text-neutral-700">Island All Stars FC</span>
+        <span className="text-[10px] font-bold text-neutral-700">
+          Island AllStars sports club
+        </span>
       </Link>
 
       {/* Desktop Buttons / Profile */}
@@ -98,9 +100,13 @@ export function MainHeader() {
         {isLoggedIn && currentUser ? (
           <Link href="/member-portal" className="flex items-center gap-3 group">
             <div className="flex flex-col items-end">
-              <span className="text-sm font-bold text-[#001429]">{currentUser.name}</span>
+              <span className="text-sm font-bold text-[#001429]">
+                {currentUser.name}
+              </span>
               <span className="text-[10px] font-bold text-primaryColor uppercase tracking-widest">
-                {currentUser.membershipType === "Club Admin" ? "Admin" : `${currentUser.membershipType} Member`}
+                {currentUser.membershipType === "Club Admin"
+                  ? "Admin"
+                  : `${currentUser.membershipType} Member`}
               </span>
             </div>
             <div className="w-11 h-11 rounded-full bg-gradient-to-br from-primaryColor to-[#001429] flex items-center justify-center text-white font-black text-sm border-2 border-white shadow-sm group-hover:scale-105 transition-transform">
@@ -235,14 +241,21 @@ export function MainHeader() {
 
               <div className="flex flex-col gap-3 mt-6">
                 {isLoggedIn && currentUser ? (
-                  <Link href="/member-portal" className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                  <Link
+                    href="/member-portal"
+                    className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
+                  >
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primaryColor to-[#001429] flex items-center justify-center text-white font-black text-lg">
                       {getUserInitials(currentUser.name)}
                     </div>
                     <div>
-                      <p className="font-bold text-[#001429]">{currentUser.name}</p>
+                      <p className="font-bold text-[#001429]">
+                        {currentUser.name}
+                      </p>
                       <p className="text-xs text-gray-400 font-semibold uppercase tracking-widest">
-                        {currentUser.membershipType === "Club Admin" ? "Admin" : `${currentUser.membershipType} Member`}
+                        {currentUser.membershipType === "Club Admin"
+                          ? "Admin"
+                          : `${currentUser.membershipType} Member`}
                       </p>
                     </div>
                   </Link>

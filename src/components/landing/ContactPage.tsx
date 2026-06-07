@@ -153,11 +153,10 @@ export default function ContactPage() {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const target = e.target as HTMLInputElement;
-    const value =
-      target.type === "checkbox" ? target.checked : target.value;
+    const value = target.type === "checkbox" ? target.checked : target.value;
     setForm((prev) => ({ ...prev, [target.name]: value }));
     // Clear error on change
     if (errors[target.name]) {
@@ -209,11 +208,12 @@ export default function ContactPage() {
             <div>
               <h1 className="text-4xl md:text-[3.2rem] font-black uppercase leading-[1.1] tracking-tight text-[#001429]">
                 Need Help?{" "}
-                <span className="text-primaryColor">Contact IFC</span> Now!
+                <span className="text-primaryColor">Contact IASC</span> Now!
               </h1>
               <p className="text-gray-500 mt-5 text-[15px] leading-relaxed max-w-md">
                 Our team is ready to support you with football queries or
-                feedback. Connect with Island Football Club for expert help.
+                feedback. Connect with Island Allstars Sports Club for expert
+                help.
               </p>
             </div>
 
@@ -221,19 +221,19 @@ export default function ContactPage() {
               <InfoCard
                 icon={<MapPinIcon />}
                 label="Our Location"
-                value="Italian School, Sikiru Alade-Oloko Crescent, Off Adebayo Doherty Street, Lekki, Lagos"
+                value="Lagos Business School, KM 22, Lekki-Epe Expressway, Ajah, Lagos, Nigeria"
               />
               <InfoCard
                 icon={<PhoneIcon />}
                 label="Phone Number"
-                value="+2348033253625"
-                href="tel:+2348033253625"
+                value="+2349155172547"
+                href="tel:+2349155172547"
               />
               <InfoCard
                 icon={<MailIcon />}
                 label="Email Address"
-                value="info@islandfc.com.ng"
-                href="mailto:info@islandfc.com.ng"
+                value="islandallstarssc@gmail.com"
+                href="mailto:islandallstarssc@gmail.com"
               />
               <InfoCard
                 icon={<ClockIcon />}
@@ -260,8 +260,8 @@ export default function ContactPage() {
                   Message Sent!
                 </h2>
                 <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
-                  Thank you for reaching out. A member of our team will get
-                  back to you shortly.
+                  Thank you for reaching out. A member of our team will get back
+                  to you shortly.
                 </p>
                 <button
                   onClick={() => {
@@ -375,7 +375,9 @@ export default function ContactPage() {
                       <option value="membership">Membership</option>
                       <option value="training">Training & Academy</option>
                       <option value="events">Events & Matches</option>
-                      <option value="sponsorship">Sponsorship / Partnership</option>
+                      <option value="sponsorship">
+                        Sponsorship / Partnership
+                      </option>
                       <option value="media">Media</option>
                     </select>
                   </div>
@@ -425,9 +427,7 @@ export default function ContactPage() {
                     </span>
                   </label>
                   {errors.agreed && (
-                    <p className="text-xs text-red-500 pl-7">
-                      {errors.agreed}
-                    </p>
+                    <p className="text-xs text-red-500 pl-7">{errors.agreed}</p>
                   )}
                 </div>
 
@@ -474,15 +474,14 @@ export default function ContactPage() {
       {/* ── Map Section ───────────────────────────────────────── */}
       <section className="w-full">
         <iframe
-          title="Island Football Club Location"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.7290703671!2d3.468!3d6.436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMjYnMTAuMyJOIDPCsDI4JzA0LjciRQ!5e0!3m2!1sen!2sng!4v1620000000000!5m2!1sen!2sng"
-          width="100%"
-          height="380"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.384931328095!2d3.6035562999999993!3d6.472829399999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf73e807b9625%3A0x196ba6c7ae623509!2sLagos%20Business%20School!5e0!3m2!1sen!2sng!4v1780789640138!5m2!1sen!2sng"
+          width="600"
+          height="450"
           style={{ border: 0, display: "block" }}
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-        />
+        ></iframe>
       </section>
 
       {/* ── FAQ Strip ─────────────────────────────────────────── */}

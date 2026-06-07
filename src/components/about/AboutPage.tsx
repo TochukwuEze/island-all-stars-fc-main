@@ -85,14 +85,15 @@ function HeroSection() {
           </h1>{" "}
           <p className="text-zinc-300 text-[15px] leading-relaxed max-w-xl mb-8">
             {" "}
-            Island Football Club (IFC) is a community of passionate football
-            lovers brought together by friendship, tradition, and a shared love
-            for the beautiful game. What started as a simple Sunday gathering
-            among friends has grown into a respected football community where
-            players of all skill levels come together to compete, connect, and
-            enjoy the spirit of the game. At IFC, football is more than a sport
-            — it is a bond that unites generations through passion, teamwork,
-            and unforgettable moments on the pitch.{" "}
+            Island AllStars Sports Club (IASC) is a community of passionate
+            football lovers brought together by friendship, tradition, and a
+            shared love for the beautiful game. What started as a simple Sunday
+            gathering among friends has grown into a respected football
+            community where players of all skill levels come together to
+            compete, connect, and enjoy the spirit of the game. At Island
+            AllStars Sports Club (IASC), football is more than a sport — it is a
+            bond that unites generations through passion, teamwork, and
+            unforgettable moments on the pitch.{" "}
           </p>{" "}
           <div className="flex items-center gap-4 flex-wrap">
             {" "}
@@ -179,10 +180,11 @@ function MissionSection() {
             INSPIRED BY THE LOVE OF THE GAME
           </h2>
           <p className="text-zinc-500 text-[15px] leading-relaxed mb-6">
-            At Island Football Club, we believe football is a transformative
-            force. Our mission is to develop well-rounded athletes who excel on
-            and off the pitch — through world-class coaching, a positive club
-            culture, and a relentless pursuit of excellence.
+            At Island AllStars Sports Club (IASC), we believe football is a
+            transformative force. Our mission is to develop well-rounded
+            athletes who excel on and off the pitch — through world-class
+            coaching, a positive club culture, and a relentless pursuit of
+            excellence.
           </p>
           <p className="text-zinc-500 text-[15px] leading-relaxed mb-8">
             We provide every member — from junior academy players to senior
@@ -301,9 +303,9 @@ function QuoteSection() {
           &ldquo;
         </div>
         <blockquote className="text-white text-xl md:text-2xl lg:text-3xl font-black uppercase leading-snug tracking-tight mb-8">
-          AT IFC, WE&apos;RE SHAPING TOMORROW&apos;S FOOTBALL BY NURTURING YOUNG
-          TALENT, INSPIRING PASSION, AND DRIVING EXCELLENCE THROUGH EDUCATION,
-          TEAMWORK, AND INNOVATION.
+          AT ISLAND ALLSTARS SPORTS CLUB (IASC), WE&apos;RE SHAPING
+          TOMORROW&apos;S FOOTBALL BY NURTURING YOUNG TALENT, INSPIRING PASSION,
+          AND DRIVING EXCELLENCE THROUGH EDUCATION, TEAMWORK, AND INNOVATION.
         </blockquote>
         <p className="text-primaryColor text-[11px] font-black uppercase tracking-[0.3em] mb-10">
           — Island Football Club, Lekki Lagos
@@ -314,6 +316,75 @@ function QuoteSection() {
         >
           Become a Member <ChevronRight size={14} />
         </Link>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────── SECTION: Anthem ─────────── */
+function AnthemSection() {
+  return (
+    <section className="bg-[#f4f4f4] py-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        {/* Left: Anthem Text */}
+        <div className="order-2 lg:order-1 text-center lg:text-left">
+          <p className="text-primaryColor text-[10px] font-black uppercase tracking-[0.4em] mb-4">
+            Island All Stars Sports Club
+          </p>
+          <h2 className="text-3xl md:text-4xl font-black uppercase leading-tight tracking-tight text-[#1a1a1a] mb-8">
+            CLUB ANTHEM: I LOVE THIS FAMILY
+          </h2>
+          
+          <div className="space-y-6 text-zinc-600 text-[15px] leading-relaxed italic font-serif">
+            <p>
+              So closely knitted into one<br />
+              Island Allstars, one great family,<br />
+              together we do great things
+            </p>
+
+            <p>
+              Together we do great things<br />
+              Together we do mighty things<br />
+              Island Allstars, one great family<br />
+              Together we shall stand
+            </p>
+
+            <p>
+              Since two thousand and eight (2008)<br />
+              This club has come to stay<br />
+              with love, we share, such sweet memories<br />
+              And the true love must prevail…
+            </p>
+
+            <p>
+              Together we do great things<br />
+              Together we do mighty things<br />
+              Island Allstars one great family<br />
+              Together we shall stand
+            </p>
+
+            <p>
+              Together we shall stand<br />
+              Together we shall stand<br />
+              Island Allstars, one great family<br />
+              Together we shall stand
+            </p>
+          </div>
+        </div>
+
+        {/* Right: Image */}
+        <div className="order-1 lg:order-2">
+          <div className="relative aspect-[4/5] overflow-hidden bg-zinc-200">
+            <Image
+              src="/images/members/memberImage2.webp"
+              alt="Club Anthem"
+              fill
+              className="object-cover transition-transform duration-700 hover:scale-105"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -405,6 +476,7 @@ export default function AboutPage() {
       <MarqueeTicker />
       <StatsSection />
       <QuoteSection />
+      <AnthemSection />
       <FAQSection />
     </>
   );
