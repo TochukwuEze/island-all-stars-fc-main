@@ -14,6 +14,18 @@ import {
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import logo from "../../../public/images/logos/iasf-logo.webp";
+import { Montserrat } from "next/font/google";
+import { Playfair_Display } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["700", "800", "900"],
+});
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -90,7 +102,9 @@ export function MainHeader() {
           height={200}
           className="h-10 md:h-12 w-auto aspect-auto object-contain"
         />
-        <span className="text-[10px] font-bold text-neutral-700">
+        <span
+          className={`${playfair.className} text-[10px] font-medium text-gray-600`}
+        >
           Island AllStars sports club
         </span>
       </Link>
@@ -118,15 +132,15 @@ export function MainHeader() {
             <Link href="/join-ifc">
               <Button
                 variant="default"
-                className="bg-[#404040] hover:bg-primaryColor text-white rounded-none px-6 font-semibold tracking-wide h-12 cursor-pointer"
+                className={`${montserrat.className} bg-[#404040] hover:bg-primaryColor text-sm! text-white rounded-none px-6 font-semibold tracking-wide h-12 cursor-pointer`}
               >
-                JOIN ISLAND FC
+                JOIN IASC
               </Button>
             </Link>
             <Link href="/member-portal">
               <Button
                 variant="default"
-                className="bg-primaryColor hover:bg-[#404040] text-white rounded-none px-6 font-semibold tracking-wide h-12 cursor-pointer"
+                className={` ${montserrat.className} bg-primaryColor hover:bg-[#404040] text-sm! text-white rounded-none px-6 font-semibold tracking-wide h-12 cursor-pointer`}
               >
                 MEMBER PORTAL
               </Button>
@@ -263,7 +277,7 @@ export function MainHeader() {
                   <>
                     <Link href="/membership">
                       <Button className="w-full bg-[#404040] hover:bg-primaryColor text-white rounded-none font-semibold tracking-wide h-12">
-                        JOIN ISLAND FC
+                        JOIN IASC
                       </Button>
                     </Link>
                     <Link href="/member-portal">

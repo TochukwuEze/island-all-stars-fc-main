@@ -16,11 +16,15 @@ const stats = [
 ];
 
 const teamMembers = [
-  { name: "Hugo Silva", role: "Head Coach", image: "/images/team/hugo.png" },
+  {
+    name: "Hugo Silva",
+    role: "Head Coach",
+    image: "/images/members/memberImage3.webp",
+  },
   {
     name: "Robert Geff",
     role: "Technical Director",
-    image: "/images/team/robert.png",
+    image: "/images/members/memberImage4.webp",
   },
 ];
 
@@ -63,11 +67,11 @@ function HeroSection() {
           alt="Island FC hero"
           fill
           priority
-          className="object-cover opacity-40"
+          className="object-cover opacity-80"
           sizes="100vw"
         />
         {/* gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -143,8 +147,8 @@ function HeroSection() {
 /* ─────────── SECTION: Partners / Sponsors ─────────── */
 function PartnersBar() {
   const partners = [
+    "IASC",
     "ISLAND FC",
-    "LEKKI UNITED",
     "LAGOS FA",
     "NFF",
     "CAF PARTNERS",
@@ -334,39 +338,53 @@ function AnthemSection() {
           <h2 className="text-3xl md:text-4xl font-black uppercase leading-tight tracking-tight text-[#1a1a1a] mb-8">
             CLUB ANTHEM: I LOVE THIS FAMILY
           </h2>
-          
+
           <div className="space-y-6 text-zinc-600 text-[15px] leading-relaxed italic font-serif">
             <p>
-              So closely knitted into one<br />
-              Island Allstars, one great family,<br />
+              So closely knitted into one
+              <br />
+              Island Allstars, one great family,
+              <br />
               together we do great things
             </p>
 
             <p>
-              Together we do great things<br />
-              Together we do mighty things<br />
-              Island Allstars, one great family<br />
+              Together we do great things
+              <br />
+              Together we do mighty things
+              <br />
+              Island Allstars, one great family
+              <br />
               Together we shall stand
             </p>
 
             <p>
-              Since two thousand and eight (2008)<br />
-              This club has come to stay<br />
-              with love, we share, such sweet memories<br />
+              Since two thousand and eight (2008)
+              <br />
+              This club has come to stay
+              <br />
+              with love, we share, such sweet memories
+              <br />
               And the true love must prevail…
             </p>
 
             <p>
-              Together we do great things<br />
-              Together we do mighty things<br />
-              Island Allstars one great family<br />
+              Together we do great things
+              <br />
+              Together we do mighty things
+              <br />
+              Island Allstars one great family
+              <br />
               Together we shall stand
             </p>
 
             <p>
-              Together we shall stand<br />
-              Together we shall stand<br />
-              Island Allstars, one great family<br />
+              Together we shall stand
+              <br />
+              Together we shall stand
+              <br />
+              Island Allstars, one great family
+              <br />
               Together we shall stand
             </p>
           </div>
