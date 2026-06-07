@@ -92,7 +92,7 @@ const experts = [
 
 const OurExpertsLead = () => {
   return (
-    <section className="bg-white py-20 px-6 md:px-12 lg:px-24">
+    <section className="bg-white py-24 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16">

@@ -1,19 +1,16 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import MemberImage5 from "../../../public/images/members/memberImage5.webp";
-import MemberImage6 from "../../../public/images/members/memberImage6.webp";
-import MemberImage7 from "../../../public/images/members/memberImage7.webp";
 
 const slides = [
   {
-    image: MemberImage7,
+    image: "/images/members/memberImage7.webp",
     title1: "Together We Do",
     title2: "Great Things",
     tags: ["Fun", "Friendship", "Fitness"],
   },
   {
-    image: "/images/hero-bg-2.webp",
+    image: "/images/members/memberImage5.webp",
     title1: "A Close-Knit",
     title2: "Family Oriented Club",
     tags: ["Social", "Family", "Networking"],
@@ -32,7 +29,7 @@ export function Hero() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -52,7 +49,7 @@ export function Hero() {
               backgroundImage: `url('${slide.image}')`,
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/80 md:to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/80 md:to-black/60" />
           </div>
 
           <div className="relative z-10 h-full max-w-6xl mx-auto flex flex-col justify-center gap-8 pt-10 px-6 md:px-10">
