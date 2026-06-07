@@ -3,9 +3,9 @@
 import { TopBar } from "@/components/landing/TopBar";
 import { MainHeader } from "@/components/landing/MainHeader";
 import { Navbar } from "@/components/landing/Navbar";
-import Footer from "@/components/landing/Footer";
 import LoginPage from "@/components/auth/LoginPage";
 import { useRouter } from "next/navigation";
+import Footer from "@/components/landing/Footer";
 
 export default function Page() {
   const router = useRouter();

@@ -9,27 +9,27 @@ import { Heart, BookOpen, HandHeart, Trophy, Globe, Users, Shield } from "lucide
 
 const initiatives = [
   {
-    title: "School Partnerships",
-    desc: "We provide free coaching clinics and equipment to over 15 local primary and secondary schools in Lagos.",
-    icon: <BookOpen className="w-6 h-6 text-white" />,
+    title: "It-Is-New-To-Me",
+    desc: "Our annual charity programme where we give back to the less privileged people in our society, ensuring nobody is left behind.",
+    icon: <HandHeart className="w-6 h-6 text-white" />,
     color: "from-blue-500 to-blue-700"
   },
   {
-    title: "Street to Stadium",
-    desc: "A talent identification program giving underprivileged youth the chance to earn full academy scholarships.",
-    icon: <Trophy className="w-6 h-6 text-white" />,
+    title: "Public Institution Support",
+    desc: "We support public institutions like the Nigeria Police Force and the Federal Road Safety Corps by donating funds and essential materials.",
+    icon: <Shield className="w-6 h-6 text-white" />,
     color: "from-green-500 to-green-700"
   },
   {
-    title: "Community Health",
-    desc: "Monthly free health check-ups and fitness seminars for the local community hosted at our facilities.",
+    title: "Healthcare Assistance",
+    desc: "We partner with local hospitals to donate essential materials and aid their life-saving services to humanity.",
     icon: <Heart className="w-6 h-6 text-white" />,
     color: "from-red-500 to-red-700"
   },
   {
-    title: "Food Drives",
-    desc: "Players and staff volunteer bi-monthly to distribute food and essentials to communities in need.",
-    icon: <HandHeart className="w-6 h-6 text-white" />,
+    title: "Community Engagement",
+    desc: "Recognizing that charity and responsible living is the core of humanity, our members regularly volunteer across the community.",
+    icon: <Users className="w-6 h-6 text-white" />,
     color: "from-orange-500 to-orange-700"
   }
 ];

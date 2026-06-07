@@ -110,7 +110,7 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
 
       <FadeIn className="max-w-md w-full relative z-10">
         <div
-          className={`backdrop-blur-xl bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8 md:p-10 shadow-2xl transition-transform ${
+          className={`backdrop-blur-xl bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8 md:p-10 mb-20 shadow-2xl transition-transform ${
             shouldShake
               ? "animate-shake border-red-500/50 shadow-red-500/5"
               : ""
