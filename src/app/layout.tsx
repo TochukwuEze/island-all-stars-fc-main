@@ -19,8 +19,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Island Football Club",
-  description: "Elite training, academy, and competitive football club in Lagos, community-driven on and off the pitch.",
+  title: "Island All-Stars Sports Club",
+  description:
+    "Community-driven sports club in Lagos, nurturing talent on and off the pitch.",
 };
 
 export default function RootLayout({

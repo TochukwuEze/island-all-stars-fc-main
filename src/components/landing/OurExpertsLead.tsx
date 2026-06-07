@@ -14,6 +14,18 @@ import PRO from "../../../public/images/executives/PRO1.webp";
 import AssistantPRO from "../../../public/images/executives/assistantPRO1.webp";
 import Provost from "../../../public/images/executives/provost1.webp";
 import AssistantProvost from "../../../public/images/executives/assistantProvost1.webp";
+import { Montserrat } from "next/font/google";
+import { Playfair_Display } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["700", "800", "900"],
+});
 
 const experts = [
   {
@@ -87,8 +99,10 @@ const OurExpertsLead = () => {
           <p className="text-gray-500 text-[10px] font-bold tracking-[0.4em] uppercase mb-3">
             Meet the Team
           </p>
-          <h2 className="text-4xl md:text-5xl font-black text-black tracking-tight uppercase leading-tight">
-            Our Experts Lead
+          <h2
+            className={`${montserrat.className} text-4xl md:text-5xl font-semibold text-black tracking-tight uppercase leading-tight`}
+          >
+            Our Club Executive Council (EXCOS)
           </h2>
         </div>
 
@@ -109,10 +123,12 @@ const OurExpertsLead = () => {
 
               {/* Expert Info */}
               <div className="mt-6">
-                <h3 className="text-lg font-black text-black uppercase tracking-tight">
+                <h3
+                  className={`${montserrat.className} text-base font-medium text-black uppercase tracking-tight`}
+                >
                   {expert.name}
                 </h3>
-                <p className="text-gray-400 text-sm font-medium mt-1">
+                <p className={`text-gray-400 text-sm font-medium mt-1`}>
                   {expert.role}
                 </p>
               </div>

@@ -331,13 +331,26 @@ export default function AdminPortal() {
           ))}
 
           <div className="mt-4 pt-4 border-t border-gray-200">
-            <button
-              onClick={clearCurrentUser}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-red-500 hover:bg-red-50 transition-all cursor-pointer"
-            >
-              <LogOut size={18} />
-              Sign Out
-            </button>
+            <AlertDialog>
+              <AlertDialogTrigger className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-red-500 hover:bg-red-50 transition-all cursor-pointer text-left">
+                <LogOut size={18} />
+                Sign Out
+              </AlertDialogTrigger>
+              <AlertDialogContent className="bg-white border-gray-100 rounded-xl">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-xl font-black text-[#001429] uppercase">Sign Out</AlertDialogTitle>
+                  <AlertDialogDescription className="text-sm font-semibold text-gray-500">
+                    Are you sure you want to sign out?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="font-bold uppercase tracking-wider text-xs rounded-xl cursor-pointer">Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={clearCurrentUser} className="font-bold uppercase tracking-wider text-xs rounded-xl bg-red-600 text-white hover:bg-red-700 cursor-pointer">
+                    Sign Out
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </aside>
 
@@ -393,13 +406,26 @@ export default function AdminPortal() {
                   </button>
                 ))}
                 <div className="bg-red-50 p-2">
-                  <button
-                    onClick={clearCurrentUser}
-                    className="w-full flex items-center justify-center gap-2 py-2 bg-white text-red-500 text-xs font-bold rounded-lg border border-red-100 hover:bg-red-50 transition-all shadow-sm"
-                  >
-                    <LogOut size={14} />
-                    SIGN OUT
-                  </button>
+                  <AlertDialog>
+                    <AlertDialogTrigger className="w-full flex items-center justify-center gap-2 py-2 bg-white text-red-500 text-xs font-bold rounded-lg border border-red-100 hover:bg-red-50 transition-all shadow-sm cursor-pointer">
+                      <LogOut size={14} />
+                      SIGN OUT
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="bg-white border-gray-100 rounded-xl">
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="text-xl font-black text-[#001429] uppercase">Sign Out</AlertDialogTitle>
+                        <AlertDialogDescription className="text-sm font-semibold text-gray-500">
+                          Are you sure you want to sign out?
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className="font-bold uppercase tracking-wider text-xs rounded-xl cursor-pointer">Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={clearCurrentUser} className="font-bold uppercase tracking-wider text-xs rounded-xl bg-red-600 text-white hover:bg-red-700 cursor-pointer">
+                          Sign Out
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             )}
