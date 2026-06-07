@@ -195,7 +195,7 @@ export default function ContactPage() {
           </p>
           <p className="text-gray-500 text-sm max-w-lg leading-relaxed">
             Our team is ready to support you with football queries or feedback.
-            Connect with Island Football Club for expert help.
+            Connect with Island Allstars Sports Club for expert help.
           </p>
         </div>
       </div>
@@ -251,7 +251,7 @@ export default function ContactPage() {
           </div>
 
           {/* ── Right: Form / Success ─────────────────────── */}
-          <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-gray-100/80 p-8 md:p-10">
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-xl shadow-gray-100/80 p-8 md:p-10">
             {submitted ? (
               /* Success State */
               <div className="flex flex-col items-center text-center gap-5 py-10">
@@ -499,20 +499,20 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
-                q: "How do I register for the academy?",
-                a: "Visit our Academy page and fill out the enrollment form. Our coaching staff will contact you within 48 hours to confirm your spot and provide next steps.",
+                q: "How do I become a member of Island Allstars Sports Club?",
+                a: "You can apply for membership by completing our online membership form on the 'Join our club' page. Our team will review your application and get in touch to guide you through the next steps.",
               },
               {
-                q: "What age groups do you cater to?",
-                a: "We welcome players from age 5 to adults across various programmes — grassroots, youth development, and senior competitive squads.",
+                q: "What sports and activities do you offer?",
+                a: "We offer a diverse range of physical fitness activities including Football, Table Tennis, as well as indoor games like Chess, Draft, and Ludo.",
               },
               {
-                q: "Where are your training grounds?",
-                a: "Our primary facility is at Italian School, Sikiru Alade-Oloko Crescent, Off Adebayo Doherty Street, Lekki, Lagos.",
+                q: "Where are your training and club facilities located?",
+                a: "Our primary facility is located within the premises of the prestigious Lagos Business School in Ajah, Lekki, Lagos.",
               },
               {
-                q: "How can I sponsor or partner with IFC?",
-                a: "Please email info@islandfc.com.ng with 'Partnership Enquiry' as the subject line, or use the contact form above and select Sponsorship / Partnership.",
+                q: "How can I sponsor or partner with IASC?",
+                a: "Please email islandallstarssc@gmail.com with 'Partnership Enquiry' as the subject line, or use the contact form above and select Sponsorship / Partnership.",
               },
             ].map((faq, i) => (
               <FaqCard key={i} q={faq.q} a={faq.a} />
