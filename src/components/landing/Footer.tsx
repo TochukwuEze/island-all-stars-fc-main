@@ -1,5 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Inter, Sofia_Sans_Condensed } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
+const sofiaSansCondensed = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["700"],
+});
 
 import logo from "../../../public/images/logos/iasf-logo.webp";
 
@@ -66,7 +73,7 @@ const LinkedinIcon = ({ size = 24 }: { size?: number }) => (
 
 const Footer = () => {
   return (
-    <footer className="bg-[#001429] text-white pt-20 pb-8 px-6 lg:px-16">
+    <footer className={`bg-[#001429] text-white pt-20 pb-8 px-6 lg:px-16 ${inter.className}`}>
       <div className="max-w-[1400px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 mb-24">
           {/* Left Column: Contact Details */}
@@ -121,7 +128,7 @@ const Footer = () => {
 
           {/* Right Column: Huge Heading and Text */}
           <div className="md:col-span-6 flex flex-col items-start md:items-end text-left md:text-right">
-            <h2 className="text-4xl lg:text-[56px] leading-[1.1] font-bold uppercase tracking-tight mb-6 max-w-2xl">
+            <h2 className={`text-4xl lg:text-[56px] leading-[1.1] font-bold uppercase tracking-tight mb-6 max-w-2xl ${sofiaSansCondensed.className}`}>
               STAY CONNECTED TO THE
               <br />
               GAME WE LOVE

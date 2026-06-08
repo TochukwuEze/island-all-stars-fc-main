@@ -6,6 +6,7 @@ import { AboutSection } from "@/components/landing/AboutSection";
 import Footer from "@/components/landing/Footer";
 import OurExpertsLead from "@/components/landing/OurExpertsLead";
 import News from "@/components/landing/News";
+import StatsAndAnalytics from "@/components/landing/StatsAndAnalytics";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <AboutSection />
         <OurExpertsLead />
         <News />
+        <StatsAndAnalytics />
       </main>
       <Footer />
     </div>

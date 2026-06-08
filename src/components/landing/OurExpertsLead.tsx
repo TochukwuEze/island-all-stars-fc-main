@@ -16,6 +16,12 @@ import Provost from "../../../public/images/executives/provost1.webp";
 import AssistantProvost from "../../../public/images/executives/assistantProvost1.webp";
 import { Montserrat } from "next/font/google";
 import { Playfair_Display } from "next/font/google";
+import { Sofia_Sans_Condensed } from "next/font/google";
+
+const sofiaSansCondensed = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["700"],
+});
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -100,7 +106,7 @@ const OurExpertsLead = () => {
             Meet the Team
           </p>
           <h2
-            className={`${montserrat.className} text-4xl md:text-5xl font-semibold text-black tracking-tight uppercase leading-tight`}
+            className={`${sofiaSansCondensed.className} text-4xl md:text-5xl font-bold text-black tracking-tight uppercase leading-tight`}
           >
             Our Club Executive Council (EXCOS)
           </h2>

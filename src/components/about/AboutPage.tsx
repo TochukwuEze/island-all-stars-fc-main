@@ -17,13 +17,13 @@ const stats = [
 
 const teamMembers = [
   {
-    name: "Hugo Silva",
-    role: "Head Coach",
+    name: "One Big Happy Family",
+    role: "Our Values",
     image: "/images/members/memberImage3.webp",
   },
   {
-    name: "Robert Geff",
-    role: "Technical Director",
+    name: "For The Love of The Game",
+    role: "Our Story",
     image: "/images/members/memberImage4.webp",
   },
 ];
