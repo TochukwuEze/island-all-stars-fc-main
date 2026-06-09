@@ -108,26 +108,26 @@ const Footer = () => {
           </div>
 
           {/* Middle Column: Links */}
-          <div className="md:col-span-3 flex flex-col gap-5 text-[15px] font-medium text-gray-300">
-            <Link href="/" className="hover:text-white transition-colors w-fit">
-              Home
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors w-fit">
-              Training
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors w-fit">
-              About Us
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors w-fit">
-              Membership
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors w-fit">
-              Contact Us
-            </Link>
+          <div className="md:col-span-4 grid grid-cols-2 gap-8 text-[15px] font-medium text-gray-300">
+            <div className="flex flex-col gap-5">
+              <Link href="/" className="hover:text-white transition-colors w-fit">Home</Link>
+              <Link href="/training" className="hover:text-white transition-colors w-fit">Training</Link>
+              <Link href="/about-us" className="hover:text-white transition-colors w-fit">About Us</Link>
+              <Link href="/committees" className="hover:text-white transition-colors w-fit">Our Committees</Link>
+              <Link href="/membership" className="hover:text-white transition-colors w-fit">Membership</Link>
+              <Link href="/contact" className="hover:text-white transition-colors w-fit">Contact Us</Link>
+            </div>
+            <div className="flex flex-col gap-5">
+              <Link href="/gallery" className="hover:text-white transition-colors w-fit">Gallery</Link>
+              <Link href="/events" className="hover:text-white transition-colors w-fit">Events</Link>
+              <Link href="/business-hub" className="hover:text-white transition-colors w-fit">Business Hub</Link>
+              <Link href="/accademy" className="hover:text-white transition-colors w-fit">Academy</Link>
+              <Link href="/blog" className="hover:text-white transition-colors w-fit">Blog</Link>
+            </div>
           </div>
 
           {/* Right Column: Huge Heading and Text */}
-          <div className="md:col-span-6 flex flex-col items-start md:items-end text-left md:text-right">
+          <div className="md:col-span-5 flex flex-col items-start md:items-end text-left md:text-right">
             <h2 className={`text-4xl lg:text-[56px] leading-[1.1] font-bold uppercase tracking-tight mb-6 max-w-2xl ${sofiaSansCondensed.className}`}>
               STAY CONNECTED TO THE
               <br />

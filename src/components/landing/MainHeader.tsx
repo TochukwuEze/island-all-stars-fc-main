@@ -40,6 +40,7 @@ const navItems = [
 
 const aboutDropdownItems = [
   { label: "About Us", href: "/about-us" },
+  { label: "Our Committees", href: "/committees" },
   { label: "Our Partners", href: "/partners" },
 ];
 

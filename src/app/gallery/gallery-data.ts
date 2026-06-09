@@ -13,8 +13,8 @@ export const galleryItems: GalleryItem[] = [
   {
     id: "photo-1",
     type: "photo",
-    src: "/images/hero-bg.webp",
-    thumbnail: "/images/hero-bg.webp",
+    src: "/images/members/memberImage11.webp",
+    thumbnail: "/images/members/memberImage11.webp",
     title: "Match Day Intensity",
     category: "Match",
     year: 2024,
@@ -40,8 +40,8 @@ export const galleryItems: GalleryItem[] = [
   {
     id: "photo-4",
     type: "photo",
-    src: "/images/news/grassroots.png",
-    thumbnail: "/images/news/grassroots.png",
+    src: "/images/members/memberImage6.webp",
+    thumbnail: "/images/members/memberImage6.webp",
     title: "Grassroots Development",
     category: "Community",
     year: 2024,
