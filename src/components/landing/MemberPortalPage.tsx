@@ -6,6 +6,13 @@ import Link from "next/link";
 import { constitutionSections } from "@/data/constitution";
 import LoginPage from "@/components/auth/LoginPage";
 import AdminPortal from "@/components/admin/AdminPortal";
+import { Inter, Sofia_Sans_Condensed } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
+const sofiaSansCondensed = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["700"],
+});
 import { 
   getCurrentUser, 
   clearCurrentUser, 
@@ -144,7 +151,7 @@ function DashboardTab({ member }: { member: Member }) {
           <p className="text-xs font-bold uppercase tracking-widest text-white/60 mb-1">
             Welcome back
           </p>
-          <h2 className="text-2xl md:text-3xl font-black uppercase">
+          <h2 className={`text-2xl md:text-3xl font-black uppercase ${sofiaSansCondensed.className}`}>
             {member.name}
           </h2>
           <p className="text-white/70 text-sm mt-1">
@@ -895,7 +902,7 @@ export default function MemberPortalPage() {
     <div>
       <Breadcrumb title="Member Portal" />
 
-      <div className="bg-[#f7f9fc] min-h-screen">
+      <div className={`bg-[#f7f9fc] min-h-screen ${inter.className}`}>
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-10 flex flex-col lg:flex-row gap-8 items-start">
           {/* ── Sidebar ─────────────────────────────────────────── */}
           <aside className="hidden lg:flex flex-col w-64 flex-shrink-0 gap-2 sticky top-8">

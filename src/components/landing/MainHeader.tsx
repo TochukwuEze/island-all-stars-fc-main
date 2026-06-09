@@ -130,7 +130,7 @@ export function MainHeader() {
           </Link>
         ) : (
           <>
-            <Link href="/join-ifc">
+            <Link href="/join-iasc">
               <Button
                 variant="default"
                 className={`${montserrat.className} bg-[#404040] hover:bg-primaryColor text-sm! text-white rounded-none px-6 font-semibold tracking-wide h-12 cursor-pointer`}
