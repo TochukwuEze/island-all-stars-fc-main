@@ -194,7 +194,7 @@ export default function TrainingPage() {
                 View Memberships
               </button>
             </Link>
-            <Link href="/join-ifc">
+            <Link href="/join-iasc">
               <button className="w-full sm:w-auto px-10 py-4 bg-primaryColor text-white rounded-xl font-bold uppercase tracking-widest text-sm hover:bg-blue-600 transition-all duration-300 flex items-center justify-center gap-2 group">
                 Register Now <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>

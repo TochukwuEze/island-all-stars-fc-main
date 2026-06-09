@@ -102,7 +102,7 @@ function HeroSection() {
           <div className="flex items-center gap-4 flex-wrap">
             {" "}
             <Link
-              href="/join-ifc"
+              href="/join-iasc"
               className="inline-flex items-center gap-2 bg-primaryColor text-white text-[11px] font-black uppercase tracking-widest px-7 py-3.5 hover:bg-white hover:text-primaryColor transition-all duration-300"
             >
               {" "}
@@ -195,7 +195,7 @@ function MissionSection() {
             family.
           </p>
           <Link
-            href="/join-ifc"
+            href="/join-iasc"
             className="inline-flex items-center gap-2 bg-[#1a1a1a] text-white text-[11px] font-black uppercase tracking-widest px-7 py-3.5 hover:bg-primaryColor transition-all duration-300"
           >
             Get Started <ChevronRight size={14} />
@@ -312,7 +312,7 @@ function QuoteSection() {
           — Island Allstars Sports Club, Lagos
         </p>
         <Link
-          href="/join-ifc"
+          href="/join-iasc"
           className="inline-flex items-center gap-2 bg-primaryColor text-white text-[11px] font-black uppercase tracking-widest px-8 py-4 hover:bg-white hover:text-primaryColor transition-all duration-300"
         >
           Become a Member <ChevronRight size={14} />

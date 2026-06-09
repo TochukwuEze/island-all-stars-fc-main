@@ -50,7 +50,7 @@ export default function AcademyPage() {
             </p>
           </FadeIn>
           <FadeIn delay={0.6}>
-            <Link href="/join-ifc">
+            <Link href="/join-iasc">
               <button className="px-8 py-4 bg-primaryColor text-white font-bold uppercase tracking-widest text-sm rounded-full hover:bg-blue-600 transition-colors shadow-lg shadow-blue-500/30">
                 Apply for Academy
               </button>
@@ -132,7 +132,7 @@ export default function AcademyPage() {
                   <div className="text-primaryColor text-xs font-bold uppercase tracking-widest mb-2">{squad.age}</div>
                   <h3 className="text-2xl font-black text-white uppercase mb-4">{squad.group}</h3>
                   <p className="text-gray-400 leading-relaxed mb-8">{squad.desc}</p>
-                  <Link href="/join-ifc" className="flex items-center gap-2 text-white font-bold uppercase text-xs tracking-wider group-hover:text-primaryColor transition-colors">
+                  <Link href="/join-iasc" className="flex items-center gap-2 text-white font-bold uppercase text-xs tracking-wider group-hover:text-primaryColor transition-colors">
                     Learn More <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>

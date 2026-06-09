@@ -4,6 +4,13 @@ import React, { useState } from "react";
 import { Mail, Lock, AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { findMemberByEmail, setCurrentUser } from "@/lib/membersStore";
 import FadeIn from "@/components/ui/FadeIn";
+import { Inter, Sofia_Sans_Condensed } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
+const sofiaSansCondensed = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["700"],
+});
 
 interface LoginPageProps {
   onLoginSuccess?: (user: any) => void;
@@ -123,7 +130,9 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
                 IASC
               </span>
             </div>
-            <h2 className="text-2xl font-black tracking-tight text-white uppercase">
+            <h2
+              className={`text-2xl font-black tracking-tight text-white uppercase ${sofiaSansCondensed.className}`}
+            >
               Member Portal
             </h2>
             <p className="text-zinc-400 text-xs mt-1 uppercase tracking-widest font-semibold">
