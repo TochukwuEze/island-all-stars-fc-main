@@ -21,7 +21,11 @@ import { galleryItems } from "@/app/gallery/gallery-data";
 
 const News = () => {
   const combinedItems = [
-    ...newsItems.map((item) => ({ ...item, isVideo: false })),
+    ...newsItems.map((item) => ({
+      ...item,
+      isVideo: false,
+      description: item.content.split("\n")[0],
+    })),
     ...galleryItems
       .filter((item) => item.type === "video")
       .map((video) => ({
@@ -33,6 +37,7 @@ const News = () => {
         comments: 0,
         image: video.thumbnail,
         isVideo: true,
+        description: video.description,
       })),
   ];
 
@@ -109,6 +114,9 @@ const News = () => {
                     <h3 className="text-lg font-bold leading-tight uppercase group-hover:text-[#2052DA] transition-colors duration-300 line-clamp-2">
                       {item.title}
                     </h3>
+                    <p className="text-sm text-gray-400 line-clamp-2">
+                      {item.description}
+                    </p>
                     <div className="flex items-center gap-2 text-gray-500 text-[11px] font-medium uppercase">
                       <span>{item.date}</span>
                       {!item.isVideo && (
@@ -126,7 +134,7 @@ const News = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="hidden md:flex items-center justify-end gap-4 mt-8">
+          <div className="flex items-center justify-end gap-4 mt-8">
             <CarouselPrevious className="static transform-none bg-transparent border-gray-800 hover:bg-zinc-800 hover:text-white hover:border-gray-700" />
             <CarouselNext className="static transform-none bg-transparent border-gray-800 hover:bg-zinc-800 hover:text-white hover:border-gray-700" />
           </div>
