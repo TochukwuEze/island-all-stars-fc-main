@@ -10,6 +10,12 @@ import {
   ChevronRight,
   ChevronLeft,
 } from "lucide-react";
+import { Sofia_Sans_Condensed } from "next/font/google";
+
+const sofiaSansCondensed = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["900"],
+});
 
 const blogPosts = [
   {
@@ -36,13 +42,13 @@ const blogPosts = [
   },
   {
     id: 3,
-    slug: "tips-for-balancing-academics-and-soccer-commitments",
-    title: "TIPS FOR BALANCING ACADEMICS AND SOCCER COMMITMENTS",
-    category: "ACADEMY",
+    slug: "tips-for-balancing-career-and-club-commitments",
+    title: "TIPS FOR BALANCING CAREER AND CLUB COMMITMENTS",
+    category: "WELLNESS & FITNESS",
     date: "Apr 15, 2025",
     comments: 0,
     excerpt:
-      "Juggling academic obligations with a rigorous soccer schedule is one of the most common challenges young athletes face. With smart time management and the right support, it is entirely possible to thrive in both arenas.",
+      "Juggling professional work obligations with a rigorous sporting schedule is one of the most common challenges adult athletes face. With smart time management and the right support, it is entirely possible to thrive in both arenas.",
     image: "/images/news/grassroots.png",
   },
   {
@@ -69,13 +75,13 @@ const blogPosts = [
   },
   {
     id: 6,
-    slug: "how-nutrition-impacts-soccer-player-performance",
-    title: "HOW NUTRITION IMPACTS SOCCER PLAYER PERFORMANCE",
-    category: "TRAINING",
+    slug: "how-nutrition-impacts-veteran-athlete-performance",
+    title: "HOW NUTRITION IMPACTS VETERAN ATHLETE PERFORMANCE",
+    category: "WELLNESS & FITNESS",
     date: "Mar 18, 2025",
     comments: 2,
     excerpt:
-      "A player's diet directly influences their speed, stamina, and recovery. Proper nutrition — from pre-match meals to post-training hydration — is the foundation of peak athletic performance on and off the field.",
+      "An adult player's diet directly influences their speed, stamina, and recovery. Proper nutrition — from pre-match meals to post-training hydration — is the foundation of peak athletic performance on and off the field.",
     image: "/images/news/injuries.png",
   },
 ];
@@ -83,8 +89,8 @@ const blogPosts = [
 const categories = [
   { name: "Club News", count: 8 },
   { name: "Football News", count: 14 },
-  { name: "Training", count: 6 },
-  { name: "Academy", count: 4 },
+  { name: "Activities", count: 6 },
+  { name: "Wellness & Fitness", count: 4 },
   { name: "Matches", count: 10 },
   { name: "Community", count: 3 },
 ];
@@ -103,10 +109,10 @@ const recentPosts = [
     slug: "what-makes-a-great-football-coach-stand-out",
   },
   {
-    title: "Tips for balancing academics and soccer commitments",
+    title: "Tips for balancing career and club commitments",
     date: "Apr 15, 2025",
     image: "/images/news/grassroots.png",
-    slug: "tips-for-balancing-academics-and-soccer-commitments",
+    slug: "tips-for-balancing-career-and-club-commitments",
   },
 ];
 
@@ -154,11 +160,10 @@ export default function BlogPage() {
       <div className="max-w-7xl mx-auto">
         {/* Page Title */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-black uppercase tracking-widest text-[#1a1a1a]">
+          <h1 className={`text-3xl md:text-4xl font-black uppercase tracking-widest text-[#1a1a1a] ${sofiaSansCondensed.className}`}>
             BLOG{" "}
             <span className="relative inline-block">
               <span className="relative z-10">— STANDARD</span>
-              {/* <span className="absolute bottom-1 left-0 right-0 h-[3px] bg-primaryColor" /> */}
             </span>
           </h1>
         </div>

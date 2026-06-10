@@ -4,14 +4,20 @@ import { MainHeader } from "@/components/landing/MainHeader";
 import { Navbar } from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import BlogPage from "@/components/blog/BlogPage";
+import { Sofia_Sans_Condensed } from "next/font/google";
+
+const sofiaSansCondensed = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["900"],
+});
 
 export const metadata: Metadata = {
-  title: "Blog | Island Football Club",
+  title: "Blog | Island Allstars Sports Club",
   description:
-    "Read the latest football news, training tips, academy updates, and club stories from Island Football Club — Lekki, Lagos.",
+    "Read the latest news, match updates, wellness tips, and club stories from Island Allstars Sports Club — Lagos.",
 };
 
-/* ─────────── Page Hero / Breadcrumb ─────────── */
+/* ✨✨✨✨✨✨✨✨✨✨✨ Page Hero / Breadcrumb ✨✨✨✨✨✨✨✨✨✨✨ */
 function BlogHero() {
   return (
     <div className="relative w-full bg-[#1a1a1a] py-16 md:py-20 overflow-hidden">
@@ -30,9 +36,9 @@ function BlogHero() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <p className="text-primaryColor text-[10px] font-black uppercase tracking-[0.4em] mb-2">
-            Island Football Club
+            Island Allstars Sports Club
           </p>
-          <h1 className="text-white text-3xl md:text-4xl font-black uppercase tracking-tight">
+          <h1 className={`text-white text-3xl md:text-4xl font-black uppercase tracking-tight ${sofiaSansCondensed.className}`}>
             Blog
           </h1>
         </div>

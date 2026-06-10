@@ -6,43 +6,49 @@ import Link from "next/link";
 import Breadcrumb from "@/components/landing/Breadcrumb";
 import { Calendar, MapPin, Clock, ArrowRight, Star } from "lucide-react";
 import FadeIn from "@/components/ui/FadeIn";
+import { Sofia_Sans_Condensed } from "next/font/google";
+
+const sofiaSansCondensed = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["900"],
+});
 
 
 const upcomingEvents = [
   {
-    title: "Island FC Annual Gala & Awards Night",
-    date: "June 15, 2026",
+    title: "Island Allstars Annual Gala & Awards Night",
+    date: "December 15, 2026",
     time: "19:00 - 23:00",
-    location: "Eko Hotels & Suites, Victoria Island",
-    description: "Join us as we celebrate the achievements of our players, staff, and community members over the past season. Black tie event.",
+    location: "Lagos Business School Banquet Hall",
+    description: "Join us as we celebrate the achievements of our members, honor outstanding contributors, and enjoy a night of brotherhood. Black tie event.",
     type: "Club Event",
-    image: "/images/hero-bg.webp",
+    image: "/images/members/memberImage1.webp",
   },
   {
-    title: "Youth Academy Open Tryouts",
+    title: "Quarterly General Meeting & Social",
     date: "July 4, 2026",
-    time: "08:00 - 14:00",
-    location: "Lekki Phase 1 Sports Complex",
-    description: "Calling all young talents! We are hosting open tryouts for our U-15 and U-18 academy squads. Pre-registration is required.",
-    type: "Academy",
-    image: "/images/hero-bg-2.webp",
+    time: "10:00 - 14:00",
+    location: "LBS Sports Complex Lounge",
+    description: "Our mandatory quarterly meeting to discuss club progress, upcoming initiatives, and welcome new members, followed by food and drinks.",
+    type: "Meeting",
+    image: "/images/members/memberImage5.webp",
   },
   {
-    title: "Community Health & Fitness Day",
+    title: "Community Health & Philanthropy Day",
     date: "August 20, 2026",
     time: "09:00 - 15:00",
-    location: "Island FC Training Grounds",
-    description: "A free event for the local community featuring free health checkups, fitness classes, and 5-a-side fun matches.",
+    location: "Lekki Community Center",
+    description: "A free event where our members volunteer to provide health checkups, essential materials, and donations to the less privileged.",
     type: "Community",
-    image: "/images/hero-bg-3.webp",
+    image: "/images/members/memberImage11.webp",
   },
 ];
 
 const pastEvents = [
-  { title: "2025 End of Season Party", date: "December 2025" },
-  { title: "LFA Charity Cup Tournament", date: "October 2025" },
-  { title: "Coaching Masterclass with Pro Staff", date: "August 2025" },
-  { title: "Island FC Beach Soccer Day", date: "June 2025" },
+  { title: "2025 End of Year Gala & Awards", date: "December 2025" },
+  { title: "Synergy Cup Tournament 2025", date: "October 2025" },
+  { title: "Annual Health Walk & Medical Checkup", date: "August 2025" },
+  { title: "Homecoming Novelty Match", date: "June 2025" },
 ];
 
 export default function EventsPage() {
@@ -71,14 +77,14 @@ export default function EventsPage() {
             </p>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <h1 className="text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6">
+            <h1 className={`text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6 ${sofiaSansCondensed.className}`}>
               Upcoming <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryColor to-blue-400">Club Events</span>
             </h1>
           </FadeIn>
           <FadeIn delay={0.4}>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
-              From glamorous galas to community outreach programs, stay updated on everything happening off the pitch at Island Football Club.
+              From glamorous galas to community outreach programs, stay updated on everything happening off the pitch at Island Allstars Sports Club.
             </p>
           </FadeIn>
         </div>
@@ -144,7 +150,7 @@ export default function EventsPage() {
                 <Star className="w-10 h-10 text-yellow-400 mb-6" />
                 <h3 className="text-2xl font-black uppercase mb-3">Host Your Event With Us</h3>
                 <p className="text-sm text-blue-100 mb-8 leading-relaxed">
-                  Looking for a unique venue? Our sports complex and VIP lounges are available for private hire, corporate team building, and tournaments.
+                  Looking to collaborate or sponsor an event? Our club is open to partnerships for corporate team building, novelty matches, and charity drives.
                 </p>
                 <Link href="/contact" className="block">
                   <button className="w-full py-4 bg-white text-[#001429] font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-gray-100 transition-colors">

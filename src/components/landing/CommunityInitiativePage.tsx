@@ -56,7 +56,7 @@ export default function CommunityInitiativePage() {
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <p className="text-primaryColor text-xs md:text-sm font-black uppercase tracking-[0.3em] mb-4">
-              More Than A Club
+              More Than A Sports Club
             </p>
           </FadeIn>
           <FadeIn delay={0.2}>
@@ -67,7 +67,7 @@ export default function CommunityInitiativePage() {
           </FadeIn>
           <FadeIn delay={0.4}>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
-              Island Football Club is dedicated to making a positive difference in Lagos. We believe in the power of football to unite and inspire.
+              Island Allstars Sports Club is dedicated to making a meaningful difference in society. We believe in leveraging our collective strength as a social club to uplift the less privileged and support vital institutions.
             </p>
           </FadeIn>
         </div>
@@ -77,17 +77,17 @@ export default function CommunityInitiativePage() {
       <section className="py-20 bg-[#f7f9fc]">
         <div className="max-w-4xl mx-auto px-4 md:px-6 text-center">
           <h2 className="text-2xl md:text-4xl font-black text-[#001429] uppercase mb-8 leading-tight">
-            "A football club is only as strong as the community that stands behind it."
+            "Charity and responsible living are the core of humanity."
           </h2>
           <p className="text-gray-600 text-lg leading-relaxed mb-12">
-            Since our inception, Island Football Club has dedicated a percentage of all revenue directly to our charitable foundation. We don't just want to win trophies; we want to win hearts, provide opportunities, and build a better future for the youth of Lagos.
+            As a premier social and sports club, Island Allstars Sports Club goes beyond the pitch to impact lives. Through our various initiatives, our members pool resources to support public institutions, assist healthcare facilities, and drive positive change in our society. We are united not just by our love for sports, but by our commitment to giving back.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: <Heart className="w-8 h-8 text-white" />, title: "Empowerment", text: "Providing opportunities for young people to reach their full potential through sports." },
-              { icon: <Globe className="w-8 h-8 text-white" />, title: "Sustainability", text: "Promoting environmental awareness and sustainable practices in our local area." },
-              { icon: <Shield className="w-8 h-8 text-white" />, title: "Inclusion", text: "Ensuring football is accessible to everyone, regardless of background or ability." }
+              { icon: <HandHeart className="w-8 h-8 text-white" />, title: "Philanthropy", text: "Mobilizing resources to provide essential aid and donations to the less privileged in our society." },
+              { icon: <Shield className="w-8 h-8 text-white" />, title: "Civic Support", text: "Partnering with and supporting vital public institutions like the Police and FRSC to enhance community welfare." },
+              { icon: <Users className="w-8 h-8 text-white" />, title: "Social Responsibility", text: "Fostering a culture of empathy and active community engagement among our esteemed members." }
             ].map((item, idx) => (
               <FadeIn key={idx} delay={idx * 0.1}>
                 <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-50 hover:shadow-xl transition-shadow">
@@ -133,7 +133,7 @@ export default function CommunityInitiativePage() {
           <div className="relative z-10">
             <h2 className="text-3xl md:text-5xl font-black uppercase mb-6">Want to make a difference?</h2>
             <p className="text-blue-100 text-lg mb-10 max-w-2xl mx-auto">
-              We are always looking for volunteers, corporate partners, and sponsors for our community outreach programs.
+              We welcome partnerships, sponsorships, and collaborations to expand our outreach programs and touch more lives across the nation.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link href="/contact">
@@ -143,7 +143,7 @@ export default function CommunityInitiativePage() {
               </Link>
               <Link href="/contact">
                 <button className="px-8 py-4 bg-transparent border-2 border-white text-white font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-white/10 transition-colors">
-                  Volunteer
+                  Contact Us
                 </button>
               </Link>
             </div>

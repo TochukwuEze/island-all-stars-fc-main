@@ -2,11 +2,11 @@ import { TopBar } from "@/components/landing/TopBar";
 import { MainHeader } from "@/components/landing/MainHeader";
 import { Navbar } from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import AcademyPage from "@/components/landing/AcademyPage";
+import ActivitiesPage from "@/components/landing/ActivitiesPage";
 
 export const metadata = {
-  title: "Youth Academy | Island Football Club",
-  description: "Developing the next generation of football stars through elite coaching and holistic player development.",
+  title: "Sports & Training | Island Allstars Sports Club",
+  description: "Promoting physical fitness, wellness, and camaraderie through consistent training and recreational activities for our members.",
 };
 
 export default function Page() {
@@ -16,7 +16,7 @@ export default function Page() {
       <MainHeader />
       <Navbar />
       <main className="flex-1">
-        <AcademyPage />
+        <ActivitiesPage />
       </main>
       <Footer />
     </div>

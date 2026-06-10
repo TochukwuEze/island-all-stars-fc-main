@@ -141,7 +141,7 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className={`space-y-6 `}>
             {error && (
               <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-200 text-xs rounded-xl flex items-start gap-3">
                 <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />

@@ -6,26 +6,32 @@ import Link from "next/link";
 import Breadcrumb from "@/components/landing/Breadcrumb";
 import { Calendar, MapPin, Clock, Trophy, ChevronRight } from "lucide-react";
 import FadeIn from "@/components/ui/FadeIn";
+import { Sofia_Sans_Condensed } from "next/font/google";
+
+const sofiaSansCondensed = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["900"],
+});
 
 
 const upcomingFixtures = [
-  { date: "Saturday, May 18, 2026", time: "16:00", opponent: "Lagos United FC", venue: "Home - Lekki Sports Complex", competition: "LFA Premier League", type: "Home" },
-  { date: "Saturday, May 25, 2026", time: "15:30", opponent: "Victoria Island Stars", venue: "Away - VI Municipal Stadium", competition: "LFA Premier League", type: "Away" },
-  { date: "Wednesday, Jun 3, 2026", time: "19:00", opponent: "Eko City FC", venue: "Home - Lekki Sports Complex", competition: "State FA Cup (Quarter Final)", type: "Home" },
+  { date: "Saturday, May 18, 2026", time: "16:00", opponent: "Ikoyi Club Veterans", venue: "Home - LBS Sports Complex", competition: "Above 45 Tournament", type: "Home" },
+  { date: "Saturday, May 25, 2026", time: "15:30", opponent: "VGC Allstars", venue: "Away - VGC Stadium", competition: "Synergy Cup", type: "Away" },
+  { date: "Wednesday, Jun 3, 2026", time: "19:00", opponent: "Team Blue vs Team Red", venue: "Home - LBS Sports Complex", competition: "Monthly Internal Match", type: "Internal" },
 ];
 
 const recentResults = [
-  { date: "May 11, 2026", opponent: "Apapa Rovers", result: "W", score: "3 - 1", competition: "LFA Premier League", homeTeam: "Island FC", awayTeam: "Apapa Rovers" },
-  { date: "May 4, 2026", opponent: "Mainland Knights", result: "D", score: "1 - 1", competition: "LFA Premier League", homeTeam: "Mainland Knights", awayTeam: "Island FC" },
-  { date: "April 28, 2026", opponent: "Ikeja Dynamos", result: "W", score: "2 - 0", competition: "State FA Cup", homeTeam: "Island FC", awayTeam: "Ikeja Dynamos" },
+  { date: "May 11, 2026", opponent: "Mainland Veterans", result: "W", score: "3 - 1", competition: "Synergy Cup", homeTeam: "Island Allstars", awayTeam: "Mainland Veterans" },
+  { date: "May 4, 2026", opponent: "Homecoming Match", result: "D", score: "2 - 2", competition: "Novelty Match", homeTeam: "Island Legends", awayTeam: "Island Active" },
+  { date: "April 28, 2026", opponent: "Festac Allstars", result: "W", score: "2 - 0", competition: "Club Friendly", homeTeam: "Island Allstars", awayTeam: "Festac Allstars" },
 ];
 
 const standings = [
-  { pos: 1, team: "Lagos United FC", p: 15, w: 11, d: 3, l: 1, gd: "+21", pts: 36 },
-  { pos: 2, team: "Island FC", p: 15, w: 10, d: 4, l: 1, gd: "+18", pts: 34 },
-  { pos: 3, team: "Victoria Island Stars", p: 15, w: 9, d: 5, l: 1, gd: "+15", pts: 32 },
-  { pos: 4, team: "Eko City FC", p: 15, w: 8, d: 4, l: 3, gd: "+10", pts: 28 },
-  { pos: 5, team: "Mainland Knights", p: 15, w: 6, d: 6, l: 3, gd: "+4", pts: 24 },
+  { pos: 1, team: "Ikoyi Club Veterans", p: 5, w: 4, d: 1, l: 0, gd: "+8", pts: 13 },
+  { pos: 2, team: "Island Allstars", p: 5, w: 3, d: 2, l: 0, gd: "+6", pts: 11 },
+  { pos: 3, team: "VGC Allstars", p: 5, w: 2, d: 2, l: 1, gd: "+2", pts: 8 },
+  { pos: 4, team: "Lagos Country Club", p: 5, w: 1, d: 2, l: 2, gd: "-1", pts: 5 },
+  { pos: 5, team: "Festac Allstars", p: 5, w: 0, d: 1, l: 4, gd: "-15", pts: 1 },
 ];
 
 export default function MatchesPage() {
@@ -54,14 +60,14 @@ export default function MatchesPage() {
             </p>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <h1 className="text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6">
+            <h1 className={`text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6 ${sofiaSansCondensed.className}`}>
               Follow the <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryColor to-blue-400">Action Live</span>
             </h1>
           </FadeIn>
           <FadeIn delay={0.4}>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
-              Stay up to date with Island FC's latest fixtures, recent results, and league standings. Support the team home and away.
+              Stay up to date with Island Allstars' latest fixtures, recent results, and tournament standings. Cheer on our members on the pitch!
             </p>
           </FadeIn>
         </div>
@@ -102,7 +108,7 @@ export default function MatchesPage() {
                       </div>
                       {fixture.type === "Home" && (
                         <button className="md:ml-4 px-6 py-3 bg-[#001429] text-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-primaryColor transition-colors flex-shrink-0">
-                          Get Tickets
+                          Add to Calendar
                         </button>
                       )}
                     </div>
@@ -151,7 +157,7 @@ export default function MatchesPage() {
             <FadeIn direction="left">
               <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
                 <h3 className="text-lg font-black text-[#001429] uppercase mb-6 pb-4 border-b border-gray-100">
-                  LFA Premier League
+                  Synergy Cup Group Stage
                 </h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
@@ -189,12 +195,12 @@ export default function MatchesPage() {
             <FadeIn direction="left" delay={0.2}>
               <div className="bg-gradient-to-br from-primaryColor to-[#001429] rounded-3xl p-8 text-center text-white shadow-lg relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-                <h3 className="text-xl font-black uppercase mb-3 relative z-10">Matchday Hospitality</h3>
+                <h3 className="text-xl font-black uppercase mb-3 relative z-10">Post-Match Social</h3>
                 <p className="text-sm text-blue-100 mb-6 relative z-10">
-                  Experience Island FC matches in style. Premium seating, exclusive lounge access, and catered food.
+                  Join us after the match for drinks, food, and brotherhood at the clubhouse.
                 </p>
                 <button className="w-full py-3 bg-white text-[#001429] font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-gray-100 transition-colors relative z-10">
-                  Book VIP Package
+                  View Social Calendar
                 </button>
               </div>
             </FadeIn>

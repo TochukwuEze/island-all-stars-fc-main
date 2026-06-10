@@ -14,6 +14,12 @@ import {
   Filter,
   User,
 } from "lucide-react";
+import { Sofia_Sans_Condensed } from "next/font/google";
+
+const sofiaSansCondensed = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["900"],
+});
 
 const BusinessHubPage = () => {
   return (
@@ -27,8 +33,8 @@ const BusinessHubPage = () => {
         <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-8">
-            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900">
-              Island Club{" "}
+            <h1 className={`text-5xl md:text-6xl font-black uppercase tracking-tight text-gray-900 ${sofiaSansCondensed.className}`}>
+              Island Allstars{" "}
               <span className="text-blue-600">Business Directory</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">

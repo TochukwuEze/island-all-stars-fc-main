@@ -48,7 +48,7 @@ const eventsDropdownItems = [
   { label: "All Events", href: "/events" },
   { label: "Matches", href: "/matches" },
   { label: "Players", href: "/players" },
-  { label: "Academy", href: "/accademy" },
+  { label: "Activities", href: "/activities" },
   { label: "Community Initiative", href: "/community-initiative" },
   { label: "Contact", href: "/contact" },
 ];
