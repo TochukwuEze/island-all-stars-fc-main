@@ -6,47 +6,53 @@ import Link from "next/link";
 import Breadcrumb from "@/components/landing/Breadcrumb";
 import { Calendar, Clock, MapPin, Target, Users, Zap, Shield, ArrowRight } from "lucide-react";
 import FadeIn from "@/components/ui/FadeIn";
+import { Sofia_Sans_Condensed } from "next/font/google";
+
+const sofiaSansCondensed = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["900"],
+});
 
 
 const programs = [
   {
-    title: "Senior Squad Training",
-    description: "Intensive tactical and physical preparation for our competitive first and reserve teams.",
+    title: "Football Match Days",
+    description: "Competitive and casual 11-a-side or 5-a-side matches among members to stay fit and build teamwork.",
     icon: <Users className="w-8 h-8 text-[#2052DA]" />,
-    schedule: "Tue, Thu, Sat",
-    level: "Advanced",
-  },
-  {
-    title: "Youth Academy",
-    description: "Development-focused sessions for young talents to refine their skills and understanding of the game.",
-    icon: <Target className="w-8 h-8 text-[#2052DA]" />,
-    schedule: "Mon, Wed, Fri",
-    level: "Beginner - Intermediate",
-  },
-  {
-    title: "Fitness & Conditioning",
-    description: "High-intensity cardio and strength training designed specifically for football endurance.",
-    icon: <Zap className="w-8 h-8 text-[#2052DA]" />,
-    schedule: "Wed, Sun",
+    schedule: "Wed, Sat",
     level: "All Levels",
   },
   {
-    title: "Goalkeeper Coaching",
-    description: "Specialized drills focusing on reflexes, distribution, positioning, and shot-stopping.",
-    icon: <Shield className="w-8 h-8 text-[#2052DA]" />,
+    title: "Table Tennis",
+    description: "High-intensity rallies and reflex training for cardiovascular health and competitive fun.",
+    icon: <Target className="w-8 h-8 text-[#2052DA]" />,
     schedule: "Tue, Thu",
-    level: "Intermediate - Advanced",
+    level: "All Levels",
+  },
+  {
+    title: "Aerobics & Gymnastics",
+    description: "High-intensity cardio, stretching, and strength training designed for overall wellness and flexibility.",
+    icon: <Zap className="w-8 h-8 text-[#2052DA]" />,
+    schedule: "Thu, Sun",
+    level: "All Levels",
+  },
+  {
+    title: "Indoor Games",
+    description: "Chess, Draft, and Ludo to build strategic thinking and foster camaraderie off the pitch.",
+    icon: <Shield className="w-8 h-8 text-[#2052DA]" />,
+    schedule: "Daily",
+    level: "Recreational",
   },
 ];
 
 const schedule = [
-  { day: "Monday", sessions: [{ time: "16:00 - 18:00", name: "Youth Academy (U12 - U15)" }, { time: "18:30 - 20:30", name: "Open Play / Scrimmage" }] },
-  { day: "Tuesday", sessions: [{ time: "17:00 - 19:00", name: "Senior Squad Tactics" }, { time: "19:00 - 20:30", name: "Goalkeeper Clinic" }] },
-  { day: "Wednesday", sessions: [{ time: "16:00 - 18:00", name: "Youth Academy (U16 - U18)" }, { time: "18:30 - 20:00", name: "Fitness & Conditioning" }] },
-  { day: "Thursday", sessions: [{ time: "17:00 - 19:00", name: "Senior Squad Match Prep" }, { time: "19:00 - 20:30", name: "Goalkeeper Clinic" }] },
-  { day: "Friday", sessions: [{ time: "16:00 - 18:30", name: "Youth Academy Match Prep" }] },
-  { day: "Saturday", sessions: [{ time: "08:00 - 10:00", name: "Senior Squad Walkthrough" }, { time: "10:30 - 13:00", name: "Youth Matches" }] },
-  { day: "Sunday", sessions: [{ time: "09:00 - 11:00", name: "Recovery & Conditioning" }, { time: "15:00 - 18:00", name: "Senior Matches" }] },
+  { day: "Monday", sessions: [{ time: "18:00 - 21:00", name: "Rest & Clubhouse Networking" }] },
+  { day: "Tuesday", sessions: [{ time: "17:00 - 20:00", name: "Table Tennis & Indoor Games" }] },
+  { day: "Wednesday", sessions: [{ time: "18:30 - 20:30", name: "Midweek Football Scrimmage" }] },
+  { day: "Thursday", sessions: [{ time: "17:00 - 19:00", name: "Aerobics & Gymnastics" }, { time: "19:00 - 21:00", name: "Table Tennis" }] },
+  { day: "Friday", sessions: [{ time: "18:00 - 22:00", name: "Pre-Weekend Social & Board Games" }] },
+  { day: "Saturday", sessions: [{ time: "07:00 - 10:00", name: "Official Match Day (Football)" }] },
+  { day: "Sunday", sessions: [{ time: "09:00 - 11:00", name: "Recovery & General Fitness" }] },
 ];
 
 export default function TrainingPage() {
@@ -75,14 +81,14 @@ export default function TrainingPage() {
             </p>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <h1 className="text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6">
-              Elite Training <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryColor to-blue-400">For Every Level</span>
+            <h1 className={`text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6 ${sofiaSansCondensed.className}`}>
+              Fitness, Sports & <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryColor to-blue-400">Brotherhood</span>
             </h1>
           </FadeIn>
           <FadeIn delay={0.4}>
             <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-              From grassroots development to competitive senior squads, our professional coaching staff provides the perfect environment to hone your skills.
+              From competitive football to indoor games, our diverse physical fitness programs are designed to keep members healthy, active, and connected.
             </p>
           </FadeIn>
         </div>
@@ -92,10 +98,10 @@ export default function TrainingPage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-black text-[#001429] uppercase mb-4">Our Programs</h2>
+            <h2 className="text-3xl md:text-4xl font-black text-[#001429] uppercase mb-4">Our Activities</h2>
             <div className="w-20 h-1.5 bg-primaryColor mx-auto mb-6 rounded-full" />
             <p className="text-gray-500 text-lg">
-              We offer structured sessions designed to improve tactical awareness, technical ability, and physical conditioning.
+              We offer structured weekly sessions designed to improve physical conditioning, cardiovascular health, and strategic thinking.
             </p>
           </div>
 
@@ -133,11 +139,11 @@ export default function TrainingPage() {
             <div>
               <h2 className="text-3xl md:text-4xl font-black text-[#001429] uppercase mb-4">Weekly Schedule</h2>
               <div className="w-20 h-1.5 bg-primaryColor mb-4 rounded-full" />
-              <p className="text-gray-500">Regular training times at the Island FC Main Ground.</p>
+              <p className="text-gray-500">Regular activity times at the IASC grounds.</p>
             </div>
             <div className="flex items-center gap-2 text-sm font-bold text-[#001429] bg-white px-5 py-3 rounded-xl shadow-sm border border-gray-100">
               <MapPin className="w-5 h-5 text-primaryColor" />
-              Lekki Phase 1 Sports Complex
+              Lagos Business School Sports Complex
             </div>
           </div>
 
@@ -166,11 +172,11 @@ export default function TrainingPage() {
             {/* Call to action card in schedule grid */}
             <FadeIn delay={0.4}>
               <div className="bg-gradient-to-br from-primaryColor to-[#001429] rounded-2xl shadow-sm border border-blue-800 p-6 flex flex-col justify-center items-center text-center h-full">
-                <h3 className="text-white font-black uppercase text-xl mb-3">Private Sessions</h3>
-                <p className="text-blue-100 text-sm mb-6">Need 1-on-1 coaching? Book a private session with our senior staff.</p>
-                <Link href="/contact" className="w-full">
+                <h3 className="text-white font-black uppercase text-xl mb-3">Family Inclusive</h3>
+                <p className="text-blue-100 text-sm mb-6">Our activities are designed to accommodate the wives and children of our esteemed members.</p>
+                <Link href="/membership" className="w-full">
                   <button className="w-full py-3 bg-white text-[#001429] rounded-xl font-bold uppercase text-xs tracking-wider hover:bg-gray-50 transition-colors">
-                    Inquire Now
+                    Join The Family
                   </button>
                 </Link>
               </div>
@@ -182,11 +188,11 @@ export default function TrainingPage() {
       {/* CTA Section */}
       <section className="py-24 relative overflow-hidden bg-white">
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-5xl font-black text-[#001429] uppercase mb-6">
-            Ready to Join Training?
+          <h2 className={`text-3xl md:text-5xl font-black text-[#001429] uppercase mb-6 ${sofiaSansCondensed.className}`}>
+            Ready to Join The Action?
           </h2>
           <p className="text-gray-500 text-lg mb-10 max-w-2xl mx-auto">
-            All training sessions are exclusive to registered Island FC members. Secure your spot on the pitch today.
+            All sporting activities are exclusive to registered Island Allstars members. Secure your spot in the brotherhood today.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href="/membership">

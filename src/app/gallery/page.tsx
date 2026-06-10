@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Footer from "@/components/landing/Footer";
 import { TopBar } from "@/components/landing/TopBar";
 import { MainHeader } from "@/components/landing/MainHeader";
@@ -19,10 +20,7 @@ const VIDEO_CATEGORIES = [
 ] as const;
 type VideoCategory = (typeof VIDEO_CATEGORIES)[number];
 
-/** Appends autoplay to a YouTube embed URL whether or not it already has a query string */
-function withAutoplay(src: string) {
-  return src.includes("?") ? `${src}&autoplay=1` : `${src}?autoplay=1`;
-}
+
 
 /** Returns a human-readable relative time string from a year, e.g. "9 years ago" */
 function timeAgo(year: number): string {
@@ -36,7 +34,6 @@ const GalleryPage = () => {
   const [activeTab, setActiveTab] = useState<MediaTab>("all");
   const [videoCategory, setVideoCategory] =
     useState<VideoCategory>("All Videos");
-  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const filteredItems = galleryItems.filter((item) => {
@@ -118,72 +115,90 @@ const GalleryPage = () => {
 
           {/* Gallery Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {filteredItems.map((item) => (
-              <div
-                key={item.id}
-                className="group relative overflow-hidden rounded-md bg-white shadow hover:shadow-lg transition-all duration-500 cursor-pointer flex flex-col"
-                onClick={() => {
-                  if (item.type === "video") setSelectedVideo(item.src);
-                  else setSelectedImage(item.src);
-                }}
-              >
-                {/* Thumbnail */}
-                <div className="relative aspect-[4/2.5] overflow-hidden">
-                  <Image
-                    src={item.thumbnail}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+            {filteredItems.map((item) => {
+              const isVideo = item.type === "video";
+              const cardContent = (
+                <>
+                  {/* Thumbnail */}
+                  <div className="relative aspect-[4/2.5] overflow-hidden">
+                    <Image
+                      src={item.thumbnail}
+                      alt={item.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
 
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    {item.type === "video" ? (
-                      <div className="w-16 h-16 bg-[#2052DA] rounded-full flex items-center justify-center shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <Play className="text-white fill-current w-8 h-8 ml-1" />
-                      </div>
-                    ) : (
-                      <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <Maximize2 className="text-white w-8 h-8" />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Icon Tag */}
-                  <div className="absolute top-4 left-4 z-10">
-                    <div className="bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-sm">
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       {item.type === "video" ? (
-                        <VideoIcon className="w-5 h-5 text-[#2052DA]" />
+                        <div className="w-16 h-16 bg-[#2052DA] rounded-full flex items-center justify-center shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                          <Play className="text-white fill-current w-8 h-8 ml-1" />
+                        </div>
                       ) : (
-                        <ImageIcon className="w-5 h-5 text-[#2052DA]" />
+                        <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                          <Maximize2 className="text-white w-8 h-8" />
+                        </div>
                       )}
                     </div>
-                  </div>
-                </div>
 
-                {/* Content */}
-                <div className="p-4 flex flex-col flex-1">
-                  <span className="text-xs font-bold text-primaryColor uppercase tracking-wider mb-1 block">
-                    {item.category}
-                  </span>
-                  <h3
-                    title={item.title}
-                    className="text-sm font-bold text-gray-900 line-clamp-1 group-hover:text-primaryColor transition-colors mb-2"
+                    {/* Icon Tag */}
+                    <div className="absolute top-4 left-4 z-10">
+                      <div className="bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-sm">
+                        {item.type === "video" ? (
+                          <VideoIcon className="w-5 h-5 text-[#2052DA]" />
+                        ) : (
+                          <ImageIcon className="w-5 h-5 text-[#2052DA]" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-4 flex flex-col flex-1">
+                    <span className="text-xs font-bold text-primaryColor uppercase tracking-wider mb-1 block">
+                      {item.category}
+                    </span>
+                    <h3
+                      title={item.title}
+                      className="text-sm font-bold text-gray-900 line-clamp-1 group-hover:text-primaryColor transition-colors mb-2"
+                    >
+                      {item.title}
+                    </h3>
+                    <p
+                      title={item.description}
+                      className="text-xs text-gray-600 line-clamp-2 mb-3 flex-1"
+                    >
+                      {item.description}
+                    </p>
+                    <p className="text-xs text-gray-500 font-medium mt-auto">
+                      {timeAgo(item.year)}
+                    </p>
+                  </div>
+                </>
+              );
+
+              if (isVideo) {
+                return (
+                  <Link
+                    key={item.id}
+                    href={`/gallery/${item.id}`}
+                    className="group relative overflow-hidden rounded-md bg-white shadow hover:shadow-lg transition-all duration-500 flex flex-col"
                   >
-                    {item.title}
-                  </h3>
-                  <p
-                    title={item.description}
-                    className="text-xs text-gray-600 line-clamp-2 mb-3 flex-1"
-                  >
-                    {item.description}
-                  </p>
-                  <p className="text-xs text-gray-500 font-medium mt-auto">
-                    {timeAgo(item.year)}
-                  </p>
+                    {cardContent}
+                  </Link>
+                );
+              }
+
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => setSelectedImage(item.src)}
+                  className="group relative overflow-hidden rounded-md bg-white shadow hover:shadow-lg transition-all duration-500 flex flex-col cursor-pointer"
+                >
+                  {cardContent}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {filteredItems.length === 0 && (
@@ -196,31 +211,7 @@ const GalleryPage = () => {
         </div>
       </div>
 
-      {/* Video Modal */}
-      {selectedVideo && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 md:p-8"
-          onClick={() => setSelectedVideo(null)}
-        >
-          <div
-            className="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setSelectedVideo(null)}
-              className="absolute top-4 right-4 z-10 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
-            <iframe
-              src={withAutoplay(selectedVideo)}
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
-      )}
+
 
       {/* Image Modal */}
       {selectedImage && (

@@ -85,7 +85,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-3",
     type: "video",
     src: "https://www.youtube.com/embed/Dh0JCODTtPk",
-    thumbnail: "https://img.youtube.com/vi/Dh0JCODTtPk/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/Dh0JCODTtPk/hqdefault.jpg",
     title:
       "Island All Stars SC vs All Stars International FC - Saturday, July 26, 2025",
     description:
@@ -97,7 +97,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-4",
     type: "video",
     src: "https://www.youtube.com/embed/1lAOnbD8TpQ",
-    thumbnail: "https://img.youtube.com/vi/1lAOnbD8TpQ/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/1lAOnbD8TpQ/hqdefault.jpg",
     title:
       "ISLAND ALLSTARS SPORTS CLUB: HOMECOMING NOVELTY MATCH & EARLY BIRTHDAY CELEBRATION",
     description:
@@ -109,7 +109,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-5",
     type: "video",
     src: "https://www.youtube.com/embed/g7PK5Umkazs",
-    thumbnail: "https://img.youtube.com/vi/g7PK5Umkazs/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/g7PK5Umkazs/hqdefault.jpg",
     title: "Island Allstars vs Navy Town Ojo | Lagos Football Showdown | Super",
     description:
       "This video features a friendly, competitive football match between Island Allstars Sports Club and Navy Town Ojo held at the Lagos Business School Arena on April 25, 2026. The event emphasized brotherhood, sportsmanship, and the spirit of community bonding.",
@@ -120,7 +120,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-6",
     type: "video",
     src: "https://www.youtube.com/embed/hWXhmC7I7-c",
-    thumbnail: "https://img.youtube.com/vi/hWXhmC7I7-c/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/hWXhmC7I7-c/hqdefault.jpg",
     title:
       "Africa’s Social Football Spectacle! | Island All Stars Synergy Cup 2025 – Week 2 Live from Lagos",
     description:
@@ -132,7 +132,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-7",
     type: "video",
     src: "https://www.youtube.com/embed/38USi62sDjg",
-    thumbnail: "https://img.youtube.com/vi/38USi62sDjg/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/38USi62sDjg/hqdefault.jpg",
     title: "IASC Super Cup 2026 🏆 | Team Lugna 🆚 Island Allstars SC",
     description:
       "Football passion meets competition as both teams battle for glory in this highly anticipated Super Cup encounter, played at the iconic Lagos Business School. From intense tackles to moments of brilliance, this match delivered excitement from start to finish.",
@@ -143,7 +143,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-8",
     type: "video",
     src: "https://www.youtube.com/embed/mQW7UdgY1Kk",
-    thumbnail: "https://img.youtube.com/vi/mQW7UdgY1Kk/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/mQW7UdgY1Kk/hqdefault.jpg",
     title:
       "1st Half Enugu Selected All Stars vs Island AllStars Sports Club of Lagos",
     description:
@@ -155,7 +155,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-9",
     type: "video",
     src: "https://www.youtube.com/embed/8LRrdd0GlGE",
-    thumbnail: "https://img.youtube.com/vi/8LRrdd0GlGE/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/8LRrdd0GlGE/hqdefault.jpg",
     title:
       "Global Football Stream: Island AllStars WERBLACK WINES Cup 2025 | Week 1 Live",
     description:
@@ -167,7 +167,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-10",
     type: "video",
     src: "https://www.youtube.com/embed/bg0UPcDIq2Q",
-    thumbnail: "https://img.youtube.com/vi/bg0UPcDIq2Q/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/bg0UPcDIq2Q/hqdefault.jpg",
     title:
       "ISLAND ALLSTARS SC 1-2 ELITE FOOTBALL CLUB LAGOS | HIGHLIGHTS | CLUB CHALLENGE",
     description:
@@ -179,7 +179,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-11",
     type: "video",
     src: "https://www.youtube.com/embed/b8xWKxkvOcI",
-    thumbnail: "https://img.youtube.com/vi/b8xWKxkvOcI/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/b8xWKxkvOcI/hqdefault.jpg",
     title: "ISLAND ALLSTARS SPORTS CLUB ELECTION 2022",
     description:
       "Island Allstars Sports Club Presidential Election 2022: Haliru Momodu (The Bridge) vs. Ikenna Maduagwu (The New Order)",
@@ -190,7 +190,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-12",
     type: "video",
     src: "https://www.youtube.com/embed/cSWyFIwxXy8",
-    thumbnail: "https://img.youtube.com/vi/cSWyFIwxXy8/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/cSWyFIwxXy8/hqdefault.jpg",
     title: "ISLAND ALL STARS ABOVE 45 TOURNAMENT 2024",
     description:
       "This video features a football match between Real Tonex and Live Station, held on October 5, 2024, at the Lagos Business School as part of the Island All Stars Above 45 Tournament.",
@@ -201,7 +201,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-13",
     type: "video",
     src: "https://www.youtube.com/embed/whfSZwZxy5U",
-    thumbnail: "https://img.youtube.com/vi/whfSZwZxy5U/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/whfSZwZxy5U/hqdefault.jpg",
     title: "2024 IASC PROVIDUS BANK ACHIEVERS CUP: TEAM T-GOLD VS TEAM PROSSY",
     description:
       "2024 Island All Stars Sports Club Providus Bank Achievers Cup: Team T-Gold vs. Team Prossy",
@@ -212,7 +212,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-14",
     type: "video",
     src: "https://www.youtube.com/embed/FiHeled5VjI",
-    thumbnail: "https://img.youtube.com/vi/FiHeled5VjI/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/FiHeled5VjI/hqdefault.jpg",
     title:
       "Allstars Sports Club Inaugurates Excos And Inducts New Members | Metrofile",
     description:
@@ -224,7 +224,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-15",
     type: "video",
     src: "https://www.youtube.com/embed/faIk1Ew2wEc",
-    thumbnail: "https://img.youtube.com/vi/faIk1Ew2wEc/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/faIk1Ew2wEc/hqdefault.jpg",
     title: "HIGHLIGHT: ISLAND ALLSTARS MANIFESTO NIGHT & ELECTION 2022.",
     description:
       "The anticipated general election of the Island Allstars Sports Club held on Saturday May 28, 2022 saw Mr Ikenna Maduagwu emerge as the President of the club for the next three years, defeating Mr Haliru Momodu with 99 votes to 88 votes.",
@@ -235,7 +235,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-16",
     type: "video",
     src: "https://www.youtube.com/embed/hfdTuxrm4Sc",
-    thumbnail: "https://img.youtube.com/vi/hfdTuxrm4Sc/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/hfdTuxrm4Sc/hqdefault.jpg",
     title: "2023 ISLAND ALLSTARS PROVIDUS LOVE CUP MATCHDAY 2 HIGHLIGHT",
     description:
       "2023 Island Allstars Providus Bank Love Cup Matchday 1: Realitypro Vs Lush Club and Lorenzo-Phianni Vs  Ailes Group",
@@ -246,7 +246,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-17",
     type: "video",
     src: "https://www.youtube.com/embed/HR0E38l6DZQ",
-    thumbnail: "https://img.youtube.com/vi/HR0E38l6DZQ/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/HR0E38l6DZQ/hqdefault.jpg",
     title: "2nd Half Enugu Selected All stars vs Island Sports Club of Lagos",
     description:
       "This video captures the 2nd half of a novelty football match between the Enugu Selected All Stars and the Island Sports Club of Lagos. Throughout the match, the commentary highlights the skill of veteran players, the flow of the game, and moments of high excitement.",
@@ -257,7 +257,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-18",
     type: "video",
     src: "https://www.youtube.com/embed/V-2oJjOMukk",
-    thumbnail: "https://img.youtube.com/vi/V-2oJjOMukk/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/V-2oJjOMukk/hqdefault.jpg",
     title:
       "2023 Island Allstars Providus Bank Love Cup: Realitypro Vs Lush Club",
     description:
@@ -269,7 +269,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-19",
     type: "video",
     src: "https://www.youtube.com/embed/Bu2ErPSFzIA",
-    thumbnail: "https://img.youtube.com/vi/Bu2ErPSFzIA/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/Bu2ErPSFzIA/hqdefault.jpg",
     title: "National Club Friendly: Island Allstars SC VS Primus City AS",
     description:
       "This video features a football match between Island Allstars SC and Primus City AS. The event serves as a grassroots sports exhibition, organized by Sports247 ",
@@ -280,7 +280,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-20",
     type: "video",
     src: "https://www.youtube.com/embed/XWVUzpK0aks",
-    thumbnail: "https://img.youtube.com/vi/XWVUzpK0aks/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/XWVUzpK0aks/hqdefault.jpg",
     title:
       "Club Election: Island All Stars Holds Manifesto Night Ahead Of Club Elections",
     description:
@@ -292,7 +292,7 @@ export const galleryItems: GalleryItem[] = [
     id: "t16-21",
     type: "video",
     src: "https://www.youtube.com/embed/MgPZiftcehQ",
-    thumbnail: "https://img.youtube.com/vi/MgPZiftcehQ/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/MgPZiftcehQ/hqdefault.jpg",
     title:
       "2023 Island Allstars Providus Bank Love Cup: Lush Club Vs Lorenzo-Phianni",
     description:

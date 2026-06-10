@@ -48,7 +48,7 @@ const News = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16">
           <div className="md:w-1/3">
             <p className="text-gray-400 text-[10px] font-bold tracking-[0.4em] uppercase">
-              Elevate your football journey
+              Elevate your social & sports life
             </p>
           </div>
           <div className="md:w-2/3 md:text-right">

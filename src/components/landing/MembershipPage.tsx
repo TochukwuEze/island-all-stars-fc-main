@@ -6,6 +6,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Check, Shield, Star, Trophy, Users } from "lucide-react";
 import FadeIn from "@/components/ui/FadeIn";
+import { Sofia_Sans_Condensed } from "next/font/google";
+
+const sofiaSansCondensed = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["900"],
+});
 
 const membershipTiers = [
   {
@@ -80,7 +86,7 @@ export default function MembershipPage() {
             </p>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <h1 className="text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6">
+            <h1 className={`text-white text-4xl md:text-6xl font-black uppercase leading-tight mb-6 ${sofiaSansCondensed.className}`}>
               Become a part of <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryColor to-blue-400">
                 Island Allstars Sports Club
@@ -107,9 +113,7 @@ export default function MembershipPage() {
             </h2>
             <div className="w-20 h-1.5 bg-primaryColor mx-auto mb-6 rounded-full" />
             <p className="text-gray-500 text-lg">
-              Membership at Island Allstars Sports Club is more than just a
-              ticket to a game. It's your pass to an exclusive lifestyle and
-              community.
+              Membership at Island Allstars Sports Club is more than just sports. It's your pass to an exclusive lifestyle, brotherhood, and a thriving professional network.
             </p>
           </div>
 
@@ -211,13 +215,12 @@ export default function MembershipPage() {
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-5xl font-black text-white uppercase mb-6">
-            Ready to Take the Pitch?
+          <h2 className={`text-3xl md:text-5xl font-black text-white uppercase mb-6 ${sofiaSansCondensed.className}`}>
+            Ready to Join the Brotherhood?
           </h2>
           <p className="text-blue-100 text-lg mb-10 max-w-2xl mx-auto">
             Join hundreds of members who are already enjoying the exclusive
-            benefits of Island Allstars Sports Club. Don't just watch the
-            game—live it.
+            benefits of Island Allstars Sports Club. Connect, stay fit, and create wealth together.
           </p>
           <Link href="/join-iasc">
             <button className="px-10 py-4 bg-primaryColor text-white rounded-full font-bold uppercase tracking-widest text-sm hover:bg-blue-600 hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(32,82,218,0.4)]">

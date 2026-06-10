@@ -2,6 +2,12 @@
 
 import React, { useState } from "react";
 import Breadcrumb from "@/components/landing/Breadcrumb";
+import { Sofia_Sans_Condensed } from "next/font/google";
+
+const sofiaSansCondensed = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["900"],
+});
 
 // ── Icons ──────────────────────────────────────────────────────────────────
 
@@ -206,7 +212,7 @@ export default function ContactPage() {
           {/* ── Left: Info ──────────────────────────────────── */}
           <div className="flex flex-col gap-10">
             <div>
-              <h1 className="text-4xl md:text-[3.2rem] font-black uppercase leading-[1.1] tracking-tight text-[#001429]">
+              <h1 className={`text-4xl md:text-[3.2rem] font-black uppercase leading-[1.1] tracking-tight text-[#001429] ${sofiaSansCondensed.className}`}>
                 Need Help?{" "}
                 <span className="text-primaryColor">Contact IASC</span> Now!
               </h1>
