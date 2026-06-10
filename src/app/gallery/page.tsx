@@ -121,7 +121,7 @@ const GalleryPage = () => {
             {filteredItems.map((item) => (
               <div
                 key={item.id}
-                className="group relative overflow-hidden rounded-md bg-white shadow hover:shadow-lg transition-all duration-500 cursor-pointer"
+                className="group relative overflow-hidden rounded-md bg-white shadow hover:shadow-lg transition-all duration-500 cursor-pointer flex flex-col"
                 onClick={() => {
                   if (item.type === "video") setSelectedVideo(item.src);
                   else setSelectedImage(item.src);
@@ -162,17 +162,23 @@ const GalleryPage = () => {
                 </div>
 
                 {/* Content */}
-                <div className="p-4">
+                <div className="p-4 flex flex-col flex-1">
                   <span className="text-xs font-bold text-primaryColor uppercase tracking-wider mb-1 block">
                     {item.category}
                   </span>
                   <h3
                     title={item.title}
-                    className="text-sm font-bold text-gray-900 line-clamp-1 group-hover:text-primaryColor transition-colors"
+                    className="text-sm font-bold text-gray-900 line-clamp-1 group-hover:text-primaryColor transition-colors mb-2"
                   >
                     {item.title}
                   </h3>
-                  <p className="text-xs text-gray-500 font-medium">
+                  <p
+                    title={item.description}
+                    className="text-xs text-gray-600 line-clamp-2 mb-3 flex-1"
+                  >
+                    {item.description}
+                  </p>
+                  <p className="text-xs text-gray-500 font-medium mt-auto">
                     {timeAgo(item.year)}
                   </p>
                 </div>
