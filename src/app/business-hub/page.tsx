@@ -1,8 +1,10 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { TopBar } from "@/components/landing/TopBar";
 import { MainHeader } from "@/components/landing/MainHeader";
 import { Navbar } from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import Link from "next/link";
 import {
   Search,
   MapPin,
@@ -15,6 +17,7 @@ import {
   User,
 } from "lucide-react";
 import { Sofia_Sans_Condensed } from "next/font/google";
+import { getBusinesses, Business } from "@/lib/businessStore";
 
 const sofiaSansCondensed = Sofia_Sans_Condensed({
   subsets: ["latin"],
@@ -22,6 +25,20 @@ const sofiaSansCondensed = Sofia_Sans_Condensed({
 });
 
 const BusinessHubPage = () => {
+  const [businessesList, setBusinessesList] = useState<Business[]>([]);
+
+  useEffect(() => {
+    const fetchBiz = () => {
+      const activeBusinesses = getBusinesses().filter(b => b.status !== "suspended");
+      setBusinessesList(activeBusinesses);
+    };
+    
+    fetchBiz();
+
+    window.addEventListener("businesses-updated", fetchBiz);
+    return () => window.removeEventListener("businesses-updated", fetchBiz);
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50/50">
       <TopBar />
@@ -61,9 +78,9 @@ const BusinessHubPage = () => {
             <div className="pt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-gray-500">
               <span>Popular Categories:</span>
               {[
+                "Technology",
                 "Real Estate",
-                "Legal Services",
-                "Retail & Fashion",
+                "Healthcare",
                 "Consulting",
               ].map((term) => (
                 <span
@@ -127,12 +144,16 @@ const BusinessHubPage = () => {
                   </h4>
                   <div className="space-y-3">
                     {[
-                      "Real Estate & Property",
-                      "Legal & Consulting",
-                      "Healthcare & Medical",
-                      "Technology & IT",
+                      "Technology",
+                      "Legal",
+                      "Real Estate",
+                      "Healthcare",
+                      "Logistics",
                       "Food & Hospitality",
-                      "Logistics & Transport",
+                      "Finance",
+                      "Retail",
+                      "Consulting",
+                      "Others"
                     ].map((industry) => (
                       <label
                         key={industry}
@@ -173,7 +194,7 @@ const BusinessHubPage = () => {
 
             {/* Business Cards */}
             <div className="space-y-5">
-              {businesses.map((business, idx) => (
+              {businessesList.map((business, idx) => (
                 <div
                   key={idx}
                   className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all hover:border-blue-200 group relative overflow-hidden"
@@ -207,6 +228,12 @@ const BusinessHubPage = () => {
                             <MapPin className="w-4 h-4 text-gray-400" />{" "}
                             {business.location}
                           </span>
+                          {business.phone && (
+                            <span className="flex items-center gap-1.5">
+                              <Phone className="w-4 h-4 text-gray-400" />{" "}
+                              {business.phone}
+                            </span>
+                          )}
                         </div>
                         <div className="flex flex-wrap gap-2">
                           {business.tags.map((tag) => (
@@ -221,12 +248,14 @@ const BusinessHubPage = () => {
                       </div>
                     </div>
                     <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 sm:gap-4 shrink-0">
-                      <button className="bg-white border border-gray-200 text-gray-900 hover:bg-gray-50 hover:text-blue-600 font-semibold px-6 py-2.5 rounded-xl text-sm flex items-center gap-2 transition-all w-full justify-center">
+                      <Link href={`/business-hub/${encodeURIComponent(business.name.toLowerCase().replace(/\s+/g, '-'))}`} className="bg-white border border-gray-200 text-gray-900 hover:bg-gray-50 hover:text-blue-600 font-semibold px-6 py-2.5 rounded-xl text-sm flex items-center gap-2 transition-all w-full justify-center">
                         View Profile
-                      </button>
-                      <button className="bg-blue-50 border border-blue-100 text-blue-700 hover:bg-blue-600 hover:text-white font-semibold px-6 py-2.5 rounded-xl text-sm flex items-center gap-2 transition-all w-full justify-center">
-                        <Phone className="w-4 h-4" /> Contact
-                      </button>
+                      </Link>
+                      {business.phone && (
+                        <a href={`tel:${business.phone}`} className="bg-blue-50 border border-blue-100 text-blue-700 hover:bg-blue-600 hover:text-white font-semibold px-6 py-2.5 rounded-xl text-sm flex items-center gap-2 transition-all w-full justify-center">
+                          <Phone className="w-4 h-4" /> Contact
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -291,53 +320,5 @@ const BusinessHubPage = () => {
     </div>
   );
 };
-
-const businesses = [
-  {
-    name: "Sterling Legal Partners",
-    owner: "Chief Adekunle Williams",
-    description:
-      "Premium legal consulting, corporate advisory, and dispute resolution services for enterprise clients and individuals.",
-    location: "Ikoyi, Lagos",
-    tags: ["Legal", "Consulting", "B2B"],
-    isVerified: true,
-  },
-  {
-    name: "TechNova Solutions Ltd",
-    owner: "Mr. Chukwudi Eze",
-    description:
-      "End-to-end software development, IT infrastructure setup, and digital transformation consulting.",
-    location: "Victoria Island, Lagos",
-    tags: ["Technology", "IT Services", "B2B"],
-    isVerified: true,
-  },
-  {
-    name: "Island Prime Properties",
-    owner: "Mrs. Folashade Ojo",
-    description:
-      "Luxury real estate brokerage, property management, and investment advisory on the Island.",
-    location: "Lekki Phase 1, Lagos",
-    tags: ["Real Estate", "Sales", "Management"],
-    isVerified: false,
-  },
-  {
-    name: "HealthPlus Diagnostics",
-    owner: "Dr. Ibrahim Musa",
-    description:
-      "State-of-the-art medical laboratory and diagnostic center providing fast and accurate test results.",
-    location: "Surulere, Lagos",
-    tags: ["Healthcare", "Medical", "B2C"],
-    isVerified: true,
-  },
-  {
-    name: "Global Trade & Logistics",
-    owner: "Alhaji Sani Danjuma",
-    description:
-      "International freight forwarding, customs clearance, and supply chain management services.",
-    location: "Apapa, Lagos",
-    tags: ["Logistics", "Import/Export", "B2B"],
-    isVerified: false,
-  },
-];
 
 export default BusinessHubPage;

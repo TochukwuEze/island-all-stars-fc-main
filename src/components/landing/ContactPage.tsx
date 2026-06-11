@@ -379,7 +379,7 @@ export default function ContactPage() {
                       <option value="">Select a subject</option>
                       <option value="general">General Enquiry</option>
                       <option value="membership">Membership</option>
-                      <option value="training">Training & Academy</option>
+                      <option value="training">Training</option>
                       <option value="events">Events & Matches</option>
                       <option value="sponsorship">
                         Sponsorship / Partnership
@@ -504,6 +504,10 @@ export default function ContactPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
+              {
+                q: "What does IASC stand for?",
+                a: "IASC stands for Island Allstars Sports Club.",
+              },
               {
                 q: "How do I become a member of Island Allstars Sports Club?",
                 a: "You can apply for membership by completing our online membership form on the 'Join our club' page. Our team will review your application and get in touch to guide you through the next steps.",

@@ -30,15 +30,15 @@ const teamMembers = [
 
 const faqs = [
   {
+    question: "What does IASC stand for?",
+    answer: "IASC stands for Island Allstars Sports Club.",
+  },
+  {
     question: "How do I join Island Allstars Sports Club?",
     answer:
       "You can join Island Allstars Sports Club by completing our online membership form on the Join our club page. Our team will review your application and get in touch within 48 hours to guide you through the next steps, including a trial session at our Lekki facility.",
   },
-  {
-    question: "What age groups does the academy cater to?",
-    answer:
-      "Our academy programmes cater to players aged 6 and above, with dedicated streams for Under-8s, Under-10s, Under-12s, Under-16s, and our senior development squad. Each group trains with age-appropriate coaching methodology.",
-  },
+
   {
     question:
       "Where are Island Allstars Sports Club training facilities located?",
@@ -53,7 +53,7 @@ const faqs = [
   {
     question: "How often do teams train per week?",
     answer:
-      "Training schedules vary by group, but most squads train three to four times per week, with weekend match days. Our coaches will provide each player's personalised schedule upon enrolment.",
+      "Our training days are Thursdays (4:00 PM - 6:00 PM) and Saturdays (8:00 AM - 12:00 PM). If there is a home match on a Saturday, it takes place at the same time. Away matches follow the opponent's schedule.",
   },
 ];
 

@@ -46,7 +46,7 @@ export default function ActivitiesPage() {
         <div className="absolute inset-0">
           <Image
             src="/images/hero-bg-ai.webp"
-            alt="Island FC Academy"
+            alt="Island FC Activities"
             fill
             priority
             className="object-cover opacity-40 mix-blend-luminosity"
@@ -94,7 +94,7 @@ export default function ActivitiesPage() {
               <div className="relative h-[500px] w-full rounded-3xl overflow-hidden shadow-xl">
                 <Image
                   src="/images/members/memberImage11.webp"
-                  alt="Academy Training"
+                  alt="Football Training"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
@@ -164,7 +164,6 @@ export default function ActivitiesPage() {
               to maximize our members' health and performance.
             </p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {ageGroups.map((squad, idx) => (
               <FadeIn key={idx} delay={idx * 0.1}>

@@ -22,6 +22,7 @@ import {
   Hash,
   Lock,
   Download,
+  Store,
 } from "lucide-react";
 import * as XLSX from "xlsx";
 import {
@@ -31,6 +32,7 @@ import {
   Member,
   saveMembers,
 } from "@/lib/membersStore";
+import { addBusiness, Business, getBusinesses, deleteBusiness, toggleSuspendBusiness } from "@/lib/businessStore";
 import Breadcrumb from "@/components/landing/Breadcrumb";
 import FadeIn from "@/components/ui/FadeIn";
 import { Sofia_Sans_Condensed, Inter } from "next/font/google";
@@ -53,11 +55,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-type AdminTab = "dashboard" | "directory" | "register" | "broadcast";
+type AdminTab = "dashboard" | "directory" | "register" | "broadcast" | "businesses";
 
 export default function AdminPortal() {
   const [activeTab, setActiveTab] = useState<AdminTab>("dashboard");
   const [members, setMembers] = useState<Member[]>([]);
+  const [businessesList, setBusinessesList] = useState<Business[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -77,12 +80,26 @@ export default function AdminPortal() {
   const [msgSubject, setMsgSubject] = useState("");
   const [msgContent, setMsgContent] = useState("");
 
+  // Business Form State
+  const [bizName, setBizName] = useState("");
+  const [bizOwner, setBizOwner] = useState("");
+  const [bizPhone, setBizPhone] = useState("");
+  const [bizDescription, setBizDescription] = useState("");
+  const [bizLocation, setBizLocation] = useState("");
+  const [bizTagSelect, setBizTagSelect] = useState("Technology");
+  const [bizCustomTags, setBizCustomTags] = useState("");
+  const [bizVerified, setBizVerified] = useState(false);
+
   // Notification states
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
     setMembers(getMembers());
+    setBusinessesList(getBusinesses());
+    const handleBizUpdate = () => setBusinessesList(getBusinesses());
+    window.addEventListener("businesses-updated", handleBizUpdate);
+    return () => window.removeEventListener("businesses-updated", handleBizUpdate);
   }, []);
 
   const refreshMembers = () => {
@@ -169,6 +186,41 @@ export default function AdminPortal() {
     }
   };
 
+  const handleAddBusiness = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!bizName.trim() || !bizOwner.trim()) {
+      showToast("error", "Business name and owner are required.");
+      return;
+    }
+
+    const newBusiness: Business = {
+      name: bizName.trim(),
+      owner: bizOwner.trim(),
+      description: bizDescription.trim(),
+      location: bizLocation.trim(),
+      phone: bizPhone.trim() || undefined,
+      tags: bizTagSelect === "Others" 
+        ? bizCustomTags.split(",").map(t => t.trim()).filter(Boolean)
+        : [bizTagSelect],
+      isVerified: bizVerified,
+    };
+
+    const added = addBusiness(newBusiness);
+    if (added) {
+      showToast("success", `Successfully added ${bizName.trim()} to Business Hub.`);
+      setBizName("");
+      setBizOwner("");
+      setBizPhone("");
+      setBizDescription("");
+      setBizLocation("");
+      setBizTagSelect("Technology");
+      setBizCustomTags("");
+      setBizVerified(false);
+    } else {
+      showToast("error", "A business with this name already exists.");
+    }
+  };
+
   const handleBroadcast = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -224,6 +276,16 @@ export default function AdminPortal() {
     );
     setMsgSubject("");
     setMsgContent("");
+  };
+
+  const handleDeleteBusiness = (name: string) => {
+    deleteBusiness(name);
+    showToast("success", "Business successfully deleted.");
+  };
+
+  const handleToggleSuspendBusiness = (name: string) => {
+    toggleSuspendBusiness(name);
+    showToast("success", "Business status updated successfully.");
   };
 
   const handleDeleteMember = (emailToDelete: string) => {
@@ -333,6 +395,11 @@ export default function AdminPortal() {
       id: "broadcast",
       label: "Broadcast message",
       icon: <MessageSquare size={18} />,
+    },
+    {
+      id: "businesses",
+      label: "Manage Businesses",
+      icon: <Store size={18} />,
     },
   ];
 
@@ -1159,6 +1226,228 @@ export default function AdminPortal() {
                       <span>Send Message</span>
                     </button>
                   </form>
+                </div>
+              </div>
+            )}
+            {activeTab === "businesses" && (
+              <div className="flex flex-col gap-6">
+                <div>
+                  <h2 className="text-xl font-black text-[#001429] uppercase">
+                    Manage Businesses
+                  </h2>
+                  <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mt-0.5">
+                    Add new member businesses to the Business Hub directory
+                  </p>
+                </div>
+
+                <div className="bg-white border border-gray-100 rounded-2xl p-6 sm:p-8 shadow-sm max-w-2xl">
+                  <form onSubmit={handleAddBusiness} className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {/* Business Name */}
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">
+                          Business Name
+                        </label>
+                        <input
+                          required
+                          type="text"
+                          placeholder="e.g. Sterling Legal"
+                          value={bizName}
+                          onChange={(e) => setBizName(e.target.value)}
+                          className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-xs font-semibold text-[#001429]"
+                        />
+                      </div>
+
+                      {/* Owner Name */}
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">
+                          Owner Name
+                        </label>
+                        <input
+                          required
+                          type="text"
+                          placeholder="e.g. Chief Adekunle"
+                          value={bizOwner}
+                          onChange={(e) => setBizOwner(e.target.value)}
+                          className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-xs font-semibold text-[#001429]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Location and Phone */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {/* Location */}
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">
+                          Location
+                        </label>
+                        <input
+                          required
+                          type="text"
+                          placeholder="e.g. Ikoyi, Lagos"
+                          value={bizLocation}
+                          onChange={(e) => setBizLocation(e.target.value)}
+                          className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-xs font-semibold text-[#001429]"
+                        />
+                      </div>
+
+                      {/* Phone Number */}
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">
+                          Phone Number
+                        </label>
+                        <input
+                          type="tel"
+                          placeholder="e.g. +234 801 234 5678"
+                          value={bizPhone}
+                          onChange={(e) => setBizPhone(e.target.value)}
+                          className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-xs font-semibold text-[#001429]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">
+                        Description
+                      </label>
+                      <textarea
+                        required
+                        rows={3}
+                        placeholder="Brief overview of the business..."
+                        value={bizDescription}
+                        onChange={(e) => setBizDescription(e.target.value)}
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-xs font-semibold text-[#001429] resize-none"
+                      />
+                    </div>
+
+                    {/* Tags */}
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">
+                        Industry Category
+                      </label>
+                      <select
+                        value={bizTagSelect}
+                        onChange={(e) => setBizTagSelect(e.target.value)}
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-xs font-semibold text-gray-500 appearance-none cursor-pointer"
+                      >
+                        <option value="Technology">Technology</option>
+                        <option value="Legal">Legal</option>
+                        <option value="Real Estate">Real Estate</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Logistics">Logistics</option>
+                        <option value="Food & Hospitality">Food & Hospitality</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Consulting">Consulting</option>
+                        <option value="Others">Others</option>
+                      </select>
+                      
+                      {bizTagSelect === "Others" && (
+                        <div className="pt-2 animate-in fade-in slide-in-from-top-2">
+                          <input
+                            type="text"
+                            placeholder="Type custom tags separated by commas..."
+                            value={bizCustomTags}
+                            onChange={(e) => setBizCustomTags(e.target.value)}
+                            className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-xs font-semibold text-[#001429]"
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Verified Status */}
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        id="bizVerified"
+                        checked={bizVerified}
+                        onChange={(e) => setBizVerified(e.target.checked)}
+                        className="w-4 h-4 rounded border-gray-300 text-primaryColor focus:ring-primaryColor accent-primaryColor cursor-pointer"
+                      />
+                      <label htmlFor="bizVerified" className="text-xs font-bold text-gray-600 uppercase tracking-widest cursor-pointer">
+                        Mark as Verified Member Business
+                      </label>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full py-4 bg-primaryColor text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/10 cursor-pointer"
+                    >
+                      Add Business
+                    </button>
+                  </form>
+                </div>
+
+                {/* Businesses Directory List */}
+                <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm mt-2">
+                  <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+                    <h3 className="font-black text-[#001429] uppercase">Business Directory</h3>
+                    <span className="text-xs font-bold text-gray-400 bg-gray-100 px-3 py-1 rounded-full">{businessesList.length} Businesses</span>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-gray-50 border-b border-gray-100">
+                          <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-400">Business</th>
+                          <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-400">Owner</th>
+                          <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-400">Status</th>
+                          <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-400 text-center">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-50 text-xs">
+                        {businessesList.map((b) => (
+                          <tr key={b.name} className="hover:bg-gray-50/50 transition-colors">
+                            <td className="px-6 py-4">
+                              <p className="font-bold text-[#001429]">{b.name}</p>
+                              <p className="text-[10px] text-gray-400">{b.location}</p>
+                            </td>
+                            <td className="px-6 py-4 font-semibold text-gray-600">
+                              {b.owner}
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                b.status === "suspended" ? "bg-red-50 text-red-600" : "bg-green-50 text-green-600"
+                              }`}>
+                                {b.status === "suspended" ? "Suspended" : "Active"}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center justify-center gap-2">
+                                <button
+                                  onClick={() => handleToggleSuspendBusiness(b.name)}
+                                  className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                                    b.status === "suspended" 
+                                      ? "bg-green-50 text-green-600 hover:bg-green-100" 
+                                      : "bg-orange-50 text-orange-600 hover:bg-orange-100"
+                                  }`}
+                                >
+                                  {b.status === "suspended" ? "Activate" : "Suspend"}
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    if(window.confirm(`Are you sure you want to delete ${b.name}?`)) {
+                                      handleDeleteBusiness(b.name);
+                                    }
+                                  }}
+                                  className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors cursor-pointer"
+                                >
+                                  Delete
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                        {businessesList.length === 0 && (
+                          <tr>
+                            <td colSpan={4} className="px-6 py-8 text-center text-gray-400 font-semibold">
+                              No businesses added yet.
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             )}

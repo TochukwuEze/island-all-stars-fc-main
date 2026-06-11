@@ -16,43 +16,17 @@ const sofiaSansCondensed = Sofia_Sans_Condensed({
 
 const programs = [
   {
-    title: "Football Match Days",
-    description: "Competitive and casual 11-a-side or 5-a-side matches among members to stay fit and build teamwork.",
+    title: "Football Training & Matches",
+    description: "Intense tactical training, fitness drills, and competitive matches. Home/Away schedules apply on match days.",
     icon: <Users className="w-8 h-8 text-[#2052DA]" />,
-    schedule: "Wed, Sat",
+    schedule: "Thu, Sat",
     level: "All Levels",
-  },
-  {
-    title: "Table Tennis",
-    description: "High-intensity rallies and reflex training for cardiovascular health and competitive fun.",
-    icon: <Target className="w-8 h-8 text-[#2052DA]" />,
-    schedule: "Tue, Thu",
-    level: "All Levels",
-  },
-  {
-    title: "Aerobics & Gymnastics",
-    description: "High-intensity cardio, stretching, and strength training designed for overall wellness and flexibility.",
-    icon: <Zap className="w-8 h-8 text-[#2052DA]" />,
-    schedule: "Thu, Sun",
-    level: "All Levels",
-  },
-  {
-    title: "Indoor Games",
-    description: "Chess, Draft, and Ludo to build strategic thinking and foster camaraderie off the pitch.",
-    icon: <Shield className="w-8 h-8 text-[#2052DA]" />,
-    schedule: "Daily",
-    level: "Recreational",
   },
 ];
 
 const schedule = [
-  { day: "Monday", sessions: [{ time: "18:00 - 21:00", name: "Rest & Clubhouse Networking" }] },
-  { day: "Tuesday", sessions: [{ time: "17:00 - 20:00", name: "Table Tennis & Indoor Games" }] },
-  { day: "Wednesday", sessions: [{ time: "18:30 - 20:30", name: "Midweek Football Scrimmage" }] },
-  { day: "Thursday", sessions: [{ time: "17:00 - 19:00", name: "Aerobics & Gymnastics" }, { time: "19:00 - 21:00", name: "Table Tennis" }] },
-  { day: "Friday", sessions: [{ time: "18:00 - 22:00", name: "Pre-Weekend Social & Board Games" }] },
-  { day: "Saturday", sessions: [{ time: "07:00 - 10:00", name: "Official Match Day (Football)" }] },
-  { day: "Sunday", sessions: [{ time: "09:00 - 11:00", name: "Recovery & General Fitness" }] },
+  { day: "Thursday", sessions: [{ time: "16:00 - 18:00", name: "Football Training" }] },
+  { day: "Saturday", sessions: [{ time: "08:00 - 12:00", name: "Football Training / Home Match" }, { time: "TBD", name: "Away Match (Opponent's Schedule)" }] },
 ];
 
 export default function TrainingPage() {
@@ -105,10 +79,10 @@ export default function TrainingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
             {programs.map((prog, idx) => (
               <FadeIn key={idx} delay={idx * 0.1}>
-                <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:border-primaryColor/30 hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+                <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:border-primaryColor/30 hover:shadow-xl transition-all duration-300 group flex flex-col h-full justify-center">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#001429] to-primaryColor flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform duration-300">
                     <div className="bg-white rounded-full p-2">{prog.icon}</div>
                   </div>
@@ -128,6 +102,16 @@ export default function TrainingPage() {
                 </div>
               </FadeIn>
             ))}
+            
+            <FadeIn delay={0.2} className="relative h-full min-h-[250px] md:min-h-[350px] w-full rounded-2xl overflow-hidden shadow-lg">
+              <Image
+                src="/images/members/memberImage11.webp"
+                alt="Football Training Session"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </FadeIn>
           </div>
         </div>
       </section>

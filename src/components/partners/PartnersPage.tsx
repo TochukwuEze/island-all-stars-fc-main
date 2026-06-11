@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Star, ChevronRight } from "lucide-react";
+import { Star, ChevronRight, User } from "lucide-react";
 
 /* ─────────── DATA ─────────── */
 const partners = [
@@ -24,25 +24,25 @@ const benefits = [
 
 const testimonials = [
   {
-    name: "Matteo Romano",
-    location: "Milan, Italy",
+    name: "Chinedu Okafor",
+    location: "Lekki, Lagos",
     rating: 5,
     image: "/images/team/hugo.png",
-    text: "Island FC helped our squad grow with their expert training and advice. The coaches guided us to reach new levels and boosted our club fast.",
+    text: "Partnering with Island Allstars Sports Club has been an incredible experience. Their dedication to fitness, community, and structured sports events is unmatched in Lagos.",
   },
   {
-    name: "Ethan Marshall",
-    location: "Turin, Italy",
+    name: "Babatunde Adeyemi",
+    location: "Ajah, Lagos",
     rating: 5,
     image: "/images/team/geff.png",
-    text: "Island FC sparked our group with new methods and great support. Their team's love for football gave us a strong push on the pitch.",
+    text: "IASC's commitment to creating a true family environment while maintaining competitive football is inspiring. They provide excellent networking and wellness opportunities.",
   },
   {
-    name: "Giovanni Russo",
-    location: "Rome, Italy",
+    name: "Emeka Nwosu",
+    location: "Victoria Island, Lagos",
     rating: 5,
     image: "/images/team/robert.png",
-    text: "IFC's creative events for fans made our matches much more fun. Their support and bold ideas gave our club a bright and loyal crowd.",
+    text: "From the weekly matches to the community support, Island FC operates with high standards. Our sponsorship with them has significantly boosted our local engagement.",
   },
 ];
 
@@ -207,14 +207,8 @@ function TestimonialsSection() {
 
               {/* Author */}
               <div className="flex items-center gap-4">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden bg-zinc-100 shrink-0">
-                  <Image
-                    src={t.image}
-                    alt={t.name}
-                    fill
-                    className="object-cover object-top"
-                    sizes="48px"
-                  />
+                <div className="relative w-12 h-12 rounded-full overflow-hidden bg-zinc-100 shrink-0 flex items-center justify-center">
+                  <User size={24} className="text-zinc-400" />
                 </div>
                 <div>
                   <p className="text-[13px] font-black text-[#1a1a1a] uppercase">
