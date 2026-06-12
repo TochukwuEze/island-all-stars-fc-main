@@ -1,11 +1,11 @@
-"use server";
+
 
 import { prisma } from "./prisma";
-
+import type { GalleryItem } from "../generated/prisma";
 export async function getGalleryItems() {
   const items = await prisma.galleryItem.findMany();
   
-  return items.map(item => ({
+  return items.map((item: GalleryItem) => ({
     id: item.id,
     title: item.title,
     description: item.description,
