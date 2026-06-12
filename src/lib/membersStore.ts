@@ -39,7 +39,7 @@ export interface Member {
   activity: MemberActivity[];
   messages: MemberMessage[];
 }
-
+type PrismaMember = Member & { stats: MemberStats; activity: MemberActivity[]; messages: MemberMessage[] };
 export async function getMembers(): Promise<Member[]> {
   const data = await prisma.member.findMany({
     include: {
@@ -48,7 +48,7 @@ export async function getMembers(): Promise<Member[]> {
       messages: true
     },
     orderBy: { createdAt: 'desc' }
-  });
+  }) as PrismaMember[];
   
   return data.map(d => ({
     ...d,
@@ -60,12 +60,12 @@ export async function getMembers(): Promise<Member[]> {
       assists: d.stats.assists,
       rating: d.stats.rating
     } : { matches: 0, goals: 0, assists: 0, rating: 0 },
-    activity: d.activity.map(a => ({
+    activity: d.activity.map((a: MemberActivity) => ({
       type: a.type as "match" | "training" | "social" | "payment" | "system",
       label: a.label,
       time: a.time
     })),
-    messages: d.messages.map(m => ({
+    messages: d.messages.map((m: MemberMessage) => ({
       from: m.from,
       subject: m.subject,
       time: m.time,
