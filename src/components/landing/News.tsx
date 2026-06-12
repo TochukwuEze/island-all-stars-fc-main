@@ -4,12 +4,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { newsItems } from "@/data/news";
-import { Sofia_Sans_Condensed } from "next/font/google";
-
-const sofiaSansCondensed = Sofia_Sans_Condensed({
-  subsets: ["latin"],
-  weight: ["700"],
-});
 import {
   Carousel,
   CarouselContent,
@@ -18,6 +12,12 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { galleryItems } from "@/app/gallery/gallery-data";
+import { Sofia_Sans_Condensed } from "next/font/google";
+
+const sofiaSansCondensed = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  weight: ["700"],
+});
 
 const News = () => {
   const combinedItems = [
