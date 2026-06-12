@@ -14,12 +14,11 @@ const sofiaSansCondensed = Sofia_Sans_Condensed({
   weight: ["700"],
 });
 import { 
-  getCurrentUser, 
-  clearCurrentUser, 
   findMemberByEmail, 
   updateMemberProfile, 
   Member 
 } from "@/lib/membersStore";
+import { getCurrentUser, clearCurrentUser } from "@/lib/authStore";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -271,8 +270,8 @@ function ProfileTab({ member, onUpdate }: { member: Member; onUpdate: () => void
   const [number, setNumber] = useState(member.number);
   const [role, setRole] = useState(member.role);
 
-  const handleSave = () => {
-    updateMemberProfile(member.email, {
+  const handleSave = async () => {
+    await updateMemberProfile(member.email, {
       name: name.trim(),
       position,
       number,
@@ -716,14 +715,26 @@ function ConstitutionTab() {
 export default function MemberPortalPage() {
   const [mounted, setMounted] = useState(false);
   const [currentUser, setCurrentUser] = useState<any>(null);
+  const [memberData, setMemberData] = useState<Member | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const checkAuth = () => {
+    const checkAuth = async () => {
       const user = getCurrentUser();
       setCurrentUser(user);
+      if (user && user.role !== "admin") {
+        const data = await findMemberByEmail(user.email);
+        // Ensure default data shapes are provided if fields are missing in fallback
+        const fallback = {
+          ...user,
+          stats: { matches: 0, goals: 0, assists: 0, rating: 6.0 },
+          activity: [],
+          messages: []
+        };
+        setMemberData(data || fallback);
+      }
     };
     checkAuth();
     window.addEventListener("auth-change", checkAuth);
@@ -752,20 +763,13 @@ export default function MemberPortalPage() {
   }
 
   // 3. Member -> Show member dashboard with dynamic data
-  const memberData = findMemberByEmail(currentUser.email) || {
-    name: currentUser.name,
-    email: currentUser.email,
-    role: currentUser.role || "Member",
-    number: currentUser.number || "#-",
-    position: currentUser.position || "Player",
-    joined: currentUser.joined || "N/A",
-    membershipType: currentUser.membershipType || "Member",
-    membershipExpiry: currentUser.membershipExpiry || "N/A",
-    avatar: null,
-    stats: { matches: 0, goals: 0, assists: 0, rating: 6.0 },
-    activity: [],
-    messages: []
-  };
+  if (!memberData) {
+    return (
+      <div className="min-h-screen bg-[#f7f9fc] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-primaryColor border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   const unreadMessages = (memberData.messages || []).filter((m) => !m.read).length;
 

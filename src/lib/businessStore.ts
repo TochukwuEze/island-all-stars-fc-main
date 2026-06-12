@@ -1,4 +1,6 @@
-"use client";
+"use server";
+import { prisma } from "./prisma";
+import { revalidatePath } from "next/cache";
 
 export interface Business {
   name: string;
@@ -7,137 +9,57 @@ export interface Business {
   location: string;
   tags: string[];
   isVerified: boolean;
-  status?: "active" | "suspended";
-  phone?: string;
+  status?: string | null;
+  phone?: string | null;
 }
 
-const DEFAULT_BUSINESSES: Business[] = [
-  {
-    name: "Sterling Legal Partners",
-    owner: "Chief Adekunle Williams",
-    description:
-      "Premium legal consulting, corporate advisory, and dispute resolution services for enterprise clients and individuals.",
-    location: "Ikoyi, Lagos",
-    tags: ["Legal", "Consulting", "B2B"],
-    isVerified: true,
-    phone: "+234 801 234 5678",
-  },
-  {
-    name: "TechNova Solutions Ltd",
-    owner: "Mr. Chukwudi Eze",
-    description:
-      "End-to-end software development, IT infrastructure setup, and digital transformation consulting.",
-    location: "Victoria Island, Lagos",
-    tags: ["Technology", "IT Services", "B2B"],
-    isVerified: true,
-    phone: "+234 802 345 6789",
-  },
-  {
-    name: "Island Prime Properties",
-    owner: "Mrs. Folashade Ojo",
-    description:
-      "Luxury real estate brokerage, property management, and investment advisory on the Island.",
-    location: "Lekki Phase 1, Lagos",
-    tags: ["Real Estate", "Sales", "Management"],
-    isVerified: false,
-    phone: "+234 803 456 7890",
-  },
-  {
-    name: "HealthPlus Diagnostics",
-    owner: "Dr. Ibrahim Musa",
-    description:
-      "State-of-the-art medical laboratory and diagnostic center providing fast and accurate test results.",
-    location: "Surulere, Lagos",
-    tags: ["Healthcare", "Medical", "B2C"],
-    isVerified: true,
-    phone: "+234 804 567 8901",
-  },
-  {
-    name: "Global Trade & Logistics",
-    owner: "Alhaji Sani Danjuma",
-    description:
-      "International freight forwarding, customs clearance, and supply chain management services.",
-    location: "Apapa, Lagos",
-    tags: ["Logistics", "Import/Export", "B2B"],
-    isVerified: false,
-    phone: "+234 805 678 9012",
-  },
-];
+export async function getBusinesses(): Promise<Business[]> {
+  const businesses = await prisma.business.findMany({
+    orderBy: { createdAt: 'desc' }
+  });
+  return businesses as Business[];
+}
 
-export const isClient = typeof window !== "undefined";
+export async function addBusiness(business: Business): Promise<boolean> {
+  const existing = await prisma.business.findUnique({
+    where: { name: business.name }
+  });
+  if (existing) return false;
 
-export function getBusinesses(): Business[] {
-  if (!isClient) return DEFAULT_BUSINESSES;
-  
-  const stored = localStorage.getItem("iasc_businesses");
-  if (!stored) {
-    localStorage.setItem("iasc_businesses", JSON.stringify(DEFAULT_BUSINESSES));
-    return DEFAULT_BUSINESSES;
-  }
-  
-  try {
-    const parsed: Business[] = JSON.parse(stored);
-    
-    // Patch existing businesses with default phone numbers if they are missing
-    const patched = parsed.map(b => {
-      if (!b.phone) {
-        const defaultMatch = DEFAULT_BUSINESSES.find(db => db.name === b.name);
-        if (defaultMatch && defaultMatch.phone) {
-          return { ...b, phone: defaultMatch.phone };
-        }
-      }
-      return b;
-    });
-    
-    // Save patched version back to keep it updated
-    if (JSON.stringify(parsed) !== JSON.stringify(patched)) {
-      localStorage.setItem("iasc_businesses", JSON.stringify(patched));
+  await prisma.business.create({
+    data: {
+      name: business.name,
+      owner: business.owner,
+      description: business.description,
+      location: business.location,
+      tags: business.tags,
+      isVerified: business.isVerified ?? false,
+      status: business.status ?? "active",
+      phone: business.phone
     }
-    
-    return patched;
-  } catch (e) {
-    console.error("Failed to parse businesses from storage", e);
-    return DEFAULT_BUSINESSES;
-  }
-}
-
-export function saveBusinesses(businesses: Business[]) {
-  if (!isClient) return;
-  localStorage.setItem("iasc_businesses", JSON.stringify(businesses));
-}
-
-export function addBusiness(business: Business): boolean {
-  const businesses = getBusinesses();
-  // Simple check for duplicates by name
-  if (businesses.some(b => b.name.toLowerCase() === business.name.toLowerCase())) {
-    return false;
-  }
-  businesses.unshift(business); // Add new business to the top
-  saveBusinesses(businesses);
-  // Dispatch an event so other components know data changed
-  if (isClient) {
-    window.dispatchEvent(new Event("businesses-updated"));
-  }
+  });
+  
+  revalidatePath("/business-hub");
+  revalidatePath("/admin");
   return true;
 }
 
-export function deleteBusiness(name: string): void {
-  const businesses = getBusinesses();
-  const filtered = businesses.filter(b => b.name.toLowerCase() !== name.toLowerCase());
-  saveBusinesses(filtered);
-  if (isClient) {
-    window.dispatchEvent(new Event("businesses-updated"));
-  }
+export async function deleteBusiness(name: string): Promise<void> {
+  await prisma.business.delete({
+    where: { name }
+  });
+  revalidatePath("/business-hub");
+  revalidatePath("/admin");
 }
 
-export function toggleSuspendBusiness(name: string): void {
-  const businesses = getBusinesses();
-  const target = businesses.find(b => b.name.toLowerCase() === name.toLowerCase());
+export async function toggleSuspendBusiness(name: string): Promise<void> {
+  const target = await prisma.business.findUnique({ where: { name } });
   if (target) {
-    target.status = target.status === "suspended" ? "active" : "suspended";
-    saveBusinesses(businesses);
-    if (isClient) {
-      window.dispatchEvent(new Event("businesses-updated"));
-    }
+    await prisma.business.update({
+      where: { name },
+      data: { status: target.status === "suspended" ? "active" : "suspended" }
+    });
+    revalidatePath("/business-hub");
+    revalidatePath("/admin");
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/landing/Footer";
@@ -9,7 +9,7 @@ import { MainHeader } from "@/components/landing/MainHeader";
 import { Navbar } from "@/components/landing/Navbar";
 import Breadcrumb from "@/components/landing/Breadcrumb";
 import { Play, X, ImageIcon, VideoIcon, Maximize2 } from "lucide-react";
-import { galleryItems } from "./gallery-data";
+import { getGalleryItems } from "@/lib/galleryStore";
 
 type MediaTab = "all" | "photo" | "video";
 
@@ -35,6 +35,15 @@ const GalleryPage = () => {
   const [videoCategory, setVideoCategory] =
     useState<VideoCategory>("All Videos");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [galleryItems, setGalleryItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const items = await getGalleryItems();
+      setGalleryItems(items);
+    };
+    fetchData();
+  }, []);
 
   const filteredItems = galleryItems.filter((item) => {
     if (activeTab === "photo") return item.type === "photo";

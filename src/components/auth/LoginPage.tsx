@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { Mail, Lock, AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
-import { findMemberByEmail, setCurrentUser } from "@/lib/membersStore";
+import { findMemberByEmail } from "@/lib/membersStore";
+import { setCurrentUser } from "@/lib/authStore";
 import FadeIn from "@/components/ui/FadeIn";
 import { Inter, Sofia_Sans_Condensed } from "next/font/google";
 
@@ -30,32 +31,11 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
     setIsSubmitting(true);
 
     // Simulate network delay
-    setTimeout(() => {
+    setTimeout(async () => {
       const normalizedEmail = email.trim().toLowerCase();
-      const adminEmail = "detobisz@yahoo.com";
-      const adminPassword = "123456";
-
-      // 1. Check Admin Credentials
-      if (normalizedEmail === adminEmail && password === adminPassword) {
-        const adminUser = {
-          name: "Admin",
-          email: adminEmail,
-          role: "admin",
-          position: "Club Administrator",
-          membershipType: "Club Admin",
-          number: "IFC-01",
-          joined: "June 2026",
-        };
-        setCurrentUser(adminUser);
-        setIsSubmitting(false);
-        if (onLoginSuccess) {
-          onLoginSuccess(adminUser);
-        }
-        return;
-      }
 
       // 2. Check Local Members DB
-      const member = findMemberByEmail(normalizedEmail);
+      const member = await findMemberByEmail(normalizedEmail);
       if (member && member.password === password) {
         if (member.status === "suspended") {
           setError(

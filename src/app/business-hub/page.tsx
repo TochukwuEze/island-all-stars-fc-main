@@ -28,15 +28,13 @@ const BusinessHubPage = () => {
   const [businessesList, setBusinessesList] = useState<Business[]>([]);
 
   useEffect(() => {
-    const fetchBiz = () => {
-      const activeBusinesses = getBusinesses().filter(b => b.status !== "suspended");
+    const fetchBiz = async () => {
+      const allBusinesses = await getBusinesses();
+      const activeBusinesses = allBusinesses.filter((b: Business) => b.status !== "suspended");
       setBusinessesList(activeBusinesses);
     };
     
     fetchBiz();
-
-    window.addEventListener("businesses-updated", fetchBiz);
-    return () => window.removeEventListener("businesses-updated", fetchBiz);
   }, []);
 
   return (

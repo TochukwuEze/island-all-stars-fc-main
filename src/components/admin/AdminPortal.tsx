@@ -28,10 +28,12 @@ import * as XLSX from "xlsx";
 import {
   getMembers,
   addMember,
-  clearCurrentUser,
+  deleteMember,
+  toggleSuspend,
+  broadcastMessage,
   Member,
-  saveMembers,
 } from "@/lib/membersStore";
+import { clearCurrentUser } from "@/lib/authStore";
 import { addBusiness, Business, getBusinesses, deleteBusiness, toggleSuspendBusiness } from "@/lib/businessStore";
 import Breadcrumb from "@/components/landing/Breadcrumb";
 import FadeIn from "@/components/ui/FadeIn";
@@ -95,15 +97,15 @@ export default function AdminPortal() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
-    setMembers(getMembers());
-    setBusinessesList(getBusinesses());
-    const handleBizUpdate = () => setBusinessesList(getBusinesses());
-    window.addEventListener("businesses-updated", handleBizUpdate);
-    return () => window.removeEventListener("businesses-updated", handleBizUpdate);
+    const fetchData = async () => {
+      setMembers(await getMembers());
+      setBusinessesList(await getBusinesses());
+    };
+    fetchData();
   }, []);
 
-  const refreshMembers = () => {
-    setMembers(getMembers());
+  const refreshMembers = async () => {
+    setMembers(await getMembers());
   };
 
   const showToast = (type: "success" | "error", message: string) => {
@@ -116,7 +118,7 @@ export default function AdminPortal() {
     }
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
     setSuccessMsg(null);
@@ -162,7 +164,7 @@ export default function AdminPortal() {
       status: "active",
     };
 
-    const added = addMember(newMember);
+    const added = await addMember(newMember);
 
     if (added) {
       showToast(
@@ -186,7 +188,7 @@ export default function AdminPortal() {
     }
   };
 
-  const handleAddBusiness = (e: React.FormEvent) => {
+  const handleAddBusiness = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!bizName.trim() || !bizOwner.trim()) {
       showToast("error", "Business name and owner are required.");
@@ -205,7 +207,7 @@ export default function AdminPortal() {
       isVerified: bizVerified,
     };
 
-    const added = addBusiness(newBusiness);
+    const added = await addBusiness(newBusiness);
     if (added) {
       showToast("success", `Successfully added ${bizName.trim()} to Business Hub.`);
       setBizName("");
@@ -221,7 +223,7 @@ export default function AdminPortal() {
     }
   };
 
-  const handleBroadcast = (e: React.FormEvent) => {
+  const handleBroadcast = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!msgSubject.trim() || !msgContent.trim()) {
@@ -229,46 +231,8 @@ export default function AdminPortal() {
       return;
     }
 
-    const currentMembers = getMembers();
-    const newMessage = {
-      from: "Club Admin",
-      subject: msgSubject.trim(),
-      time: "Just now",
-      read: false,
-    };
+    const updatedCount = await broadcastMessage(msgSubject.trim(), msgContent.trim(), msgRecipient);
 
-    let updatedCount = 0;
-
-    if (msgRecipient === "all") {
-      currentMembers.forEach((member) => {
-        member.messages = [newMessage, ...member.messages];
-        member.activity = [
-          {
-            type: "system",
-            label: `Received admin message: ${msgSubject.trim()}`,
-            time: "Just now",
-          },
-          ...member.activity,
-        ];
-      });
-      updatedCount = currentMembers.length;
-    } else {
-      const target = currentMembers.find((m) => m.email === msgRecipient);
-      if (target) {
-        target.messages = [newMessage, ...target.messages];
-        target.activity = [
-          {
-            type: "system",
-            label: `Received admin message: ${msgSubject.trim()}`,
-            time: "Just now",
-          },
-          ...target.activity,
-        ];
-        updatedCount = 1;
-      }
-    }
-
-    saveMembers(currentMembers);
     refreshMembers();
     showToast(
       "success",
@@ -278,54 +242,32 @@ export default function AdminPortal() {
     setMsgContent("");
   };
 
-  const handleDeleteBusiness = (name: string) => {
-    deleteBusiness(name);
+  const handleDeleteBusiness = async (name: string) => {
+    await deleteBusiness(name);
+    setBusinessesList(await getBusinesses());
     showToast("success", "Business successfully deleted.");
   };
 
-  const handleToggleSuspendBusiness = (name: string) => {
-    toggleSuspendBusiness(name);
+  const handleToggleSuspendBusiness = async (name: string) => {
+    await toggleSuspendBusiness(name);
+    setBusinessesList(await getBusinesses());
     showToast("success", "Business status updated successfully.");
   };
 
-  const handleDeleteMember = (emailToDelete: string) => {
-    const currentMembers = getMembers();
-    const filtered = currentMembers.filter(
-      (m) => m.email.toLowerCase() !== emailToDelete.toLowerCase(),
-    );
-    saveMembers(filtered);
+  const handleDeleteMember = async (emailToDelete: string) => {
+    await deleteMember(emailToDelete);
     refreshMembers();
     showToast("success", "Member successfully deleted.");
   };
 
-  const handleToggleSuspend = (
+  const handleToggleSuspend = async (
     email: string,
     currentStatus?: "active" | "suspended",
   ) => {
-    const newStatus = currentStatus === "suspended" ? "active" : "suspended";
-    const statusText = newStatus === "suspended" ? "suspended" : "reactivated";
-
-    const currentMembers = getMembers();
-    const target = currentMembers.find(
-      (m) => m.email.toLowerCase() === email.toLowerCase(),
-    );
-    if (target) {
-      target.status = newStatus;
-      target.activity = [
-        {
-          type: "system",
-          label: `Account ${statusText} by Admin`,
-          time: "Just now",
-        },
-        ...target.activity,
-      ];
-      saveMembers(currentMembers);
-      refreshMembers();
-      showToast(
-        "success",
-        `Successfully ${statusText} account for ${target.name}`,
-      );
-    }
+    const statusText = currentStatus === "suspended" ? "reactivated" : "suspended";
+    await toggleSuspend(email);
+    refreshMembers();
+    showToast("success", `Successfully ${statusText} account.`);
   };
 
   // Dashboard calculations
