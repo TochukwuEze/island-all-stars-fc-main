@@ -16,12 +16,15 @@ export default function BusinessProfilePage({ params }: { params: Promise<{ slug
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const allBusinesses = getBusinesses();
-    const found = allBusinesses.find(
-      (b) => encodeURIComponent(b.name.toLowerCase().replace(/\s+/g, "-")) === slug && b.status !== "suspended"
-    );
-    setBusiness(found || null);
-    setLoading(false);
+    const fetchBiz = async () => {
+      const allBusinesses = await getBusinesses();
+      const found = allBusinesses.find(
+        (b: Business) => encodeURIComponent(b.name.toLowerCase().replace(/\s+/g, "-")) === slug && b.status !== "suspended"
+      );
+      setBusiness(found || null);
+      setLoading(false);
+    };
+    fetchBiz();
   }, [slug]);
 
   if (loading) {

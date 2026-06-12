@@ -1,4 +1,7 @@
-"use client";
+"use server";
+
+import { prisma } from "./prisma";
+import { revalidatePath } from "next/cache";
 
 export interface MemberStats {
   matches: number;
@@ -8,7 +11,7 @@ export interface MemberStats {
 }
 
 export interface MemberActivity {
-  type: "match" | "training" | "payment" | "system";
+  type: "match" | "training" | "social" | "payment" | "system";
   label: string;
   time: string;
 }
@@ -31,184 +34,193 @@ export interface Member {
   membershipType: string;
   membershipExpiry: string;
   avatar: string | null;
+  status?: "active" | "suspended";
   stats: MemberStats;
   activity: MemberActivity[];
   messages: MemberMessage[];
-  status?: "active" | "suspended";
 }
 
-const DEFAULT_MEMBERS: Member[] = [
-  {
-    name: "Emeka Okafor",
-    email: "emeka.okafor@email.com",
-    password: "password123",
-    role: "Senior Player",
-    number: "#14",
-    position: "Midfielder",
-    joined: "January 2023",
-    membershipType: "Member",
-    membershipExpiry: "December 2026",
-    avatar: null,
-    stats: {
-      matches: 32,
-      goals: 7,
-      assists: 11,
-      rating: 7.8,
+export async function getMembers(): Promise<Member[]> {
+  const data = await prisma.member.findMany({
+    include: {
+      stats: true,
+      activity: true,
+      messages: true
     },
-    activity: [
-      { type: "match", label: "Match vs Apapa FC — Won 3-1", time: "2 days ago" },
-      { type: "training", label: "Training Session — Tactical Drills", time: "4 days ago" },
-      { type: "payment", label: "Membership Renewed — ₦50,000", time: "1 week ago" },
-      { type: "match", label: "Match vs Bar Beach Boys — Draw 1-1", time: "2 weeks ago" },
-    ],
-    messages: [
-      {
-        from: "Coach Tunde",
-        subject: "Training update for next week",
-        time: "2h ago",
-        read: false,
-      },
-      {
-        from: "Club Admin",
-        subject: "Membership renewal confirmation",
-        time: "1d ago",
-        read: true,
-      },
-      {
-        from: "Coach Tunde",
-        subject: "Team selection for Saturday",
-        time: "3d ago",
-        read: true,
-      },
-      {
-        from: "IASC Events",
-        subject: "Annual Club Gala — RSVP Required",
-        time: "5d ago",
-        read: false,
-      },
-    ],
-    status: "active",
-  },
-  {
-    name: "John Doe",
-    email: "john.doe@email.com",
-    password: "password123",
-    role: "Junior Player",
-    number: "#9",
-    position: "Forward",
-    joined: "March 2024",
-    membershipType: "Member",
-    membershipExpiry: "March 2027",
-    avatar: null,
-    stats: {
-      matches: 12,
-      goals: 8,
-      assists: 2,
-      rating: 7.2,
-    },
-    activity: [
-      { type: "match", label: "Match vs Marina Strikers — Won 2-0", time: "5 days ago" },
-      { type: "training", label: "Fitness Drills Session", time: "1 week ago" },
-    ],
-    messages: [
-      {
-        from: "Coach Tunde",
-        subject: "Tactical briefing agenda",
-        time: "1d ago",
-        read: false,
-      },
-    ],
-    status: "active",
-  },
-];
-
-export const isClient = typeof window !== "undefined";
-
-export function getMembers(): Member[] {
-  if (!isClient) return DEFAULT_MEMBERS;
+    orderBy: { createdAt: 'desc' }
+  });
   
-  const stored = localStorage.getItem("iasc_members");
-  if (!stored) {
-    localStorage.setItem("iasc_members", JSON.stringify(DEFAULT_MEMBERS));
-    return DEFAULT_MEMBERS;
-  }
-  
-  try {
-    return JSON.parse(stored);
-  } catch (e) {
-    console.error("Failed to parse members from storage", e);
-    return DEFAULT_MEMBERS;
-  }
+  return data.map(d => ({
+    ...d,
+    password: d.password || undefined,
+    status: d.status as "active" | "suspended" | undefined,
+    stats: d.stats ? {
+      matches: d.stats.matches,
+      goals: d.stats.goals,
+      assists: d.stats.assists,
+      rating: d.stats.rating
+    } : { matches: 0, goals: 0, assists: 0, rating: 0 },
+    activity: d.activity.map(a => ({
+      type: a.type as "match" | "training" | "social" | "payment" | "system",
+      label: a.label,
+      time: a.time
+    })),
+    messages: d.messages.map(m => ({
+      from: m.from,
+      subject: m.subject,
+      time: m.time,
+      read: m.read
+    }))
+  }));
 }
 
-export function saveMembers(members: Member[]) {
-  if (!isClient) return;
-  localStorage.setItem("iasc_members", JSON.stringify(members));
+export async function findMemberByEmail(email: string): Promise<Member | undefined> {
+  const members = await getMembers();
+  return members.find(m => m.email.toLowerCase() === email.toLowerCase());
 }
 
-export function findMemberByEmail(email: string): Member | undefined {
-  const members = getMembers();
-  return members.find((m) => m.email.toLowerCase() === email.toLowerCase());
-}
+export async function addMember(member: Member): Promise<boolean> {
+  const existing = await prisma.member.findUnique({
+    where: { email: member.email }
+  });
+  if (existing) return false;
 
-export function addMember(member: Member): boolean {
-  if (findMemberByEmail(member.email)) {
-    return false; // already exists
-  }
-  const members = getMembers();
-  members.push(member);
-  saveMembers(members);
+  await prisma.member.create({
+    data: {
+      name: member.name,
+      email: member.email,
+      password: member.password || "password123",
+      role: member.role,
+      number: member.number,
+      position: member.position,
+      joined: member.joined,
+      membershipType: member.membershipType,
+      membershipExpiry: member.membershipExpiry,
+      avatar: member.avatar,
+      status: member.status || "active",
+      stats: {
+        create: member.stats
+      },
+      activity: {
+        create: member.activity.map(a => ({
+          type: a.type,
+          label: a.label,
+          time: a.time
+        }))
+      },
+      messages: {
+        create: member.messages.map(m => ({
+          from: m.from,
+          subject: m.subject,
+          time: m.time,
+          read: m.read
+        }))
+      }
+    }
+  });
+
+  revalidatePath("/admin");
   return true;
 }
 
-export function getCurrentUser() {
-  if (!isClient) return null;
-  const userStr = localStorage.getItem("iasc_current_user");
-  if (!userStr) return null;
-  try {
-    return JSON.parse(userStr);
-  } catch (e) {
-    return null;
-  }
+export async function updateMemberProfile(email: string, updatedFields: Partial<Member>): Promise<boolean> {
+  const existing = await prisma.member.findUnique({ where: { email } });
+  if (!existing) return false;
+
+  const dataToUpdate: any = {};
+  if (updatedFields.name) dataToUpdate.name = updatedFields.name;
+  if (updatedFields.role) dataToUpdate.role = updatedFields.role;
+  if (updatedFields.number) dataToUpdate.number = updatedFields.number;
+  if (updatedFields.position) dataToUpdate.position = updatedFields.position;
+  if (updatedFields.status) dataToUpdate.status = updatedFields.status;
+
+  await prisma.member.update({
+    where: { email },
+    data: dataToUpdate
+  });
+
+  revalidatePath("/admin");
+  revalidatePath("/member-portal");
+  return true;
 }
 
-export function setCurrentUser(user: any) {
-  if (!isClient) return;
-  localStorage.setItem("iasc_current_user", JSON.stringify(user));
-  window.dispatchEvent(new Event("auth-change"));
+export async function deleteMember(email: string): Promise<void> {
+  await prisma.member.delete({
+    where: { email }
+  });
+  revalidatePath("/admin");
 }
 
-export function clearCurrentUser() {
-  if (!isClient) return;
-  localStorage.removeItem("iasc_current_user");
-  window.dispatchEvent(new Event("auth-change"));
-}
-
-export function updateMemberProfile(email: string, updatedFields: Partial<Member>): boolean {
-  const members = getMembers();
-  const index = members.findIndex((m) => m.email.toLowerCase() === email.toLowerCase());
-  if (index === -1) return false;
-  
-  members[index] = {
-    ...members[index],
-    ...updatedFields,
-    // Ensure nested objects aren't accidentally wiped if they aren't part of update
-    stats: { ...members[index].stats, ...(updatedFields.stats || {}) },
+export async function broadcastMessage(subject: string, content: string, recipientEmail?: string): Promise<number> {
+  const newMessage = {
+    from: "Club Admin",
+    subject,
+    time: "Just now",
+    read: false
   };
-  
-  saveMembers(members);
-  
-  // If this is the current user, update their session too
-  const currentUser = getCurrentUser();
-  if (currentUser && currentUser.email.toLowerCase() === email.toLowerCase()) {
-    const updatedUser = {
-      ...currentUser,
-      ...updatedFields,
-    };
-    // Don't leak password in session state
-    delete updatedUser.password;
-    setCurrentUser(updatedUser);
+
+  if (recipientEmail && recipientEmail !== "all") {
+    const member = await prisma.member.findUnique({ where: { email: recipientEmail } });
+    if (member) {
+      await prisma.memberMessage.create({
+        data: {
+          memberId: member.id,
+          ...newMessage
+        }
+      });
+      await prisma.memberActivity.create({
+        data: {
+          memberId: member.id,
+          type: "system",
+          label: `Received admin message: ${subject}`,
+          time: "Just now"
+        }
+      });
+      revalidatePath("/admin");
+      return 1;
+    }
+    return 0;
+  } else {
+    const members = await prisma.member.findMany();
+    let count = 0;
+    for (const m of members) {
+      await prisma.memberMessage.create({
+        data: {
+          memberId: m.id,
+          ...newMessage
+        }
+      });
+      await prisma.memberActivity.create({
+        data: {
+          memberId: m.id,
+          type: "system",
+          label: `Received admin message: ${subject}`,
+          time: "Just now"
+        }
+      });
+      count++;
+    }
+    revalidatePath("/admin");
+    return count;
   }
-  
-  return true;
+}
+
+export async function toggleSuspend(email: string): Promise<void> {
+  const member = await prisma.member.findUnique({ where: { email } });
+  if (member) {
+    const newStatus = member.status === "suspended" ? "active" : "suspended";
+    await prisma.member.update({
+      where: { email },
+      data: { status: newStatus }
+    });
+    await prisma.memberActivity.create({
+      data: {
+        memberId: member.id,
+        type: "system",
+        label: `Account ${newStatus === "suspended" ? "suspended" : "reactivated"} by Admin`,
+        time: "Just now"
+      }
+    });
+    revalidatePath("/admin");
+  }
 }

@@ -1,0 +1,95 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Member {
+  id               String           @id @default(uuid())
+  name             String
+  email            String           @unique
+  password         String?
+  role             String
+  number           String
+  position         String
+  joined           String
+  membershipType   String
+  membershipExpiry String
+  avatar           String?
+  status           String?          @default("active") // "active" | "suspended"
+  stats            MemberStats?
+  activity         MemberActivity[]
+  messages         MemberMessage[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+model MemberStats {
+  id       String @id @default(uuid())
+  matches  Int
+  goals    Int
+  assists  Int
+  rating   Float
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  memberId String @unique
+}
+
+model MemberActivity {
+  id       String @id @default(uuid())
+  type     String // "match" | "training" | "payment" | "system"
+  label    String
+  time     String
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  memberId String
+}
+
+model MemberMessage {
+  id       String  @id @default(uuid())
+  from     String
+  subject  String
+  time     String
+  read     Boolean @default(false)
+  member   Member  @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  memberId String
+}
+
+model Business {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  owner       String
+  description String
+  location    String
+  tags        String[]
+  isVerified  Boolean  @default(false)
+  status      String?  @default("active") // "active" | "suspended"
+  phone       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model NewsItem {
+  id       String @id @default(uuid())
+  slug     String @unique
+  title    String
+  category String
+  date     String
+  comments Int    @default(0)
+  image    String
+  content  String
+}
+
+model GalleryItem {
+  id          String  @id @default(uuid())
+  type        String // "photo" | "video"
+  src         String
+  thumbnail   String
+  title       String
+  category    String
+  year        Int
+  description String?
+}

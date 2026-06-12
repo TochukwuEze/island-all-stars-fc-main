@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { newsItems } from "@/data/news";
+import { getNewsItems } from "@/lib/newsStore";
+import { getGalleryItems } from "@/lib/galleryStore";
 import {
   Carousel,
   CarouselContent,
@@ -11,7 +12,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { galleryItems } from "@/app/gallery/gallery-data";
 import { Sofia_Sans_Condensed } from "next/font/google";
 
 const sofiaSansCondensed = Sofia_Sans_Condensed({
@@ -20,26 +20,37 @@ const sofiaSansCondensed = Sofia_Sans_Condensed({
 });
 
 const News = () => {
-  const combinedItems = [
-    ...newsItems.map((item) => ({
-      ...item,
-      isVideo: false,
-      description: item.content.split("\n")[0],
-    })),
-    ...galleryItems
-      .filter((item) => item.type === "video")
-      .map((video) => ({
-        id: video.id,
-        slug: video.id,
-        title: video.title,
-        category: "VIDEO",
-        date: video.year.toString(),
-        comments: 0,
-        image: video.thumbnail,
-        isVideo: true,
-        description: video.description,
-      })),
-  ];
+  const [combinedItems, setCombinedItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedNews = await getNewsItems();
+      const fetchedGallery = await getGalleryItems();
+      
+      const combined = [
+        ...fetchedNews.map((item) => ({
+          ...item,
+          isVideo: false,
+          description: item.content.split("\n")[0],
+        })),
+        ...fetchedGallery
+          .filter((item) => item.type === "video")
+          .map((video) => ({
+            id: video.id,
+            slug: video.id,
+            title: video.title,
+            category: "VIDEO",
+            date: video.year.toString(),
+            comments: 0,
+            image: video.thumbnail,
+            isVideo: true,
+            description: video.description,
+          })),
+      ];
+      setCombinedItems(combined);
+    };
+    fetchData();
+  }, []);
 
   return (
     <section className="bg-black text-white py-24 px-6 md:px-12 lg:px-24 overflow-hidden">

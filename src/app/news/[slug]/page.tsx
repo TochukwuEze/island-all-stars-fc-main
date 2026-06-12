@@ -6,8 +6,8 @@ import { TopBar } from "@/components/landing/TopBar";
 import { MainHeader } from "@/components/landing/MainHeader";
 import { Navbar } from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { newsItems } from "@/data/news";
-import { galleryItems } from "@/app/gallery/gallery-data";
+import { getNewsItems } from "@/lib/newsStore";
+import { getGalleryItems } from "@/lib/galleryStore";
 import { Inter, Sofia_Sans_Condensed } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,6 +24,8 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const newsItems = await getNewsItems();
+  const galleryItems = await getGalleryItems();
   const article = newsItems.find((item) => item.slug === slug);
   const videoItem = galleryItems.find(
     (item) => item.id === slug && item.type === "video",
@@ -42,6 +44,8 @@ export async function generateMetadata({
 
 export default async function NewsArticlePage({ params }: PageProps) {
   const { slug } = await params;
+  const newsItems = await getNewsItems();
+  const galleryItems = await getGalleryItems();
   const article = newsItems.find((item) => item.slug === slug);
   const videoItem = galleryItems.find(
     (item) => item.id === slug && item.type === "video",
