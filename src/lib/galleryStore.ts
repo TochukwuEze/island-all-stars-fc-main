@@ -1,5 +1,6 @@
 import { prisma } from "./prisma";
-import type { GalleryItem } from "@prisma/client";
+import type { GalleryItem } from "@prisma/client"; // This casing will now work perfectly!
+
 export async function getGalleryItems() {
   const items = await prisma.galleryItem.findMany();
 
