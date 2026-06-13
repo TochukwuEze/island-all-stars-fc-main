@@ -1,3 +1,5 @@
+"use server";
+
 
 import { PrismaClient } from "../generated/prisma";
 import { Pool } from "pg";
