@@ -17,6 +17,7 @@ import AssistantProvost from "../../../public/images/executives/assistantProvost
 import { Montserrat } from "next/font/google";
 import { Playfair_Display } from "next/font/google";
 import { Sofia_Sans_Condensed } from "next/font/google";
+import Link from "next/link";
 
 const sofiaSansCondensed = Sofia_Sans_Condensed({
   subsets: ["latin"],
@@ -33,68 +34,7 @@ const montserrat = Montserrat({
   weight: ["700", "800", "900"],
 });
 
-const experts = [
-  {
-    name: "Mr Okeke Azubugwu Kenneth",
-    role: "President",
-    image: President,
-  },
-  {
-    name: "Mr Ijezie Ben",
-    role: "Vice President",
-    image: VicePresident,
-  },
-  {
-    name: "Mr Uche Onoro",
-    role: "Secretary General",
-    image: SecretaryGeneral,
-  },
-  {
-    name: "Mr Nwankwo Reginald Emeka",
-    role: "Assistant Secretary General",
-    image: AssistantSecretaryGeneral,
-  },
-  {
-    name: "Mr Celestine Agba",
-    role: "Financial Secretary",
-    image: FinancialSecretary,
-  },
-  {
-    name: "Mr Ezeude Emmanuel Chukwunonso",
-    role: "Assistant Financial Secretary",
-    image: AssistantFinancialSecretary,
-  },
-  {
-    name: "Mr Anthony Molokwu",
-    role: "Welfare Director",
-    image: WelfareDirector,
-  },
-  {
-    name: "Mr Oscar Egwuonwu",
-    role: "Assistant Welfare Director",
-    image: AssistantWelfareDirector,
-  },
-  {
-    name: "Mr Emmanuel Emeka Agukwe",
-    role: "P.R.O",
-    image: PRO,
-  },
-  {
-    name: "Mr Obidike Nonso Christian",
-    role: "Assistant P.R.O",
-    image: AssistantPRO,
-  },
-  {
-    name: "Mr Okumbele Ogadi",
-    role: "Provost",
-    image: Provost,
-  },
-  {
-    name: "Mr Ernest Onyekwere",
-    role: "Assistan Provost",
-    image: AssistantProvost,
-  },
-];
+import { experts, type Expert } from "../../lib/expertsData";
 
 const OurExpertsLead = () => {
   return (
@@ -114,8 +54,8 @@ const OurExpertsLead = () => {
 
         {/* Experts Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6">
-          {experts.map((expert, index) => (
-            <div key={index} className="group cursor-pointer">
+          {experts.map((expert: Expert, index) => (
+            <Link href={`/experts/${expert.slug}`} className="group cursor-pointer block" key={index}>
               {/* Image Container */}
               <div className="relative aspect-[4/5] overflow-hidden bg-gray-100">
                 <Image
@@ -138,7 +78,7 @@ const OurExpertsLead = () => {
                   {expert.role}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
