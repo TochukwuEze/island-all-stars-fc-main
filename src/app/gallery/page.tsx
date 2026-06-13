@@ -9,7 +9,7 @@ import { MainHeader } from "@/components/landing/MainHeader";
 import { Navbar } from "@/components/landing/Navbar";
 import Breadcrumb from "@/components/landing/Breadcrumb";
 import { Play, X, ImageIcon, VideoIcon, Maximize2 } from "lucide-react";
-import { getGalleryItems } from "@/lib/galleryStore";
+// Data fetched via API route
 
 type MediaTab = "all" | "photo" | "video";
 
@@ -38,12 +38,14 @@ const GalleryPage = () => {
   const [galleryItems, setGalleryItems] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const items = await getGalleryItems();
-      setGalleryItems(items);
-    };
-    fetchData();
-  }, []);
+      const fetchData = async () => {
+        const res = await fetch('/api/gallery');
+        if (!res.ok) throw new Error('Failed to fetch gallery items');
+        const items = await res.json();
+        setGalleryItems(items);
+      };
+      fetchData();
+    }, []);
 
   const filteredItems = galleryItems.filter((item) => {
     if (activeTab === "photo") return item.type === "photo";

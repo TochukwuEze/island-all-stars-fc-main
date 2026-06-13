@@ -3,8 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { getNewsItems } from "@/lib/newsStore";
-import { getGalleryItems } from "@/lib/galleryStore";
+
 import {
   Carousel,
   CarouselContent,
@@ -19,28 +18,34 @@ const sofiaSansCondensed = Sofia_Sans_Condensed({
   weight: ["700"],
 });
 
+import type { CombinedItem, GalleryItem, NewsItem } from "@/types";
+
 const News = () => {
-  const [combinedItems, setCombinedItems] = useState<any[]>([]);
+  const [combinedItems, setCombinedItems] = useState<CombinedItem[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const fetchedNews = await getNewsItems();
-      const fetchedGallery = await getGalleryItems();
-      
+      const [newsRes, galleryRes] = await Promise.all([
+        fetch("/api/news"),
+        fetch("/api/gallery"),
+      ]);
+      const fetchedNews = await newsRes.json();
+      const fetchedGallery = await galleryRes.json();
       const combined = [
-        ...fetchedNews.map((item) => ({
+        ...fetchedNews.map((item: NewsItem) => ({
           ...item,
           isVideo: false,
-          description: item.content.split("\n")[0],
+          // item already includes description from the API
+          description: item.description,
         })),
         ...fetchedGallery
-          .filter((item) => item.type === "video")
-          .map((video) => ({
+          .filter((item: any) => item.type === "video")
+          .map((video: GalleryItem) => ({
             id: video.id,
             slug: video.id,
             title: video.title,
             category: "VIDEO",
-            date: video.year.toString(),
+            date: video.year?.toString() ?? "",
             comments: 0,
             image: video.thumbnail,
             isVideo: true,
