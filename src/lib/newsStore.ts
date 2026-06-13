@@ -1,8 +1,7 @@
 "use server";
 
-
 import { prisma } from "./prisma";
-import type { NewsItem } from "../generated/prisma";
+import type { NewsItem } from "@prisma/client";
 
 export async function getNewsItems() {
   const items = await prisma.newsItem.findMany();
