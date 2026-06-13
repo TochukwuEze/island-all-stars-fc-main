@@ -27,4 +27,16 @@ export interface NewsItem {
   description: string;
 }
 
+export interface VideoItem {
+  id: string;
+  title: string;
+  description?: string;
+  isVideo: boolean;
+  type: "photo" | "video";
+  category: string;
+  thumbnail: string;
+  src?: string;
+  year?: number;
+}
+
 export type CombinedItem = GalleryItem | NewsItem;
