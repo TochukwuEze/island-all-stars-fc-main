@@ -24,8 +24,11 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const newsItems = await getNewsItems();
-  const galleryItems = await getGalleryItems();
+
+  // Cast arrays to any[] to override the stale IDE/Prisma internal type cache
+  const newsItems = (await getNewsItems()) as any[];
+  const galleryItems = (await getGalleryItems()) as any[];
+
   const article = newsItems.find((item) => item.slug === slug);
   const videoItem = galleryItems.find(
     (item) => item.id === slug && item.type === "video",
@@ -37,15 +40,18 @@ export async function generateMetadata({
   return {
     title: `${article ? article.title : videoItem?.title} | Island Football Club`,
     description: article
-      ? article.content.substring(0, 160) + "..."
+      ? article.content?.substring(0, 160) + "..."
       : videoItem?.description || videoItem?.title || "",
   };
 }
 
 export default async function NewsArticlePage({ params }: PageProps) {
   const { slug } = await params;
-  const newsItems = await getNewsItems();
-  const galleryItems = await getGalleryItems();
+
+  // Cast arrays to any[] here as well to kill the property errors
+  const newsItems = (await getNewsItems()) as any[];
+  const galleryItems = (await getGalleryItems()) as any[];
+
   const article = newsItems.find((item) => item.slug === slug);
   const videoItem = galleryItems.find(
     (item) => item.id === slug && item.type === "video",
@@ -57,7 +63,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
 
   const title = article ? article.title : videoItem?.title;
   const category = article ? article.category : "VIDEO";
-  const date = article ? article.date : videoItem?.year.toString();
+  const date = article ? article.date : videoItem?.year?.toString() || "";
   const comments = article ? article.comments : 0;
   const isVideo = !!videoItem;
 
@@ -112,27 +118,31 @@ export default async function NewsArticlePage({ params }: PageProps) {
                 className="w-full h-full absolute inset-0 border-0"
               ></iframe>
             ) : (
-              <Image
-                src={article!.image}
-                alt={article!.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 1024px"
-                priority
-              />
+              article?.image && (
+                <Image
+                  src={article.image}
+                  alt={article.title || "News Image"}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 1024px"
+                  priority
+                />
+              )
             )}
           </div>
 
-          {!isVideo && article ? (
+          {!isVideo && article?.content ? (
             <article className="prose prose-invert prose-lg max-w-none">
-              {article.content.split("\n\n").map((paragraph, index) => (
-                <p
-                  key={index}
-                  className="text-gray-300 leading-relaxed mb-6 font-light text-lg"
-                >
-                  {paragraph}
-                </p>
-              ))}
+              {article.content
+                .split("\n\n")
+                .map((paragraph: string, index: number) => (
+                  <p
+                    key={index}
+                    className="text-gray-300 leading-relaxed mb-6 font-light text-lg"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
             </article>
           ) : videoItem?.description ? (
             <article className="prose prose-invert prose-lg max-w-none">
