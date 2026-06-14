@@ -1,5 +1,8 @@
 "use client";
 
+// 🚀 Force Next.js to fetch fresh database rows on every page reload instead of caching an empty screen
+export const dynamic = "force-dynamic";
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,8 +23,6 @@ const VIDEO_CATEGORIES = [
 ] as const;
 type VideoCategory = (typeof VIDEO_CATEGORIES)[number];
 
-
-
 /** Returns a human-readable relative time string from a year, e.g. "9 years ago" */
 function timeAgo(year: number): string {
   const diff = new Date().getFullYear() - year;
@@ -38,14 +39,14 @@ const GalleryPage = () => {
   const [galleryItems, setGalleryItems] = useState<any[]>([]);
 
   useEffect(() => {
-      const fetchData = async () => {
-        const res = await fetch('/api/gallery');
-        if (!res.ok) throw new Error('Failed to fetch gallery items');
-        const items = await res.json();
-        setGalleryItems(items);
-      };
-      fetchData();
-    }, []);
+    const fetchData = async () => {
+      const res = await fetch("/api/gallery");
+      if (!res.ok) throw new Error("Failed to fetch gallery items");
+      const items = await res.json();
+      setGalleryItems(items);
+    };
+    fetchData();
+  }, []);
 
   const filteredItems = galleryItems.filter((item) => {
     if (activeTab === "photo") return item.type === "photo";
@@ -221,8 +222,6 @@ const GalleryPage = () => {
           )}
         </div>
       </div>
-
-
 
       {/* Image Modal */}
       {selectedImage && (

@@ -1,3 +1,6 @@
+// 🚀 Opt out of static page caching so new articles load instantly
+export const dynamic = "force-dynamic";
+
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
