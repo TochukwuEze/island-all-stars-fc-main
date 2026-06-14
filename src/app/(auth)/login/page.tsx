@@ -10,8 +10,12 @@ import Footer from "@/components/landing/Footer";
 export default function Page() {
   const router = useRouter();
 
-  const handleLoginSuccess = () => {
-    router.push("/member-portal");
+  const handleLoginSuccess = (user: any) => {
+    if (user.role === "admin") {
+      router.push("/admin");
+    } else {
+      router.push("/member-portal");
+    }
   };
 
   return (

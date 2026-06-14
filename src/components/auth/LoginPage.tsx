@@ -48,12 +48,14 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
           }, 500);
           return;
         }
+        // Assign role based on membership type
+        const userRole = member.membershipType === "Club Admin" ? "admin" : "member";
         // Exclude password from current user session data
         const { password: _, ...userSession } = member;
-        setCurrentUser({ ...userSession, role: "member" });
+        setCurrentUser({ ...userSession, role: userRole });
         setIsSubmitting(false);
         if (onLoginSuccess) {
-          onLoginSuccess({ ...userSession, role: "member" });
+          onLoginSuccess({ ...userSession, role: userRole });
         }
         return;
       }
