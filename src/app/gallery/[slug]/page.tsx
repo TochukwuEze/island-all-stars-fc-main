@@ -27,8 +27,7 @@ export async function generateMetadata({
     (item) => item.id === slug && item.type === "video",
   );
 
-  if (!videoItem)
-    return { title: "Video Not Found | Island Football Club" };
+  if (!videoItem) return { title: "Video Not Found | Island Football Club" };
 
   return {
     title: `${videoItem.title} | Island Football Club`,
@@ -49,7 +48,9 @@ export default async function GalleryVideoPage({ params }: PageProps) {
 
   const title = videoItem.title;
   const category = videoItem.category || "VIDEO";
-  const date = videoItem.year.toString();
+
+  //  Safe fix using optional chaining and a fallback string
+  const date = videoItem.year ? videoItem.year.toString() : "";
 
   return (
     <div className="flex flex-col min-h-screen">
