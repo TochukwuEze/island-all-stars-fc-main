@@ -31,7 +31,8 @@ export const experts = [
     role: "Secretary General",
     image: "/images/executives/secretaryGeneral1.webp",
     slug: "mr-uche-onoro",
-    description: "Secretary General of the Island Football Club. ",
+    description:
+      "Secretary General of the Island Football Club. A lover of the game",
   },
   {
     name: "Mr Nwankwo Reginald Emeka",
