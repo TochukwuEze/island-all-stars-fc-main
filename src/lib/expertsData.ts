@@ -39,14 +39,14 @@ export const experts = [
     role: "Assistant Secretary General",
     image: "/images/executives/assistantSecretaryGeneral1.webp",
     slug: "mr-nwankwo-reginald-emeka",
-    description: "Assistant Secretary General.",
+    description: "Assistant Secretary General. ",
   },
   {
     name: "Mr Celestine Agba",
     role: "Financial Secretary",
     image: "/images/executives/financialSecretary1.webp",
     slug: "mr-celestine-agba",
-    description: "Financial Secretary.",
+    description: "Financial Secretary. A lover of the game",
   },
   {
     name: "Mr Ezeude Emmanuel Chukwunonso",
