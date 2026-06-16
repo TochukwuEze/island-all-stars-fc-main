@@ -56,10 +56,10 @@ export const experts = [
     description: "Assistant Financial Secretary.",
   },
   {
-    name: "Mr Anthony Molokwu",
+    name: "Mr Obinna Duruibe",
     role: "Welfare Director",
     image: "/images/executives/welfareDirector1.webp",
-    slug: "mr-anthony-molokwu",
+    slug: "mr-obinna-duruibe",
     description: "Welfare Director.",
   },
   {
