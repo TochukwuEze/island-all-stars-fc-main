@@ -106,7 +106,7 @@ function HeroSection() {
               className="inline-flex items-center gap-2 bg-primaryColor text-white text-[11px] font-black uppercase tracking-widest px-7 py-3.5 hover:bg-white hover:text-primaryColor transition-all duration-300"
             >
               {" "}
-              Join Island FC <ChevronRight size={14} />{" "}
+              Join IASC <ChevronRight size={14} />{" "}
             </Link>{" "}
             <Link
               href="/gallery"
