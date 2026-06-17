@@ -1,6 +1,3 @@
-// No image imports needed; using public path strings
-// Image assets are referenced via public paths; no imports needed
-
 export interface Expert {
   name: string;
   role: string;
@@ -31,22 +28,21 @@ export const experts = [
     role: "Secretary General",
     image: "/images/executives/secretaryGeneral1.webp",
     slug: "mr-uche-onoro",
-    description:
-      "Secretary General of the Island Football Club. A lover of the game",
+    description: "Secretary General of the Island Football Club. ",
   },
   {
     name: "Mr Nwankwo Reginald Emeka",
     role: "Assistant Secretary General",
     image: "/images/executives/assistantSecretaryGeneral1.webp",
     slug: "mr-nwankwo-reginald-emeka",
-    description: "Assistant Secretary General. ",
+    description: "Assistant Secretary General.",
   },
   {
     name: "Mr Celestine Agba",
     role: "Financial Secretary",
     image: "/images/executives/financialSecretary1.webp",
     slug: "mr-celestine-agba",
-    description: "Financial Secretary. A lover of the game",
+    description: "Financial Secretary.",
   },
   {
     name: "Mr Ezeude Emmanuel Chukwunonso",
@@ -56,10 +52,10 @@ export const experts = [
     description: "Assistant Financial Secretary.",
   },
   {
-    name: "Mr Obinna Duruibe",
+    name: "Mr Anthony Molokwu",
     role: "Welfare Director",
     image: "/images/executives/welfareDirector1.webp",
-    slug: "mr-obinna-duruibe",
+    slug: "mr-anthony-molokwu",
     description: "Welfare Director.",
   },
   {

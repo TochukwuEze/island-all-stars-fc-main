@@ -23,7 +23,9 @@ import {
   Lock,
   Download,
   Store,
+  Award,
 } from "lucide-react";
+import AdminExcosPage from "@/app/admin/excos/page";
 import * as XLSX from "xlsx";
 import {
   getMembers,
@@ -57,7 +59,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-type AdminTab = "dashboard" | "directory" | "register" | "broadcast" | "businesses";
+type AdminTab = "dashboard" | "directory" | "register" | "broadcast" | "businesses" | "excos";
 
 export default function AdminPortal() {
   const [activeTab, setActiveTab] = useState<AdminTab>("dashboard");
@@ -342,6 +344,11 @@ export default function AdminPortal() {
       id: "businesses",
       label: "Manage Businesses",
       icon: <Store size={18} />,
+    },
+    {
+      id: "excos",
+      label: "Manage EXCOS",
+      icon: <Award size={18} />,
     },
   ];
 
@@ -1392,6 +1399,10 @@ export default function AdminPortal() {
                   </div>
                 </div>
               </div>
+            )}
+            
+            {activeTab === "excos" && (
+              <AdminExcosPage />
             )}
           </FadeIn>
         </main>

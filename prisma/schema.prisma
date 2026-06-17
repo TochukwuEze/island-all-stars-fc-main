@@ -93,3 +93,15 @@ model GalleryItem {
   year        Int
   description String?
 }
+
+model Executive {
+  id          String   @id @default(uuid())
+  name        String
+  role        String
+  slug        String   @unique
+  image       String
+  description String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
