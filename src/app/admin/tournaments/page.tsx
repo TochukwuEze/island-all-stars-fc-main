@@ -208,10 +208,8 @@ export default function AdminTournamentsPage() {
                     <Edit size={18} />
                   </button>
                   <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <button className="p-2 bg-red-600 text-white rounded-full hover:bg-red-700 hover:scale-110 transition-all shadow-lg">
-                        <Trash2 size={18} />
-                      </button>
+                    <AlertDialogTrigger className="p-2 bg-red-600 text-white rounded-full hover:bg-red-700 hover:scale-110 transition-all shadow-lg cursor-pointer">
+                      <Trash2 size={18} />
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
@@ -324,17 +322,20 @@ export default function AdminTournamentsPage() {
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex justify-between">
                   <span>Sponsor Logo (Optional)</span>
                 </label>
-                <div className="flex gap-2 items-center">
-                  <input
-                    type="text"
-                    name="sponsorLogo"
-                    value={formData.sponsorLogo}
-                    onChange={handleInputChange}
-                    placeholder="Image URL"
-                    className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-primaryColor focus:bg-white transition-all text-sm font-semibold"
-                  />
+                {formData.sponsorLogo ? (
+                  <div className="relative w-24 h-24 bg-gray-100 rounded-xl overflow-hidden group border border-gray-200">
+                    <img src={formData.sponsorLogo} alt="Sponsor Logo" className="w-full h-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => setFormData(prev => ({ ...prev, sponsorLogo: "" }))}
+                      className="absolute top-1 right-1 p-1 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700"
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                ) : (
                   <CldUploadWidget
-                    uploadPreset="ml_default"
+                    uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "unsigned_preset"}
                     options={{ maxFiles: 1, resourceType: "image" }}
                     onSuccess={(result: any) => {
                       if (result?.info?.secure_url) {
@@ -349,13 +350,13 @@ export default function AdminTournamentsPage() {
                       <button
                         type="button"
                         onClick={() => open()}
-                        className="p-3 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl transition-colors shrink-0"
+                        className="w-full py-3 bg-gray-50 border border-dashed border-gray-300 rounded-xl text-gray-500 hover:bg-gray-100 transition-colors text-sm font-semibold flex items-center justify-center gap-2"
                       >
-                        <Plus size={20} />
+                        <Plus size={16} /> Upload Sponsor Logo
                       </button>
                     )}
                   </CldUploadWidget>
-                </div>
+                )}
               </div>
             </div>
 
@@ -394,7 +395,7 @@ export default function AdminTournamentsPage() {
                   Gallery Images (Max 5)
                 </label>
                 <CldUploadWidget
-                  uploadPreset="ml_default"
+                  uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "unsigned_preset"}
                   options={{ maxFiles: 5 - formData.images.length, resourceType: "image", multiple: true }}
                   onSuccess={(result: any) => {
                     if (result?.info?.secure_url && formData.images.length < 5) {
