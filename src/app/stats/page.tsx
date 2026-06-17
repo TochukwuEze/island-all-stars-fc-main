@@ -3,6 +3,8 @@ import { TopBar } from "@/components/landing/TopBar";
 import { MainHeader } from "@/components/landing/MainHeader";
 import { Navbar } from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import TournamentHistory from "@/components/stats/TournamentHistory";
+
 import { Sofia_Sans_Condensed } from "next/font/google";
 
 const sofiaSansCondensed = Sofia_Sans_Condensed({
@@ -132,6 +134,8 @@ export default function StatsPage() {
               ))}
             </div>
           </div>
+
+          <TournamentHistory />
         </div>
       </main>
 
