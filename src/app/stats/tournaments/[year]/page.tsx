@@ -6,7 +6,7 @@ import { TopBar } from "@/components/landing/TopBar";
 import { MainHeader } from "@/components/landing/MainHeader";
 import { Navbar } from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { tournamentWinners } from "@/data/tournaments";
+import { prisma } from "@/lib/prisma";
 import { Sofia_Sans_Condensed } from "next/font/google";
 
 const sofiaSansCondensed = Sofia_Sans_Condensed({
@@ -30,7 +30,9 @@ export async function generateMetadata(
 
 export default async function TournamentDetailsPage({ params }: Props) {
   const { year } = await params;
-  const tourney = tournamentWinners.find((t) => t.year.toString() === year);
+  const tourney = await prisma.tournamentHistory.findUnique({
+    where: { year: parseInt(year) }
+  });
 
   if (!tourney) {
     notFound();
@@ -44,12 +46,16 @@ export default async function TournamentDetailsPage({ params }: Props) {
 
       <main className="flex-1 bg-[#f9f9f9] text-black">
         {/* Hero Section */}
-        <div className="relative w-full h-[60vh] min-h-[400px] bg-black">
-          <img 
-            src={tourney.images[0]} 
-            alt={`${tourney.winner} ${tourney.year} Celebration`}
-            className="absolute inset-0 w-full h-full object-cover opacity-60"
-          />
+        <div className="relative w-full h-[60vh] min-h-[400px] bg-black flex items-center justify-center">
+          {tourney.images && tourney.images.length > 0 ? (
+            <img 
+              src={tourney.images[0]} 
+              alt={`${tourney.winner} ${tourney.year} Celebration`}
+              className="absolute inset-0 w-full h-full object-cover opacity-60"
+            />
+          ) : (
+            <Trophy size={120} className="text-white/10" />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-[#f9f9f9] via-transparent to-black/50" />
           
           <div className="absolute top-8 left-8 md:left-24 z-10">
@@ -100,26 +106,52 @@ export default async function TournamentDetailsPage({ params }: Props) {
                   </p>
                 </div>
 
-                <div className="mt-12 pt-8 border-t border-gray-100">
-                  <h3 className="text-sm font-black uppercase tracking-widest text-gray-400 mb-6">Championship Gallery</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="relative h-48 rounded-2xl overflow-hidden group">
-                      <img src={tourney.images[0]} alt="Gallery 1" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                      <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
-                    </div>
-                    {/* Placeholder for more images if they existed in the array */}
-                    <div className="relative h-48 rounded-2xl overflow-hidden bg-gray-100 flex items-center justify-center">
-                      <span className="text-gray-400 font-bold uppercase text-xs tracking-widest">More images coming soon</span>
+                {/* Video Highlights */}
+                {tourney.videoUrl && (
+                  <div className="mt-12 pt-8 border-t border-gray-100">
+                    <h3 className="text-sm font-black uppercase tracking-widest text-gray-400 mb-6">Tournament Highlights</h3>
+                    <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-gray-50">
+                      <iframe 
+                        className="absolute top-0 left-0 w-full h-full"
+                        src={tourney.videoUrl} 
+                        title={`${tourney.winner} Highlights`} 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowFullScreen>
+                      </iframe>
                     </div>
                   </div>
-                </div>
+                )}
+
+                {/* Photo Gallery */}
+                {tourney.images && tourney.images.length > 0 && (
+                  <div className="mt-12 pt-8 border-t border-gray-100">
+                    <h3 className="text-sm font-black uppercase tracking-widest text-gray-400 mb-6">Championship Gallery</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {tourney.images.slice(0, 5).map((img, idx) => (
+                        <div 
+                          key={idx} 
+                          className={`relative rounded-2xl overflow-hidden group bg-gray-100 ${
+                            idx === 0 ? 'sm:col-span-2 h-64' : 'h-48'
+                          }`}
+                        >
+                          <img 
+                            src={img} 
+                            alt={`Gallery image ${idx + 1}`} 
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                          />
+                          <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Sidebar Stats */}
             <div className="md:col-span-1 space-y-6">
               <div className="bg-[#001429] rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
-                <div className="absolute -right-6 -bottom-6 text-white/5">
+                <div className="absolute -right-6 -bottom-6 text-white/5 pointer-events-none">
                   <Trophy size={160} />
                 </div>
                 <div className="relative z-10">
@@ -128,14 +160,32 @@ export default async function TournamentDetailsPage({ params }: Props) {
                   </h3>
                   
                   <div className="space-y-6">
+                    {tourney.sponsorName && (
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Proud Sponsor</p>
+                        <div className="flex items-center gap-3 mt-2 bg-white/5 rounded-xl p-3 border border-white/10 hover:bg-white/10 transition-colors">
+                          {tourney.sponsorLogo && (
+                            <img 
+                              src={tourney.sponsorLogo} 
+                              alt={tourney.sponsorName} 
+                              className="w-10 h-10 rounded-full bg-white object-cover border-2 border-white/20 shadow-sm" 
+                            />
+                          )}
+                          <span className="font-bold text-white text-sm">{tourney.sponsorName}</span>
+                        </div>
+                      </div>
+                    )}
+                    
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Season</p>
                       <p className="text-2xl font-black text-white">{tourney.year}</p>
                     </div>
+                    
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Tournament</p>
                       <p className="text-lg font-bold text-white">End of Year League</p>
                     </div>
+                    
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Status</p>
                       <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FF4D00]/20 text-[#FF4D00] rounded-full text-xs font-bold uppercase tracking-wider">

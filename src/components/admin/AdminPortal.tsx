@@ -26,10 +26,12 @@ import {
   Award,
   Newspaper,
   Camera,
+  Trophy,
 } from "lucide-react";
 import AdminExcosPage from "@/app/admin/excos/page";
 import AdminNewsPage from "@/app/admin/news/page";
 import AdminGalleryPage from "@/app/admin/gallery/page";
+import AdminTournamentsPage from "@/app/admin/tournaments/page";
 import * as XLSX from "xlsx";
 import {
   getMembers,
@@ -63,7 +65,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-type AdminTab = "dashboard" | "directory" | "register" | "broadcast" | "businesses" | "excos" | "news" | "gallery";
+type AdminTab = "dashboard" | "directory" | "register" | "broadcast" | "businesses" | "excos" | "news" | "gallery" | "tournaments";
 
 export default function AdminPortal() {
   const [activeTab, setActiveTab] = useState<AdminTab>("dashboard");
@@ -363,6 +365,11 @@ export default function AdminPortal() {
       id: "gallery",
       label: "Manage Gallery",
       icon: <Camera size={18} />,
+    },
+    {
+      id: "tournaments",
+      label: "Manage Tournaments",
+      icon: <Trophy size={18} />,
     },
   ];
 
@@ -729,6 +736,12 @@ export default function AdminPortal() {
             {activeTab === "gallery" && (
               <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
                 <AdminGalleryPage />
+              </div>
+            )}
+
+            {activeTab === "tournaments" && (
+              <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
+                <AdminTournamentsPage />
               </div>
             )}
 
