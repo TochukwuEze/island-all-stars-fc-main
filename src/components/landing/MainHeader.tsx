@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, Mail, Phone, ChevronDown } from "lucide-react";
+import { Menu, Mail, Phone, ChevronDown, Search } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -11,6 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { SearchModal } from "./SearchModal";
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import logo from "../../../public/images/logos/iasf-logo.webp";
@@ -56,6 +57,7 @@ const eventsDropdownItems = [
 export function MainHeader() {
   const [isEventsOpen, setIsEventsOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const pathname = usePathname();
   const [currentUser, setCurrentUser] = useState<any>(null);
 
@@ -73,11 +75,24 @@ export function MainHeader() {
       }
     };
     checkAuth();
+
+    const handleOpenSearch = () => setIsSearchOpen(true);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+    };
+
     window.addEventListener("auth-change", checkAuth);
     window.addEventListener("storage", checkAuth);
+    window.addEventListener("open-search-modal", handleOpenSearch);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("auth-change", checkAuth);
       window.removeEventListener("storage", checkAuth);
+      window.removeEventListener("open-search-modal", handleOpenSearch);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -152,6 +167,7 @@ export function MainHeader() {
 
       {/* Mobile Menu */}
       <div className="flex lg:hidden items-center">
+        <Search size={28} className="cursor-pointer mr-4" onClick={() => setIsSearchOpen(true)} />
         <Sheet>
           <SheetTrigger
             render={
@@ -313,6 +329,7 @@ export function MainHeader() {
           </SheetContent>
         </Sheet>
       </div>
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>
   );
 }
