@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import type { Metadata } from "next";
 import { TopBar } from "@/components/landing/TopBar";
 import { MainHeader } from "@/components/landing/MainHeader";
