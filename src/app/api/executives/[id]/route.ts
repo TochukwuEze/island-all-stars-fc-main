@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 export async function PUT(
   req: Request,
@@ -22,6 +23,9 @@ export async function PUT(
       },
     });
 
+    revalidatePath("/");
+    revalidatePath("/admin/excos");
+
     return NextResponse.json(updatedExecutive);
   } catch (error) {
     console.error("Error updating executive:", error);
@@ -41,6 +45,9 @@ export async function DELETE(
     await prisma.executive.delete({
       where: { id },
     });
+
+    revalidatePath("/");
+    revalidatePath("/admin/excos");
 
     return NextResponse.json({ message: "Executive deleted successfully" });
   } catch (error) {

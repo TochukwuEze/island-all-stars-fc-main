@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
+
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
@@ -31,6 +34,9 @@ export async function POST(req: Request) {
         order: order || 0,
       },
     });
+
+    revalidatePath("/");
+    revalidatePath("/admin/excos");
 
     return NextResponse.json(newExecutive, { status: 201 });
   } catch (error) {
