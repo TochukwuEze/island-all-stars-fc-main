@@ -1,32 +1,17 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
-import President from "../../../public/images/executives/president1.webp";
-import VicePresident from "../../../public/images/executives/vp1.webp";
-import SecretaryGeneral from "../../../public/images/executives/secretaryGeneral1.webp";
-import AssistantSecretaryGeneral from "../../../public/images/executives/assistantSecretaryGeneral1.webp";
-import FinancialSecretary from "../../../public/images/executives/financialSecretary1.webp";
-import AssistantFinancialSecretary from "../../../public/images/executives/assistantFinancialSecretary1.webp";
-import WelfareDirector from "../../../public/images/executives/welfareDirector1.webp";
-import AssistantWelfareDirector from "../../../public/images/executives/assistantWelfareDirector1.webp";
-import PRO from "../../../public/images/executives/PRO1.webp";
-import AssistantPRO from "../../../public/images/executives/assistantPRO1.webp";
-import Provost from "../../../public/images/executives/provost1.webp";
-import AssistantProvost from "../../../public/images/executives/assistantProvost1.webp";
-import { Montserrat } from "next/font/google";
-import { Playfair_Display } from "next/font/google";
-import { Sofia_Sans_Condensed } from "next/font/google";
+import ExpertImage from "./ExpertImage";
+import {
+  Montserrat,
+  Playfair_Display,
+  Sofia_Sans_Condensed,
+} from "next/font/google";
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
 const sofiaSansCondensed = Sofia_Sans_Condensed({
   subsets: ["latin"],
   weight: ["700"],
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "700"],
 });
 
 const montserrat = Montserrat({
@@ -34,9 +19,11 @@ const montserrat = Montserrat({
   weight: ["700", "800", "900"],
 });
 
-import { experts, type Expert } from "../../lib/expertsData";
+export default async function OurExpertsLead() {
+  const experts = await prisma.executive.findMany({
+    orderBy: { order: "asc" },
+  });
 
-const OurExpertsLead = () => {
   return (
     <section className="bg-white py-24 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
@@ -54,11 +41,15 @@ const OurExpertsLead = () => {
 
         {/* Experts Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6">
-          {experts.map((expert: Expert, index) => (
-            <Link href={`/experts/${expert.slug}`} className="group cursor-pointer block" key={index}>
+          {experts.map((expert, index) => (
+            <Link
+              href={`/experts/${expert.slug}`}
+              className="group cursor-pointer block"
+              key={expert.id}
+            >
               {/* Image Container */}
               <div className="relative aspect-[4/5] overflow-hidden bg-gray-100">
-                <Image
+                <ExpertImage
                   src={expert.image}
                   alt={expert.name}
                   fill
@@ -84,6 +75,4 @@ const OurExpertsLead = () => {
       </div>
     </section>
   );
-};
-
-export default OurExpertsLead;
+}

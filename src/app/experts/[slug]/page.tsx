@@ -7,7 +7,7 @@ import { TopBar } from "@/components/landing/TopBar";
 import { MainHeader } from "@/components/landing/MainHeader";
 import { Navbar } from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { getExpertBySlug, type Expert } from "../../../lib/expertsData";
+import { prisma } from "@/lib/prisma";
 import { Inter, Sofia_Sans_Condensed } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,14 +24,18 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const expert = getExpertBySlug(slug);
+  const expert = await prisma.executive.findUnique({
+    where: { slug }
+  });
   if (!expert) return { title: "Expert Not Found | Island Football Club" };
   return { title: `${expert.name} – ${expert.role} | Island Football Club` };
 }
 
 export default async function ExpertPage({ params }: PageProps) {
   const { slug } = await params;
-  const expert = getExpertBySlug(slug);
+  const expert = await prisma.executive.findUnique({
+    where: { slug }
+  });
   if (!expert) notFound();
 
   return (
