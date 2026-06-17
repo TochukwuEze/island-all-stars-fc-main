@@ -1,3 +1,5 @@
+"use client";
+
 import { Search, PhoneIncoming, ChevronDown, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
@@ -103,6 +105,7 @@ export function Navbar() {
         <Search
           size={20}
           className="cursor-pointer hover:text-primaryColor transition-colors"
+          onClick={() => window.dispatchEvent(new CustomEvent("open-search-modal"))}
         />
         <Link href="/contact">
           <PhoneIncoming
