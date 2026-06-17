@@ -73,14 +73,17 @@ model Business {
 }
 
 model NewsItem {
-  id       String @id @default(uuid())
-  slug     String @unique
-  title    String
-  category String
-  date     String
-  comments Int    @default(0)
-  image    String
-  content  String
+  id        String   @id @default(uuid())
+  slug      String   @unique
+  title     String
+  category  String
+  date      String
+  comments  Int      @default(0)
+  image     String?
+  videoUrl  String?
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model GalleryItem {

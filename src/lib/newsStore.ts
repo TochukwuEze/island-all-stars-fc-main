@@ -25,8 +25,8 @@ export async function getNewsItems(): Promise<NewsItem[]> {
     image: item.image,
     // Prisma uses `content`; our UI expects `description`
     description: item.content,
-    isVideo: false,
-    // Preserve deprecated field for any legacy consumers
-    content: undefined,
+    content: item.content,
+    videoUrl: item.videoUrl,
+    isVideo: !!item.videoUrl,
   }));
 }
