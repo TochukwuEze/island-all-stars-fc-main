@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { prisma } from '../src/lib/prisma'
 import { newsItems } from '../src/data/news'
-import { galleryItems } from '../src/app/gallery/gallery-data'
+import { galleryItems } from '../src/data/gallery'
 
 const DEFAULT_MEMBERS = [
   {

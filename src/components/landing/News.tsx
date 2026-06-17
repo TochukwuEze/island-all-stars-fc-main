@@ -32,12 +32,24 @@ const News = () => {
       const fetchedNews = await newsRes.json();
       const fetchedGallery = await galleryRes.json();
       const combined = [
-        ...fetchedNews.map((item: NewsItem) => ({
-          ...item,
-          isVideo: false,
-          // item already includes description from the API
-          description: item.description,
-        })),
+        ...fetchedNews.map((item: any) => {
+          const isYoutube = !!item.videoUrl;
+          let thumbnail = item.image;
+          
+          if (isYoutube && !thumbnail) {
+            const videoIdMatch = item.videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
+            if (videoIdMatch && videoIdMatch[1]) {
+              thumbnail = `https://img.youtube.com/vi/${videoIdMatch[1]}/hqdefault.jpg`;
+            }
+          }
+
+          return {
+            ...item,
+            image: thumbnail || "/images/placeholder.jpg",
+            isVideo: isYoutube,
+            description: item.description || item.content,
+          };
+        }),
         ...fetchedGallery
           .filter((item: any) => item.type === "video")
           .map((video: GalleryItem) => ({

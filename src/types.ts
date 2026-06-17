@@ -23,8 +23,10 @@ export interface NewsItem {
   date: string;
   comments: number;
   image: string;
-  isVideo: false;
+  videoUrl?: string | null;
+  isVideo: boolean;
   description: string;
+  content?: string;
 }
 
 export interface VideoItem {

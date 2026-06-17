@@ -65,7 +65,17 @@ export default async function NewsArticlePage({ params }: PageProps) {
   const category = article ? article.category : "VIDEO";
   const date = article ? article.date : videoItem?.year?.toString() || "";
   const comments = article ? article.comments : 0;
-  const isVideo = !!videoItem;
+  const isVideo = article ? !!article.videoUrl : !!videoItem;
+
+  let embedUrl = videoItem?.src;
+  if (article?.videoUrl) {
+    const videoIdMatch = article.videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
+    if (videoIdMatch && videoIdMatch[1]) {
+      embedUrl = `https://www.youtube.com/embed/${videoIdMatch[1]}`;
+    } else {
+      embedUrl = article.videoUrl;
+    }
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -111,8 +121,8 @@ export default async function NewsArticlePage({ params }: PageProps) {
           <div className="relative aspect-[16/9] w-full mb-16 overflow-hidden bg-zinc-900 shadow-2xl">
             {isVideo ? (
               <iframe
-                src={videoItem?.src}
-                title={videoItem?.title}
+                src={embedUrl}
+                title={title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="w-full h-full absolute inset-0 border-0"

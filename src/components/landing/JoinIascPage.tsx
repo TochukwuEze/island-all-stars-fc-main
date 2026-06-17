@@ -131,11 +131,11 @@ export default function JoinIascPage() {
             <div className="pt-2 space-y-2.5 text-xs text-gray-600 font-semibold border-t border-gray-200/50">
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-primaryColor" />
-                <span>info@iasc.com.ng</span>
+                <span>islandallstarssc@gmail.com</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-primaryColor" />
-                <span>+234 803 325 3625</span>
+                <span>+2349155172547</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-primaryColor" />

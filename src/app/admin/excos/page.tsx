@@ -209,8 +209,10 @@ export default function AdminExcosPage() {
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-bold text-lg truncate">{exec.name}</h3>
-                  <p className="text-blue-600 text-sm font-medium">
+                  <h3 className="font-semibold text-sm truncate">
+                    {exec.name}
+                  </h3>
+                  <p className="mt-1 text-blue-600 text-xs font-medium">
                     {exec.role}
                   </p>
                   <p className="text-gray-500 text-xs mt-1">
@@ -219,7 +221,7 @@ export default function AdminExcosPage() {
                 </div>
               </div>
 
-              <div className="mt-auto pt-4 flex gap-2 justify-end">
+              <div className="mt-auto pt-2 flex gap-2 justify-end">
                 <button
                   onClick={() => openEditModal(exec)}
                   className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
@@ -240,7 +242,8 @@ export default function AdminExcosPage() {
                         Confirm Deletion
                       </AlertDialogTitle>
                       <AlertDialogDescription className="text-sm font-semibold text-gray-500">
-                        Are you sure you want to delete {exec.name}? This action cannot be undone.
+                        Are you sure you want to delete {exec.name}? This action
+                        cannot be undone.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
