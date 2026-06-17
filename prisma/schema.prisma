@@ -108,3 +108,16 @@ model Executive {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model TournamentHistory {
+  id          String   @id @default(uuid())
+  year        Int      @unique
+  winner      String
+  sponsorName String?
+  sponsorLogo String?
+  details     String
+  images      String[]
+  videoUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
