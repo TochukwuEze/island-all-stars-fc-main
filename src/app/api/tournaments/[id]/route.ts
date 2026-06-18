@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { deleteCloudinaryImage } from "@/lib/cloudinary";
 
 export async function PUT(
   request: Request,
@@ -43,6 +44,21 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
+    
+    const tournament = await prisma.tournamentHistory.findUnique({
+      where: { id },
+    });
+
+    if (tournament) {
+      if (tournament.sponsorLogo) {
+        await deleteCloudinaryImage(tournament.sponsorLogo);
+      }
+      if (tournament.images && tournament.images.length > 0) {
+        for (const img of tournament.images) {
+          await deleteCloudinaryImage(img);
+        }
+      }
+    }
     
     await prisma.tournamentHistory.delete({
       where: { id },

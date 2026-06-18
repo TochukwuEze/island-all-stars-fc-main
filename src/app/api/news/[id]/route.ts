@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { deleteCloudinaryImage } from "@/lib/cloudinary";
 
 export async function PUT(
   req: Request,
@@ -44,6 +45,15 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
+    
+    const newsItem = await prisma.newsItem.findUnique({
+      where: { id },
+    });
+
+    if (newsItem?.image) {
+      await deleteCloudinaryImage(newsItem.image);
+    }
+
     await prisma.newsItem.delete({
       where: { id },
     });
