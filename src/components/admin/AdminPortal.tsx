@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import AdminExcosPage from "@/app/admin/excos/page";
 import AdminNewsPage from "@/app/admin/news/page";
+import AdminBlogPage from "@/app/admin/blog/page";
 import AdminGalleryPage from "@/app/admin/gallery/page";
 import AdminTournamentsPage from "@/app/admin/tournaments/page";
 import * as XLSX from "xlsx";
@@ -65,7 +66,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-type AdminTab = "dashboard" | "directory" | "register" | "broadcast" | "businesses" | "excos" | "news" | "gallery" | "tournaments";
+type AdminTab = "dashboard" | "directory" | "register" | "broadcast" | "businesses" | "excos" | "news" | "blog" | "gallery" | "tournaments";
 
 export default function AdminPortal() {
   const [activeTab, setActiveTab] = useState<AdminTab>("dashboard");
@@ -359,6 +360,11 @@ export default function AdminPortal() {
     {
       id: "news",
       label: "Manage News",
+      icon: <Newspaper size={18} />,
+    },
+    {
+      id: "blog",
+      label: "Manage Blog",
       icon: <Newspaper size={18} />,
     },
     {
@@ -730,6 +736,12 @@ export default function AdminPortal() {
             {activeTab === "news" && (
               <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
                 <AdminNewsPage />
+              </div>
+            )}
+
+            {activeTab === "blog" && (
+              <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
+                <AdminBlogPage />
               </div>
             )}
 
