@@ -121,3 +121,18 @@ model TournamentHistory {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model BlogItem {
+  id        String   @id @default(uuid())
+  slug      String   @unique
+  title     String
+  category  String
+  date      String
+  comments  Int      @default(0)
+  excerpt   String
+  image     String?
+  videoUrl  String?
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}

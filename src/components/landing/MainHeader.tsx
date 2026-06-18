@@ -167,7 +167,11 @@ export function MainHeader() {
 
       {/* Mobile Menu */}
       <div className="flex lg:hidden items-center">
-        <Search size={28} className="cursor-pointer mr-4" onClick={() => setIsSearchOpen(true)} />
+        <Search
+          size={28}
+          className="cursor-pointer mr-4 text-gray-700"
+          onClick={() => setIsSearchOpen(true)}
+        />
         <Sheet>
           <SheetTrigger
             render={
@@ -311,17 +315,19 @@ export function MainHeader() {
                   <div className="w-8 h-8 rounded-full bg-primaryColor/10 flex items-center justify-center">
                     <Mail size={16} className="text-primaryColor" />
                   </div>
-                  <a href="mailto:info@islandfc.com.ng">info@islandfc.com.ng</a>
+                  <a href="mailto:islandallstarssc@gmail.com">
+                    islandallstarssc@gmail.com
+                  </a>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-primaryColor/10 flex items-center justify-center">
                     <Phone size={16} className="text-primaryColor" />
                   </div>
                   <a
-                    href="tel:+2348033253625"
+                    href="tel:+2349155172547"
                     className="font-bold text-[#2A2A2A]"
                   >
-                    +2348033253625
+                    +2349155172547
                   </a>
                 </div>
               </div>
@@ -329,7 +335,10 @@ export function MainHeader() {
           </SheetContent>
         </Sheet>
       </div>
-      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <SearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
     </header>
   );
 }

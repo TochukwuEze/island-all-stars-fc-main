@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Search,
   MessageCircle,
@@ -17,112 +17,60 @@ const sofiaSansCondensed = Sofia_Sans_Condensed({
   weight: ["900"],
 });
 
-const blogPosts = [
-  {
-    id: 1,
-    slug: "ways-to-improve-communication-on-the-soccer-field",
-    title: "WAYS TO IMPROVE COMMUNICATION ON THE SOCCER FIELD",
-    category: "CLUB NEWS",
-    date: "May 2, 2025",
-    comments: 3,
-    excerpt:
-      "Effective communication on the soccer field is the backbone of successful teamwork. Whether you are directing a teammate, calling for the ball, or alerting your defence, clear and decisive communication can change the outcome of a match.",
-    image: "/images/news/rivalries.png",
-  },
-  {
-    id: 2,
-    slug: "what-makes-a-great-football-coach-stand-out",
-    title: "WHAT MAKES A GREAT FOOTBALL COACH STAND OUT",
-    category: "TRAINING",
-    date: "Apr 28, 2025",
-    comments: 5,
-    excerpt:
-      "Great football coaches possess a unique blend of tactical knowledge, motivational skill, and emotional intelligence. They know how to read players, adapt strategies mid-game, and inspire a winning mentality that extends beyond the pitch.",
-    image: "/images/news/injuries.png",
-  },
-  {
-    id: 3,
-    slug: "tips-for-balancing-career-and-club-commitments",
-    title: "TIPS FOR BALANCING CAREER AND CLUB COMMITMENTS",
-    category: "WELLNESS & FITNESS",
-    date: "Apr 15, 2025",
-    comments: 0,
-    excerpt:
-      "Juggling professional work obligations with a rigorous sporting schedule is one of the most common challenges adult athletes face. With smart time management and the right support, it is entirely possible to thrive in both arenas.",
-    image: "/images/news/grassroots.png",
-  },
-  {
-    id: 4,
-    slug: "innovative-technology-shaping-football-training-today",
-    title: "INNOVATIVE TECHNOLOGY SHAPING FOOTBALL TRAINING TODAY",
-    category: "FOOTBALL NEWS",
-    date: "Apr 10, 2025",
-    comments: 8,
-    excerpt:
-      "From GPS tracking vests to AI-powered video analysis platforms, technology is revolutionising the way footballers train and coaches strategise. Modern football is as much a science as it is an art form.",
-    image: "/images/news/unites.png",
-  },
-  {
-    id: 5,
-    slug: "the-psychology-behind-penalty-shootouts-in-soccer",
-    title: "THE PSYCHOLOGY BEHIND PENALTY SHOOTOUTS IN SOCCER",
-    category: "FOOTBALL NEWS",
-    date: "Mar 30, 2025",
-    comments: 12,
-    excerpt:
-      "Penalty shootouts are as much a mental battle as a physical one. Understanding the psychology of pressure, focus, and confidence can be the deciding factor between victory and heartbreak when everything is on the line.",
-    image: "/images/news/rivalries.png",
-  },
-  {
-    id: 6,
-    slug: "how-nutrition-impacts-veteran-athlete-performance",
-    title: "HOW NUTRITION IMPACTS VETERAN ATHLETE PERFORMANCE",
-    category: "WELLNESS & FITNESS",
-    date: "Mar 18, 2025",
-    comments: 2,
-    excerpt:
-      "An adult player's diet directly influences their speed, stamina, and recovery. Proper nutrition — from pre-match meals to post-training hydration — is the foundation of peak athletic performance on and off the field.",
-    image: "/images/news/injuries.png",
-  },
-];
+interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  date: string;
+  comments: number;
+  excerpt: string;
+  image: string;
+  content: string;
+}
 
-const categories = [
-  { name: "Club News", count: 8 },
-  { name: "Football News", count: 14 },
-  { name: "Activities", count: 6 },
-  { name: "Wellness & Fitness", count: 4 },
-  { name: "Matches", count: 10 },
-  { name: "Community", count: 3 },
-];
-
-const recentPosts = [
-  {
-    title: "Ways to improve communication on the soccer field",
-    date: "May 2, 2025",
-    image: "/images/news/rivalries.png",
-    slug: "ways-to-improve-communication-on-the-soccer-field",
-  },
-  {
-    title: "What makes a great football coach stand out",
-    date: "Apr 28, 2025",
-    image: "/images/news/injuries.png",
-    slug: "what-makes-a-great-football-coach-stand-out",
-  },
-  {
-    title: "Tips for balancing career and club commitments",
-    date: "Apr 15, 2025",
-    image: "/images/news/grassroots.png",
-    slug: "tips-for-balancing-career-and-club-commitments",
-  },
+const predefinedCategories = [
+  "Club News",
+  "Football News",
+  "Activities",
+  "Wellness & Fitness",
+  "Matches",
+  "Community",
 ];
 
 const POSTS_PER_PAGE = 5;
-const TOTAL_PAGES = Math.ceil(blogPosts.length / POSTS_PER_PAGE);
 
 export default function BlogPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await fetch("/api/blog");
+        if (res.ok) {
+          const data = await res.json();
+          setBlogPosts(data);
+        }
+      } catch (error) {
+        console.error("Error fetching blog posts", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPosts();
+  }, []);
+
+  const categories = predefinedCategories.map(cat => ({
+    name: cat,
+    count: blogPosts.filter(p => p.category.toLowerCase() === cat.toLowerCase()).length
+  })).filter(cat => cat.count > 0);
+
+  const recentPosts = blogPosts.slice(0, 3);
 
   const filteredPosts = blogPosts.filter((post) => {
     const matchesSearch =
@@ -181,7 +129,7 @@ export default function BlogPage() {
                   <Link href={`/blog/${post.slug}`}>
                     <div className="relative w-full aspect-[16/9] overflow-hidden bg-zinc-100 mb-6">
                       <Image
-                        src={post.image}
+                        src={post.image || "/images/placeholder.png"}
                         alt={post.title}
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -189,7 +137,7 @@ export default function BlogPage() {
                       />
                       {/* Category badge */}
                       <span className="absolute top-4 left-0 bg-primaryColor text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5">
-                        {post.category}
+                        {post.category || "Uncategorized"}
                       </span>
                     </div>
                   </Link>
@@ -361,7 +309,7 @@ export default function BlogPage() {
                   >
                     <div className="relative w-20 h-16 shrink-0 overflow-hidden bg-zinc-100">
                       <Image
-                        src={post.image}
+                        src={post.image || "/images/placeholder.png"}
                         alt={post.title}
                         fill
                         className="object-cover transition-transform duration-500 group-hover/recent:scale-110"
