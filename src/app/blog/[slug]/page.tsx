@@ -128,7 +128,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
           </div>
 
           {!isVideo && article.content ? (
-            <article className="prose prose-invert prose-lg max-w-none text-gray-300 font-light [&_p]:text-gray-300 [&_h1]:text-white [&_h2]:text-white [&_h3]:text-white [&_li]:text-gray-300 [&_blockquote]:text-gray-300 [&_strong]:text-white">
+            <article className="prose prose-invert prose-lg max-w-none text-gray-300 font-light">
               {article.content.includes('<p>') || article.content.includes('<h') || article.content.includes('<ul') || article.content.includes('<ol') ? (
                 <div dangerouslySetInnerHTML={{ __html: article.content }} />
               ) : (
