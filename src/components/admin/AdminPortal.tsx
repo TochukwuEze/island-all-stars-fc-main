@@ -42,8 +42,14 @@ import {
   broadcastMessage,
   Member,
 } from "@/lib/membersStore";
-import { clearCurrentUser } from "@/lib/authStore";
-import { addBusiness, Business, getBusinesses, deleteBusiness, toggleSuspendBusiness } from "@/lib/businessStore";
+import { clearCurrentUser, getCurrentUser } from "@/lib/authStore";
+import {
+  addBusiness,
+  Business,
+  getBusinesses,
+  deleteBusiness,
+  toggleSuspendBusiness,
+} from "@/lib/businessStore";
 import Breadcrumb from "@/components/landing/Breadcrumb";
 import FadeIn from "@/components/ui/FadeIn";
 import { Sofia_Sans_Condensed, Inter } from "next/font/google";
@@ -66,7 +72,17 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-type AdminTab = "dashboard" | "directory" | "register" | "broadcast" | "businesses" | "excos" | "news" | "blog" | "gallery" | "tournaments";
+type AdminTab =
+  | "dashboard"
+  | "directory"
+  | "register"
+  | "broadcast"
+  | "businesses"
+  | "excos"
+  | "news"
+  | "blog"
+  | "gallery"
+  | "tournaments";
 
 export default function AdminPortal() {
   const [activeTab, setActiveTab] = useState<AdminTab>("dashboard");
@@ -75,6 +91,7 @@ export default function AdminPortal() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<any>(null);
 
   // Form State
   const [name, setName] = useState("");
@@ -106,6 +123,7 @@ export default function AdminPortal() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
+    setCurrentUser(getCurrentUser());
     const fetchData = async () => {
       setMembers(await getMembers());
       setBusinessesList(await getBusinesses());
@@ -210,15 +228,22 @@ export default function AdminPortal() {
       description: bizDescription.trim(),
       location: bizLocation.trim(),
       phone: bizPhone.trim() || undefined,
-      tags: bizTagSelect === "Others" 
-        ? bizCustomTags.split(",").map(t => t.trim()).filter(Boolean)
-        : [bizTagSelect],
+      tags:
+        bizTagSelect === "Others"
+          ? bizCustomTags
+              .split(",")
+              .map((t) => t.trim())
+              .filter(Boolean)
+          : [bizTagSelect],
       isVerified: bizVerified,
     };
 
     const added = await addBusiness(newBusiness);
     if (added) {
-      showToast("success", `Successfully added ${bizName.trim()} to Business Hub.`);
+      showToast(
+        "success",
+        `Successfully added ${bizName.trim()} to Business Hub.`,
+      );
       setBizName("");
       setBizOwner("");
       setBizPhone("");
@@ -240,7 +265,11 @@ export default function AdminPortal() {
       return;
     }
 
-    const updatedCount = await broadcastMessage(msgSubject.trim(), msgContent.trim(), msgRecipient);
+    const updatedCount = await broadcastMessage(
+      msgSubject.trim(),
+      msgContent.trim(),
+      msgRecipient,
+    );
 
     refreshMembers();
     showToast(
@@ -273,7 +302,8 @@ export default function AdminPortal() {
     email: string,
     currentStatus?: "active" | "suspended",
   ) => {
-    const statusText = currentStatus === "suspended" ? "reactivated" : "suspended";
+    const statusText =
+      currentStatus === "suspended" ? "reactivated" : "suspended";
     await toggleSuspend(email);
     refreshMembers();
     showToast("success", `Successfully ${statusText} account.`);
@@ -414,7 +444,7 @@ export default function AdminPortal() {
                   Club Admin
                 </p>
                 <p className="text-[10px] text-zinc-300 font-bold uppercase tracking-widest mt-0.5">
-                  detobisz@yahoo.com
+                  {currentUser?.email || "Welcome Admin 🎉"}
                 </p>
               </div>
             </div>
@@ -1336,13 +1366,15 @@ export default function AdminPortal() {
                         <option value="Real Estate">Real Estate</option>
                         <option value="Healthcare">Healthcare</option>
                         <option value="Logistics">Logistics</option>
-                        <option value="Food & Hospitality">Food & Hospitality</option>
+                        <option value="Food & Hospitality">
+                          Food & Hospitality
+                        </option>
                         <option value="Finance">Finance</option>
                         <option value="Retail">Retail</option>
                         <option value="Consulting">Consulting</option>
                         <option value="Others">Others</option>
                       </select>
-                      
+
                       {bizTagSelect === "Others" && (
                         <div className="pt-2 animate-in fade-in slide-in-from-top-2">
                           <input
@@ -1365,7 +1397,10 @@ export default function AdminPortal() {
                         onChange={(e) => setBizVerified(e.target.checked)}
                         className="w-4 h-4 rounded border-gray-300 text-primaryColor focus:ring-primaryColor accent-primaryColor cursor-pointer"
                       />
-                      <label htmlFor="bizVerified" className="text-xs font-bold text-gray-600 uppercase tracking-widest cursor-pointer">
+                      <label
+                        htmlFor="bizVerified"
+                        className="text-xs font-bold text-gray-600 uppercase tracking-widest cursor-pointer"
+                      >
                         Mark as Verified Member Business
                       </label>
                     </div>
@@ -1382,51 +1417,84 @@ export default function AdminPortal() {
                 {/* Businesses Directory List */}
                 <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm mt-2">
                   <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-                    <h3 className="font-black text-[#001429] uppercase">Business Directory</h3>
-                    <span className="text-xs font-bold text-gray-400 bg-gray-100 px-3 py-1 rounded-full">{businessesList.length} Businesses</span>
+                    <h3 className="font-black text-[#001429] uppercase">
+                      Business Directory
+                    </h3>
+                    <span className="text-xs font-bold text-gray-400 bg-gray-100 px-3 py-1 rounded-full">
+                      {businessesList.length} Businesses
+                    </span>
                   </div>
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                       <thead>
                         <tr className="bg-gray-50 border-b border-gray-100">
-                          <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-400">Business</th>
-                          <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-400">Owner</th>
-                          <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-400">Status</th>
-                          <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-400 text-center">Actions</th>
+                          <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-400">
+                            Business
+                          </th>
+                          <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-400">
+                            Owner
+                          </th>
+                          <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-400">
+                            Status
+                          </th>
+                          <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-400 text-center">
+                            Actions
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-50 text-xs">
                         {businessesList.map((b) => (
-                          <tr key={b.name} className="hover:bg-gray-50/50 transition-colors">
+                          <tr
+                            key={b.name}
+                            className="hover:bg-gray-50/50 transition-colors"
+                          >
                             <td className="px-6 py-4">
-                              <p className="font-bold text-[#001429]">{b.name}</p>
-                              <p className="text-[10px] text-gray-400">{b.location}</p>
+                              <p className="font-bold text-[#001429]">
+                                {b.name}
+                              </p>
+                              <p className="text-[10px] text-gray-400">
+                                {b.location}
+                              </p>
                             </td>
                             <td className="px-6 py-4 font-semibold text-gray-600">
                               {b.owner}
                             </td>
                             <td className="px-6 py-4">
-                              <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                                b.status === "suspended" ? "bg-red-50 text-red-600" : "bg-green-50 text-green-600"
-                              }`}>
-                                {b.status === "suspended" ? "Suspended" : "Active"}
+                              <span
+                                className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                  b.status === "suspended"
+                                    ? "bg-red-50 text-red-600"
+                                    : "bg-green-50 text-green-600"
+                                }`}
+                              >
+                                {b.status === "suspended"
+                                  ? "Suspended"
+                                  : "Active"}
                               </span>
                             </td>
                             <td className="px-6 py-4">
                               <div className="flex items-center justify-center gap-2">
                                 <button
-                                  onClick={() => handleToggleSuspendBusiness(b.name)}
+                                  onClick={() =>
+                                    handleToggleSuspendBusiness(b.name)
+                                  }
                                   className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                                    b.status === "suspended" 
-                                      ? "bg-green-50 text-green-600 hover:bg-green-100" 
+                                    b.status === "suspended"
+                                      ? "bg-green-50 text-green-600 hover:bg-green-100"
                                       : "bg-orange-50 text-orange-600 hover:bg-orange-100"
                                   }`}
                                 >
-                                  {b.status === "suspended" ? "Activate" : "Suspend"}
+                                  {b.status === "suspended"
+                                    ? "Activate"
+                                    : "Suspend"}
                                 </button>
                                 <button
                                   onClick={() => {
-                                    if(window.confirm(`Are you sure you want to delete ${b.name}?`)) {
+                                    if (
+                                      window.confirm(
+                                        `Are you sure you want to delete ${b.name}?`,
+                                      )
+                                    ) {
                                       handleDeleteBusiness(b.name);
                                     }
                                   }}
@@ -1440,7 +1508,10 @@ export default function AdminPortal() {
                         ))}
                         {businessesList.length === 0 && (
                           <tr>
-                            <td colSpan={4} className="px-6 py-8 text-center text-gray-400 font-semibold">
+                            <td
+                              colSpan={4}
+                              className="px-6 py-8 text-center text-gray-400 font-semibold"
+                            >
                               No businesses added yet.
                             </td>
                           </tr>
@@ -1451,10 +1522,8 @@ export default function AdminPortal() {
                 </div>
               </div>
             )}
-            
-            {activeTab === "excos" && (
-              <AdminExcosPage />
-            )}
+
+            {activeTab === "excos" && <AdminExcosPage />}
           </FadeIn>
         </main>
       </div>
