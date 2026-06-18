@@ -21,6 +21,34 @@ interface RichTextEditorProps {
   onChange: (value: string) => void;
 }
 
+const ToolbarButton = ({
+  onClick,
+  isActive = false,
+  disabled = false,
+  children,
+  title,
+}: {
+  onClick: () => void;
+  isActive?: boolean;
+  disabled?: boolean;
+  children: React.ReactNode;
+  title: string;
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    disabled={disabled}
+    title={title}
+    className={`p-2 rounded-md transition-colors ${
+      isActive
+        ? "bg-blue-100 text-blue-700"
+        : "text-gray-600 hover:bg-gray-100"
+    } ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+  >
+    {children}
+  </button>
+);
+
 export default function RichTextEditor({
   value,
   onChange,
@@ -39,10 +67,6 @@ export default function RichTextEditor({
     },
   });
 
-  if (!editor) {
-    return null;
-  }
-
   // Update editor content if value changes from outside (e.g. when editing a different post)
   useEffect(() => {
     if (editor && editor.getHTML() !== value) {
@@ -50,33 +74,9 @@ export default function RichTextEditor({
     }
   }, [value, editor]);
 
-  const ToolbarButton = ({
-    onClick,
-    isActive = false,
-    disabled = false,
-    children,
-    title,
-  }: {
-    onClick: () => void;
-    isActive?: boolean;
-    disabled?: boolean;
-    children: React.ReactNode;
-    title: string;
-  }) => (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      title={title}
-      className={`p-2 rounded-md transition-colors ${
-        isActive
-          ? "bg-blue-100 text-blue-700"
-          : "text-gray-600 hover:bg-gray-100"
-      } ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
-    >
-      {children}
-    </button>
-  );
+  if (!editor) {
+    return null;
+  }
 
   return (
     <div className="border border-gray-300 rounded-md overflow-hidden bg-gray-50 flex flex-col focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 transition-all">
