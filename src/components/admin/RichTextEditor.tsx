@@ -2,6 +2,7 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { useEffect } from "react";
 import {
   Bold,
   Italic,
@@ -41,6 +42,13 @@ export default function RichTextEditor({
   if (!editor) {
     return null;
   }
+
+  // Update editor content if value changes from outside (e.g. when editing a different post)
+  useEffect(() => {
+    if (editor && editor.getHTML() !== value) {
+      editor.commands.setContent(value);
+    }
+  }, [value, editor]);
 
   const ToolbarButton = ({
     onClick,
