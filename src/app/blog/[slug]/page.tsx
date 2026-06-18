@@ -128,17 +128,16 @@ export default async function BlogArticlePage({ params }: PageProps) {
           </div>
 
           {!isVideo && article.content ? (
-            <article className="prose prose-invert prose-lg max-w-none">
-              {article.content
-                .split("\n\n")
-                .map((paragraph: string, index: number) => (
-                  <p
-                    key={index}
-                    className="text-gray-300 leading-relaxed mb-6 font-light text-lg"
-                  >
+            <article className="prose prose-invert prose-lg max-w-none text-gray-300 font-light">
+              {article.content.trim().startsWith('<') ? (
+                <div dangerouslySetInnerHTML={{ __html: article.content }} />
+              ) : (
+                article.content.split("\n\n").map((paragraph: string, index: number) => (
+                  <p key={index} className="leading-relaxed mb-6">
                     {paragraph}
                   </p>
-                ))}
+                ))
+              )}
             </article>
           ) : null}
         </div>

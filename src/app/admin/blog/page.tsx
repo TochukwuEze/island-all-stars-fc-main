@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import RichTextEditor from "@/components/admin/RichTextEditor";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import { Trash2, Edit, Plus, X, Video, ImageIcon } from "lucide-react";
@@ -505,15 +506,12 @@ export default function AdminBlogPage() {
               <label className="block text-sm font-medium text-gray-700">
                 Post Content *
               </label>
-              <textarea
-                name="content"
-                required
-                rows={6}
+              <RichTextEditor
                 value={formData.content}
-                onChange={handleInputChange}
-                className="w-full border rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Write the full post content here..."
-              ></textarea>
+                onChange={(content) =>
+                  setFormData((prev) => ({ ...prev, content }))
+                }
+              />
             </div>
 
             <div className="pt-4 border-t flex justify-end gap-3 mt-6">
